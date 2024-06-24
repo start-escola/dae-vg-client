@@ -25,10 +25,11 @@ const config: Config = {
         50: "#FAFAFA",
         200: "#D9D9D9",
       },
-      black: "#000000"
+      black: "#000000",
+      grey: "#F4F4F4",
+      border_grey: "#B5B5B5",
     },
   },
   plugins: [],
 };
 export default config;
-

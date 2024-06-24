@@ -6,7 +6,7 @@ import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
 
-export default function Home() {
+export default async function Home() {
   const values = [
     {
       "description": `
@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col mt-20">
+      <main className="mt-20">
         <Banner values={values} />
         <Services />
         <AboutUs />

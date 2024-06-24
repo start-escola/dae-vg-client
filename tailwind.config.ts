@@ -12,6 +12,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "acesso-background": "url('/bgAuth.jpeg')",
       },
     },
     colors: {
@@ -25,10 +26,17 @@ const config: Config = {
         50: "#FAFAFA",
         200: "#D9D9D9",
       },
-      black: "#000000"
+      black: "#000000",
+      grey: "#F4F4F4",
+      border_grey: "#B5B5B5",
+      transparent: "transparent",
+      feedback: {
+        success: "green",
+        warning: "yellow",
+        failed: "red",
+      },
     },
   },
   plugins: [],
 };
 export default config;
-

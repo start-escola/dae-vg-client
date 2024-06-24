@@ -11,18 +11,24 @@ export const metadata: Metadata = {
 
 import SwiperCore from 'swiper';
 import { Navigation } from "swiper/modules";
+import SessionProvider from "./session-provider";
+import { getSession } from "@/utils/session";
 
 SwiperCore.use([Navigation])
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession()
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <SessionProvider provider={session}>
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

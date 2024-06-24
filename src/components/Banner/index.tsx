@@ -80,12 +80,11 @@ const Banner = ({ values }: IBannerProps) => {
         {values.map((val, i) => (
           <Image
             key={i}
-            layout="fill"
+            fill
             src={val.img}
             alt=""
-            objectFit="cover"
             className={clsx(
-              "absolute top-0 left-0 w-full h-full transform transition-transform duration-1000",
+              "absolute top-0 left-0 w-full h-full transform transition-transform duration-1000 object-cover",
               i === selectedBanner
                 ? "translate-x-0"
                 : i === selectedBanner - 1
@@ -100,19 +99,24 @@ const Banner = ({ values }: IBannerProps) => {
           onMouseLeave={() => handlePauseToggle(false)}
         />
       </div>
-      <div className="container absolute translate-y-1/4 bottom-1/2 md:bottom-1/4 p-2"
+      <div className="container absolute translate-y-1/4 bottom-1/4 p-4"
         onMouseEnter={() => handlePauseToggle(true)}
         onMouseLeave={() => handlePauseToggle(false)}
       >
-        <div className="flex flex-col gap-4" dangerouslySetInnerHTML={{ __html: values[selectedBanner].description }} />
-        <button className="rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md">Saber mais</button>
+        <div className="flex flex-col gap-4 w-fit" dangerouslySetInnerHTML={{ __html: values[selectedBanner].description }} />
+        <div className="absolute left-0 top-0 h-full w-full z-10"
+          ref={bannerRef}
+          onMouseDown={handleDragStart}
+          onTouchStart={handleDragStart}
+        />
+        <button className="rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md relative z-20">Saber mais</button>
       </div>
       <div className="flex gap-2 absolute bottom-[56px]">
         {values.map((val, i) => (
           <button
             key={i}
             onClick={() => handleChangeBanner(i)}
-            className={clsx("h-4 transition-all", selectedBanner === i ? "w-12 bg-primary-500 rounded-3xl" : "w-4 rounded-full bg-white-200")}
+            className={clsx("h-2 transition-all", selectedBanner === i ? "w-12 bg-primary-500 rounded-3xl" : "w-2 rounded-full bg-white-200")}
           />
         ))}
       </div>

@@ -1,4 +1,6 @@
-import Image from "next/image"
+import Image from "next/image";
+
+
 
 interface IServiceProps {
   values: {
@@ -25,7 +27,7 @@ const Services = ({ values }: IServiceProps) => {
         ))}
       </ul>
     </section>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;

@@ -6,8 +6,10 @@ import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
 
-export default async function Home() {
-  const values = [
+async function getLastNews() {
+  'use server'
+
+  const result = [
     {
       "description": `
             <p style="font-size: 1.125rem; line-height: 1.75rem;">Obras da</p>
@@ -46,15 +48,119 @@ export default async function Home() {
     }
   ];
 
+  return result
+}
+
+async function getMostUsedServices() {
+  'use server'
+
+  const services = [
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    }
+    , {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    },
+    {
+      icon: "/water.svg",
+      title: "Pedido de nova ligação",
+      href: "#"
+    }
+  ]
+
+  return services
+}
+
+async function getLatestBids() {
+  'use server'
+
+  const values = [
+    { title: 'Pregão Eletrônico', opening: "25/04/2023", closing: "09/08/2023" },
+    { title: 'Concorrência Pública', opening: "15/05/2023", closing: "30/09/2023" },
+    { title: 'Tomada de Preços', opening: "01/06/2023", closing: "15/10/2023" },
+    { title: 'Convite', opening: "10/07/2023", closing: "20/11/2023" },
+    { title: 'Leilão', opening: "25/08/2023", closing: "15/12/2023" }
+  ];
+
+  return values
+}
+
+async function getImages() {
+  'use server'
+
+  return [
+    {
+      img: "/grid-example.jpeg"
+    },
+    {
+      img: "/grid-example.jpeg"
+    },
+    {
+      img: "/grid-example.jpeg"
+    },
+    {
+      img: "/grid-example.jpeg"
+    },
+    {
+      img: "/grid-example.jpeg"
+    }
+  ]
+}
+
+async function getSummary() {
+  'use server'
+
+  return "O Departamento de Água e Esgoto de Várzea Grande (DAE-VG) foi criado em 5 de junho de 1997, conforme Lei Municipal nº 1.733 e alterado em 08 de abril de 1998, conforme Lei Municipal nº 1.866 para atender à comunidade em saneamento básico de qualidade."
+}
+
+export default async function Home() {
+  const latestNewsData = getLastNews()
+  const mostUsedServicesData = getMostUsedServices()
+  const latestBidsData = getLatestBids()
+  const imagesData = getImages()
+  const summaryData = getSummary()
+
+  const [latestNews, mostUsedServices, latestBids, images, summary] =
+    await Promise.all([latestNewsData, mostUsedServicesData, latestBidsData, imagesData, summaryData])
+
   return (
     <>
       <Header />
       <main className="mt-20">
-        <Banner values={values} />
-        <Services />
-        <AboutUs />
-        <LatestBids />
-        <ImageGallery />
+        <Banner values={latestNews} />
+        <Services values={mostUsedServices} />
+        <AboutUs summary={summary} />
+        <LatestBids values={latestBids} />
+        <ImageGallery values={images} />
       </main>
       <Footer />
     </>

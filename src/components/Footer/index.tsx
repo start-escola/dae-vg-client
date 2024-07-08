@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="mx-auto bg-primary-500 border-b-8 border-primary-700 md:border-none">
       <section className="flex flex-col md:flex-row gap-20 justify-around mx-auto container px-4 py-20">
         <div className="w-full flex flex-col justify-center items-center gap-4 md:w-fit">
-          <Image src="/brasao.svg" width={100} height={100} alt="logo" />
+          <Image src="/brasao.png" width={100} height={100} alt="logo" />
           <div className="flex flex-col gap-2">
             <p className="font-light text-lg text-center">Prefeitura Municipal de</p>
             <p className="text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</p>

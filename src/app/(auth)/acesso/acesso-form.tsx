@@ -15,7 +15,7 @@ const AcessoForm = () => {
         <p className="text-xl font-light">Aqui nossa missão é proporcionar o melhor para a população</p>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
-        <Input name="identifier" placeholder="Login" icon="/user.svg" label="Login" />
+        <Input name="identifier" placeholder="CPF" icon="/user.svg" label="CPF" />
         <Input name="password" placeholder="Senha" icon="/user.svg" label="Senha" type="password" />
         <a href="#" className="self-end font-light">Lembrar minha senha</a>
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>

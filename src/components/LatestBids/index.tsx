@@ -6,7 +6,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from "swiper/modules";
 
-const LatestBids = () => {
+interface ILatestBids {
+  values: {
+    title: string
+    opening: string
+    closing: string
+  }[]
+}
+
+const LatestBids = ({ values }: ILatestBids) => {
   const items = [
     { title: 'Pregão Eletrônico', opening: "25/04/2023", closing: "09/08/2023" },
     { title: 'Concorrência Pública', opening: "15/05/2023", closing: "30/09/2023" },
@@ -18,7 +26,7 @@ const LatestBids = () => {
   return (
     <section className="my-14 mx-auto container p-4">
       <h1 className="text-primary-500 text-2xl font-semibold text-center">Últimas licitações</h1>
-      <div className="relative my-10">
+      <div className="relative my-10 max-w-5xl mx-auto px-10">
         <Swiper
           spaceBetween={32}
           modules={[Navigation, Pagination]}
@@ -34,7 +42,7 @@ const LatestBids = () => {
             1024: { slidesPerView: 3 },
           }}
         >
-          {items.map((val, i) => (
+          {values.map((val, i) => (
             <SwiperSlide key={i}>
               <li className={`m-auto flex flex-col gap-4 text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl w-fit`}>
                 <div className="flex flex-col items-center text-center">

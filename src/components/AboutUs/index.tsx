@@ -7,10 +7,10 @@ interface IAboutUsProps {
 
 const AboutUs = ({ summary }: IAboutUsProps) => {
   return (
-    <section className="my-14 mx-auto container p-4">
+    <section className="my-20 mx-auto container p-4">
       <div className="relative">
-        <Image src="/pessoa.png" height={400} width={400} className="hidden md:flex absolute left-[66%] -translate-x-1/2 bottom-0 z-10" alt="pessoa" />
-        <div className="flex relative rounded overflow-hidden">
+        <Image src="/pessoa.png" height={400} width={400} className="hidden md:flex absolute left-[66%] -translate-x-1/2 bottom-0 " alt="pessoa" />
+        <div className="flex relative rounded overflow-hidden -z-10">
           <div className="flex flex-col gap-6 px-4 py-8 h-fit bg-primary-500 w-10/12 md:w-8/12 md:pl-14 md:pr-44 md:py-28">
             <h1 className="text-3xl font-bold">Conheça o <strong className="font-extrabold">DAE</strong></h1>
             <p className="font-light text-base">

@@ -53,7 +53,7 @@ const LatestBids = ({ values }: ILatestBids) => {
                   <div><strong>Abertura:</strong> {val.opening}</div>
                   <div><strong>Fechamento:</strong> {val.closing}</div>
                 </div>
-                <button className="py-1 text-white-0 font-semibold text-base rounded bg-primary-500">
+                <button className="py-1 text-white-0 font-semibold text-base rounded bg-primary-500 opacity-20">
                   Aberto
                 </button>
               </li>

@@ -58,42 +58,42 @@ async function getMostUsedServices() {
     {
       icon: "/water.svg",
       title: "Pedido de nova ligação",
-      href: "#"
+      href: "http://177.136.204.56:180/totem"
     },
     {
       icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      title: "Religação de Água",
+      href: "http://177.136.204.56:180/totem"
     },
     {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/clock.svg",
+      title: "Trocar registro cavalete",
+      href: "http://177.136.204.56:180/totem"
     },
     {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/swap-fill.svg",
+      title: "Trocar de hidrômetro",
+      href: "http://177.136.204.56:180/totem"
     }
     , {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/address-book-tabs-fill.svg",
+      title: "Alterar dados cadastrais",
+      href: "http://177.136.204.56:180/totem"
     },
     {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/drop-slash-fill.svg",
+      title: "Desligamento temporário",
+      href: "http://177.136.204.56:180/totem"
     },
     {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/clock-with-wrench.svg",
+      title: "Conserto de cavalete",
+      href: "http://177.136.204.56:180/totem"
     },
     {
-      icon: "/water.svg",
-      title: "Pedido de nova ligação",
-      href: "#"
+      icon: "/file-arrow-down-fill.svg",
+      title: "2 Via de conta",
+      href: "http://177.136.204.56:180/totem"
     }
   ]
 
@@ -155,7 +155,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="mt-20">
+      <main className="relative mt-20">
         <Banner values={latestNews} />
         <Services values={mostUsedServices} />
         <AboutUs summary={summary} />

@@ -1,7 +1,7 @@
 "use server";
-import axios, { AxiosError } from "axios";
+import api from "@/utils/api";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const validateCPF = (cpf: string) => {
@@ -44,15 +44,13 @@ export async function createSession(prevState: any, formData: FormData) {
   });
 
   if (!validatedFields.success) {
-    console.log(validatedFields.error);
-    return;
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
   }
 
   try {
-    const { data } = await axios.post(
-      "http://127.0.0.1:1337/api/auth",
-      validatedFields.data
-    );
+    const { data } = await api.post("/auth", validatedFields.data);
 
     cookies().set("session", data.jwt, {
       httpOnly: true,

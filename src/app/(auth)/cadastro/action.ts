@@ -1,9 +1,9 @@
 "use server";
 
+import api from "@/utils/api";
 import axios, { AxiosError } from "axios";
 import { randomUUID } from "crypto";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const validateCPF = (cpf: string) => {
@@ -101,8 +101,8 @@ export async function performSignup(prevData: any, formData: FormData) {
   }
 
   try {
-    const response = await axios.post(
-      "http://127.0.0.1:1337/api/auth/local/register",
+    const response = await api.post(
+      "/auth/local/register",
       validatedFields.data
     );
 

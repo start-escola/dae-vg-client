@@ -1,7 +1,9 @@
 "use server";
 
 import axios, { AxiosError } from "axios";
+import { randomUUID } from "crypto";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const validateCPF = (cpf: string) => {
@@ -29,6 +31,37 @@ const validateCPF = (cpf: string) => {
   return true;
 };
 
+interface FormattedErrors {
+  errors: {
+    [key: string]: string[];
+  };
+}
+
+interface ValidationError {
+  path: string[];
+  message: string;
+  name: string;
+}
+
+const translate = {
+  "This attribute must be unique": "CPF já cadastrado",
+};
+
+function formatErrors(errors: ValidationError[]): FormattedErrors {
+  const formattedErrors: FormattedErrors = { errors: {} };
+  errors?.forEach((error) => {
+    const key = error.path[0];
+    const message = error.message;
+    if (!formattedErrors.errors[key]) {
+      formattedErrors.errors[key] = [];
+    }
+    formattedErrors.errors[key].push(
+      translate[message as keyof typeof translate] || message
+    );
+  });
+  return formattedErrors;
+}
+
 const signupSchema = z
   .object({
     username: z.string(),
@@ -39,6 +72,7 @@ const signupSchema = z
     email: z.string().email("Email inválido"),
     password: z.string(),
     confirmPassword: z.string(),
+    fullname: z.string(),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -52,7 +86,8 @@ const signupSchema = z
 
 export async function performSignup(prevData: any, formData: FormData) {
   const validatedFields = signupSchema.safeParse({
-    username: formData.get("username"),
+    fullname: formData.get("fullname"),
+    username: randomUUID(),
     email: formData.get("email"),
     cpf: formData.get("cpf"),
     password: formData.get("password"),
@@ -77,16 +112,29 @@ export async function performSignup(prevData: any, formData: FormData) {
       maxAge: 60 * 60 * 24 * 7, // One week
       path: "/",
     });
-  } catch (err) {
-    if (err instanceof AxiosError) {
-      const { status, message } = err.response?.data.error;
-      if (status === 400 && message === "Email or Username are already taken") {
+
+    return "success";
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (
+        error.response?.data.error.message ===
+        "Email or Username are already taken"
+      ) {
+        console.log(error.response.data.error.message);
         return {
           errors: {
-            email: ["Email já está em uso"],
+            email: ["Este e-mail ja está sendo utilizado"],
           },
         };
       }
+
+      const formattedError = formatErrors(
+        error.response?.data.error.details.errors as ValidationError[]
+      );
+
+      return formattedError;
+    } else {
+      console.error(error);
     }
   }
 }

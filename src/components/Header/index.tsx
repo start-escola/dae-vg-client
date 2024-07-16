@@ -195,15 +195,15 @@ const Header = () => {
               </ul>
             </li>
           ))}
-          <a href="" className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14">
+          <Link href="/acesso" className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14">
             <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
             ACESSO SERVIDOR
-          </a>
+          </Link>
         </ul>
-        <a href="" className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm">
+        <Link href="/acesso" className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm">
           <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
           ACESSO SERVIDOR
-        </a>
+        </Link>
       </section>
       <section className={clsx("flex justify-center items-center gap-8 w-full absolute bottom-0 h-12 bg-primary-500 text-white-0 -z-10 duration-500", selectedOption?.options.length && "translate-y-full")}>
         {selectedOption?.options.map((subOption, index) => (

@@ -19,8 +19,8 @@ const Services = ({ values }: IServiceProps) => {
         {values.map((val, i) => (
           <li key={i} className="rounded overflow-hidden bg-white-50 w-36 md:w-80 md:h-fit flex-grow shadow">
             <a href={session.status === "authenticated" ? val.href : `/acesso?callbackUrl=${val.href}`} target={session.status === "authenticated" ? "_blank" : "_self"} rel="noopener noreferrer" className="flex flex-col items-center gap-2 justify-around sm:flex-row px-2 py-4 md:p-4">
-              <div className="relative">
-                <Image src={val.icon} width={30} height={30} alt="" />
+              <div className="relative h-screen w-screen max-h-[30px] max-w-[30px]">
+                <Image src={val.icon} fill alt="" />
               </div>
               <div className="flex flex-col gap-2">
                 <p className="text-black font-semibold text-center">{val.title}</p>

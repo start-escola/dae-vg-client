@@ -13,6 +13,7 @@ import SwiperCore from 'swiper';
 import { Navigation } from "swiper/modules";
 import SessionProvider from "./session-provider";
 import { getSession } from "@/utils/session";
+import api from "@/utils/api"
 
 SwiperCore.use([Navigation])
 
@@ -22,6 +23,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getSession()
+
+  api.defaults.headers.common.Authorization = session && `Bearer ${session.jwt}`
 
   return (
     <html lang="en">

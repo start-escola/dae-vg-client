@@ -160,7 +160,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="relative mt-20">
+      <main className="relative mt-20 text-white-0">
         <Banner values={latestNews} />
         <Services values={mostUsedServices} />
         <AboutUs summary={summary} />

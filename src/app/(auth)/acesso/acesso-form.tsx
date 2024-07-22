@@ -1,11 +1,19 @@
-"use client";
-import Input from "../input";
-import Link from "next/link";
-import { createSession } from "./action";
-import { useFormState } from "react-dom";
+'use client'
+import Image from "next/image"
+import Input from "../input"
+import Link from "next/link"
+import { createSession } from "./action"
+import { useFormState } from "react-dom"
+import { maskCPF } from "../cadastro/cadastro-form"
+import { redirect, useSearchParams } from "next/navigation"
 
 const AcessoForm = () => {
-  const [state, formAction] = useFormState(createSession, null);
+  const [state, formAction] = useFormState(createSession, null)
+  
+  // Redirect Functions
+  const params = useSearchParams()
+  const callbackUrl = params.get('callbackUrl')
+  if (state === "success") return redirect(callbackUrl ? callbackUrl : "/")
 
   return (
     <form
@@ -33,6 +41,10 @@ const AcessoForm = () => {
           type="password"
           error={state?.errors.password.shift()}
         />
+          onChange={(e) => {
+            e.target.value = maskCPF(e.currentTarget.value);
+          }}
+        />
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>
         <div className="flex items-center justify-center w-full">
           <hr className="bg-white-0 w-full" />
@@ -41,7 +53,7 @@ const AcessoForm = () => {
         </div>
         <ul className="w-full">
           <li className="relative">
-            <Link href="/cadastro">
+            <Link href={callbackUrl ? `/cadastro?callbackUrl=${callbackUrl}` : "/cadastro"}>
               <button className="mt-3 w-full py-3 bg-[#868E96] rounded">
                 Cadastrar-se
               </button>

@@ -4,6 +4,7 @@ import Input from "../input"
 import Link from "next/link"
 import { useFormState, useFormStatus } from "react-dom";
 import { performSignup } from "./action";
+import { redirect, useSearchParams } from "next/navigation";
 
 export const maskCPF = (cpf: string) => {
   return cpf
@@ -28,6 +29,11 @@ const maskName = (value: string) => {
 const CadastroForm = () => {
   const [state, formAction] = useFormState(performSignup, null)
 
+  // Redirect Functions
+  const params = useSearchParams()
+  const callbackUrl = params.get('callbackUrl')
+  if (state === "success") return redirect(callbackUrl ? callbackUrl : "/")
+
   return (
     <form className="relative flex flex-col items-center w-screen max-w-[580px] my-4 mx-2 px-2 py-16 bg-[#06092B4D] backdrop-blur-lg" action={formAction}>
       <Link className="absolute left-4 top-4 bg-white-0 rounded-full p-3" href="/acesso">
@@ -39,14 +45,14 @@ const CadastroForm = () => {
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <Input
-          name="username"
+          name="fullname"
           placeholder="Nome completo"
           icon="/user.svg"
           label="Nome completo"
           onChange={(e) => {
             e.target.value = maskName(e.target.value)
           }}
-          error={state?.errors?.username?.pop()}
+          error={state?.errors?.fullname?.pop()}
         />
         <Input
           name="email"

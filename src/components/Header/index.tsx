@@ -267,31 +267,13 @@ const Header = () => {
               </ul>
             </li>
           ))}
-          <a
-            href="/"
-            className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14"
-          >
-            <Image
-              src="/user.svg"
-              width={20}
-              height={20}
-              alt="Acesso ao servidor"
-              className="object-cover"
-            />
+          <Link href="/acesso" className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14">
+            <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
             ACESSO SERVIDOR
           </Link>
         </ul>
-        <a
-          href=""
-          className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm"
-        >
-          <Image
-            src="/user.svg"
-            width={20}
-            height={20}
-            alt="Acesso ao servidor"
-            className="object-cover"
-          />
+        <Link href="/acesso" className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm">
+          <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
           ACESSO SERVIDOR
         </Link>
       </section>

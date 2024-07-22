@@ -1,6 +1,6 @@
 "use server";
-import axios, { AxiosError } from "axios";
 import api from "@/utils/api";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
@@ -50,7 +50,6 @@ export async function createSession(prevState: any, formData: FormData) {
     };
   }
 
-  try {
     const { data } = await api.post("/auth", validatedFields.data);
 
     cookies().set("session", data.jwt, {
@@ -61,9 +60,7 @@ export async function createSession(prevState: any, formData: FormData) {
     });
 
     return "success";
-  } 
-
-   catch (err) {
+  }  catch (err) {
     return {
       errors: {
         password: ["Email e/ou senha incorretos"],

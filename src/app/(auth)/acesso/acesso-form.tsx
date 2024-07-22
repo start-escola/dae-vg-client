@@ -32,19 +32,12 @@ const AcessoForm = () => {
           placeholder="CPF"
           icon="/user.svg"
           label="CPF"
-        />
-        <Input
-          name="password"
-          placeholder="Senha"
-          icon="/user.svg"
-          label="Senha"
-          type="password"
-          error={state?.errors.password.shift()}
-        />
           onChange={(e) => {
             e.target.value = maskCPF(e.currentTarget.value);
           }}
         />
+        <Input name="password" placeholder="Senha" icon="/user.svg" label="Senha" type="password" />
+        <a href="#" className="self-end font-light">Lembrar minha senha</a>
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>
         <div className="flex items-center justify-center w-full">
           <hr className="bg-white-0 w-full" />

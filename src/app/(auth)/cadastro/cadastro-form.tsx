@@ -28,8 +28,6 @@ const maskName = (value: string) => {
 const CadastroForm = () => {
   const [state, formAction] = useFormState(performSignup, null)
 
-  console.log(state)
-
   return (
     <form className="relative flex flex-col items-center w-screen max-w-[580px] my-4 mx-2 px-2 py-16 bg-[#06092B4D] backdrop-blur-lg" action={formAction}>
       <Link className="absolute left-4 top-4 bg-white-0 rounded-full p-3" href="/acesso">

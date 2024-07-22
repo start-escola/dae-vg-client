@@ -15,6 +15,8 @@ const AcessoForm = () => {
   const callbackUrl = params.get('callbackUrl')
   if (state === "success") return redirect(callbackUrl ? callbackUrl : "/")
 
+  const passwordError = state?.errors.password?.pop()
+
   return (
     <form
       className="flex flex-col items-center w-screen max-w-[580px] my-4 mx-2 px-2 py-16 bg-[#06092B4D] backdrop-blur-lg"
@@ -35,7 +37,8 @@ const AcessoForm = () => {
           onChange={(e) => {
             e.target.value = maskCPF(e.currentTarget.value);
           }}
-          error={state?.errors.password?.shift()}
+          error={state?.errors.identifier?.pop() || passwordError}
+          autoComplete="off"
         />
         <Input
           name="password"
@@ -43,7 +46,7 @@ const AcessoForm = () => {
           icon="/user.svg"
           label="Senha"
           type="password"
-          error={state?.errors.password?.shift()}
+          error={passwordError}
         />
         {/* <a href="#" className="self-end font-light">Lembrar minha senha</a> */}
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>

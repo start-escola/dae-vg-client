@@ -44,11 +44,11 @@ export async function createSession(prevState: any, formData: FormData) {
       password: formData.get("password"),
     });
 
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+      };
+    }
 
     const { data } = await api.post("/auth", validatedFields.data);
 
@@ -60,11 +60,12 @@ export async function createSession(prevState: any, formData: FormData) {
     });
 
     return "success";
-  }  catch (err) {
+  } catch (err) {
     return {
       errors: {
-        password: ["Email e/ou senha incorretos"],
+        password: ["CPF e/ou senha incorretos"],
       },
     };
   }
 }
+

@@ -38,18 +38,18 @@ const createSessionSchema = z.object({
 });
 
 export async function createSession(prevState: any, formData: FormData) {
-  const validatedFields = createSessionSchema.safeParse({
-    identifier: formData.get("identifier"),
-    password: formData.get("password"),
-  });
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
-
   try {
+    const validatedFields = createSessionSchema.safeParse({
+      identifier: formData.get("identifier"),
+      password: formData.get("password"),
+    });
+
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+      };
+    }
+
     const { data } = await api.post("/auth", validatedFields.data);
 
     cookies().set("session", data.jwt, {
@@ -60,10 +60,12 @@ export async function createSession(prevState: any, formData: FormData) {
     });
 
     return "success";
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      console.log(error.response?.data);
-    }
+  } catch (err) {
+    return {
+      errors: {
+        password: ["CPF e/ou senha incorretos"],
+      },
+    };
   }
 }
 

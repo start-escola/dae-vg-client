@@ -55,7 +55,7 @@ const Input: React.FC<InputProps> = ({ onChange, placeholder, label, icon, error
         placeholder={placeholder}
       />
       {error && (
-        <span className="text-xs font-light text-feedback-failed">{error}</span>
+        <span className="text-base font-light text-feedback-failed block mt-2">{error}</span>
       )}
     </div>
   );

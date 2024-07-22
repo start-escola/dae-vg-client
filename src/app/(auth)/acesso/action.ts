@@ -1,6 +1,6 @@
 "use server";
+import axios, { AxiosError } from "axios";
 import api from "@/utils/api";
-import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
@@ -38,10 +38,11 @@ const createSessionSchema = z.object({
 });
 
 export async function createSession(prevState: any, formData: FormData) {
-  const validatedFields = createSessionSchema.safeParse({
-    identifier: formData.get("identifier"),
-    password: formData.get("password"),
-  });
+  try {
+    const validatedFields = createSessionSchema.safeParse({
+      identifier: formData.get("identifier"),
+      password: formData.get("password"),
+    });
 
   if (!validatedFields.success) {
     return {
@@ -60,10 +61,13 @@ export async function createSession(prevState: any, formData: FormData) {
     });
 
     return "success";
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      console.log(error.response?.data);
-    }
+  } 
+
+   catch (err) {
+    return {
+      errors: {
+        password: ["Email e/ou senha incorretos"],
+      },
+    };
   }
 }
-

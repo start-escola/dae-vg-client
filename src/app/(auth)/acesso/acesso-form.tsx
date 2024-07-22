@@ -9,7 +9,7 @@ import { redirect, useSearchParams } from "next/navigation"
 
 const AcessoForm = () => {
   const [state, formAction] = useFormState(createSession, null)
-  
+
   // Redirect Functions
   const params = useSearchParams()
   const callbackUrl = params.get('callbackUrl')
@@ -35,9 +35,17 @@ const AcessoForm = () => {
           onChange={(e) => {
             e.target.value = maskCPF(e.currentTarget.value);
           }}
+          error={state?.errors.password?.shift()}
         />
-        <Input name="password" placeholder="Senha" icon="/user.svg" label="Senha" type="password" />
-        <a href="#" className="self-end font-light">Lembrar minha senha</a>
+        <Input
+          name="password"
+          placeholder="Senha"
+          icon="/user.svg"
+          label="Senha"
+          type="password"
+          error={state?.errors.password?.shift()}
+        />
+        {/* <a href="#" className="self-end font-light">Lembrar minha senha</a> */}
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>
         <div className="flex items-center justify-center w-full">
           <hr className="bg-white-0 w-full" />

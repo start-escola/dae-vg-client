@@ -41,7 +41,7 @@ const AcessoForm = () => {
         </div>
         <ul>
           <li className="relative w-4 h-4">
-            <Link href="/cadastro">
+            <Link href={callbackUrl ? `/cadastro?callbackUrl=${callbackUrl}` : "/cadastro"}>
               <Image src="/user.svg" fill alt={""} />
             </Link>
           </li>

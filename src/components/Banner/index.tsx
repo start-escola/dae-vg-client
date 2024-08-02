@@ -7,6 +7,7 @@ interface IBannerProps {
   values: {
     img: string;
     description: string;
+    link?: string;
   }[];
 }
 
@@ -109,7 +110,11 @@ const Banner = ({ values }: IBannerProps) => {
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
         />
-        <button className="rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md relative z-20">Saber mais</button>
+        {
+          values[selectedBanner].link && (
+            <button className="rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md relative z-20">Saber mais</button>
+          )
+        }
       </div>
       <div className="flex gap-2 absolute bottom-[56px]">
         {values.map((val, i) => (

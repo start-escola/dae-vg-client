@@ -17,7 +17,9 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
 
-  const handleOpen = () => setOpen((old) => !old);
+  const handleOpen = (open: boolean) => {
+    setOpen(open);
+  }
 
   const links: IOption[] = [
     {
@@ -59,11 +61,11 @@ const Header = () => {
       options: [
         {
           label: "Concursos",
-          href: "/",
+          href: "/transparencia/concursos",
         },
         {
           label: "Controle Interno",
-          href: "/",
+          href: "/transparencia/controle-interno",
         },
         {
           label: "Licitações",
@@ -71,7 +73,7 @@ const Header = () => {
         },
         {
           label: "Portal da Transparência",
-          href: "/",
+          href: "https://e-gov.betha.com.br/transparencia/01037-167/recursos.faces",
         },
       ],
     },
@@ -95,22 +97,22 @@ const Header = () => {
     },
     {
       label: "OUVIDORIA",
-      options: [
-        {
-          label: "Manifestação Anônima",
-          href: "/",
-        },
-        {
-          label: "Manifestação Identificada",
-          href: "/",
-        },
-        {
-          label: "Consulta Manifestação",
-          href: "/",
-        },
-      ],
+      href: "https://falabr.cgu.gov.br/web/home",
+      options: []
     },
-  ];
+  ]
+
+  links.forEach((link) => {
+    if (link.href === "/") {
+      console.log(link.label, link.href)
+    }
+
+    link.options.forEach((subopt) => {
+      if (subopt.href === "/") {
+        console.log(subopt.label, subopt.href)
+      }
+    })
+  })
 
   const handleMouseEnter = (label: IOption) => {
     if (selectedOption?.label === label.label) {
@@ -158,7 +160,6 @@ const Header = () => {
             "flex flex-col justify-between w-8 h-6 relative z-20",
             "md:hidden"
           )}
-          onClick={handleOpen}
         >
           <div
             className={clsx(
@@ -261,7 +262,7 @@ const Header = () => {
                     key={subopt.label}
                     className="text-center text-xl text-[#919191]"
                   >
-                    <Link href={subopt.href}>{subopt.label}</Link>
+                    <Link href={subopt.href} onClick={() => handleOpen(false)}>{subopt.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -284,9 +285,9 @@ const Header = () => {
         )}
       >
         {selectedOption?.options.map((subOption, index) => (
-          <a key={index} className="text-white hover:font-normal">
+          <Link href={subOption.href} key={index} className="text-white hover:font-normal">
             {subOption.label}
-          </a>
+          </Link>
         ))}
       </section>
       <div className="left-0 top-0 absolute w-full h-full bg-white-50 md:z-0" />

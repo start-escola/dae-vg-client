@@ -1,4 +1,37 @@
-export default function Page() {
+import InfoComponent from "@/components/InfoComponent";
+import api from "@/utils/api"
+import Image from "next/image";
+import Link from "next/link";
+
+async function getPage() {
+  "use server"
+
+  const { data: page } = await api.get<{
+    data: {
+      id: number,
+      attributes: {
+        opening_date: string
+      }
+    }[]
+  }>("/tenders?fields[0]=opening_date")
+
+  const yearTracker: { [key: string]: boolean } = {};
+  const uniqueYears: string[] = [];
+
+  page.data.forEach(item => {
+    const year = item.attributes.opening_date.split('-')[0];
+    if (!yearTracker[year]) {
+      yearTracker[year] = true;
+      uniqueYears.push(year);
+    }
+  });
+
+  return uniqueYears
+}
+
+export default async function Page() {
+  const data = await getPage()
+
   return (
     <>
       <section className="text-primary-500 border-b-2 border-primary-500 pb-5">
@@ -28,7 +61,17 @@ export default function Page() {
           </ul>
         </div>
         <ul className="py-16">
-
+          {data.map((year) => (
+            <li className="text-primary-500 shadow-md p-8 w-fit rounded" key={year}>
+              <Link href={`licitacoes/${year}`} className="flex flex-col gap-2 items-center">
+                <Image src="/calendar.svg" alt="calendario" width={32} height={32} />
+                <div className="text-center">
+                  <p>Ano</p>
+                  <p className="font-bold">{year}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     </>

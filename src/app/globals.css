@@ -3,27 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: #FAFAFA;
-  --background-start-rgb: #FAFAFA;
-  --background-end-rgb: #FAFAFA;
+  --foreground-rgb: #fafafa;
+  --background-start-rgb: #fafafa;
+  --background-end-rgb: #fafafa;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: #FAFAFA;
-    --background-end-rgb: #FAFAFA;
+    --background-start-rgb: #fafafa;
+    --background-end-rgb: #fafafa;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #fafafa;
 }
 
 .custom-swiper-button::after {
@@ -36,3 +31,32 @@ body {
     text-wrap: balance;
   }
 }
+
+h1,
+h2,
+h3,
+h4,
+p {
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 32px;
+}
+
+h4 {
+  font-size: 28px;
+}
+
+p {
+  font-size: 18px;
+}
+

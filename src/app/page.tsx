@@ -74,14 +74,16 @@ async function getMostUsedServices() {
 async function getLatestBids() {
   "use server";
 
-  const { data: tenders } = await api.get('/tenders?populate=*')
+  const { data: tenders } = await api.get('/tenders?populate[last_status]=*&populate[tender_type]=*&pagination[limit]=15&sort[0]=publishedAt:desc')
 
   const values = tenders.data.map(({ id, attributes }: { id: number, attributes: any }) => ({
     id,
     title: attributes.tender_type.data.attributes.name,
-    opening: attributes.opening_date.replaceAll('-', '/'),
-    closing: attributes.closing_date.replaceAll('-', '/'),
-    status: attributes.status
+    opening: attributes.opening_date?.replaceAll('-', '/'),
+    closing: attributes.closing_date?.replaceAll('-', '/'),
+    status: attributes.status,
+    slug: attributes.tender_type.data.attributes.slug,
+    last_status: attributes.last_status
   }))
 
   return values;

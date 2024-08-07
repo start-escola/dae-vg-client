@@ -102,18 +102,6 @@ const Header = () => {
     },
   ]
 
-  links.forEach((link) => {
-    if (link.href === "/") {
-      console.log(link.label, link.href)
-    }
-
-    link.options.forEach((subopt) => {
-      if (subopt.href === "/") {
-        console.log(subopt.label, subopt.href)
-      }
-    })
-  })
-
   const handleMouseEnter = (label: IOption) => {
     if (selectedOption?.label === label.label) {
       setSelectedOption(null);

@@ -1,24 +1,16 @@
-import InfoComponent from "@/components/InfoComponent";
-import api from "@/utils/api"
 import Image from "next/image";
 import Link from "next/link";
+import { getPage } from "./action";
+import Filter from "./filter";
 
-async function getPage(year: string) {
-  "use server"
-
-  const { data: page } = await api.get<{
-    data: { id: number, attributes: { name: string, slug: string } }[]
-  }>(`/tender-types?filters[$and][0][tenders][opening_date][$gte]=${year}-01-01&filters[$and][1][tenders][opening_date][$lte]=${year}-12-31`)
-
-  return page.data.map(({ id, attributes: { name, slug } }) => ({
-    id,
-    slug,
-    name
-  }))
+export type SearchParams = {
+  status?: string
+  text?: string
+  tender_type?: string
 }
 
-export default async function Page({ params }: { params: { year: string } }) {
-  const data = await getPage(params.year)
+export default async function Page({ params, searchParams }: { params: { year: string }, searchParams: { [key: string]: string | undefined } }) {
+  const data = await getPage(params.year, searchParams)
 
   return (
     <section className="py-10 text-primary-500">
@@ -27,27 +19,7 @@ export default async function Page({ params }: { params: { year: string } }) {
         <p className="text-lg">{params.year}</p>
       </section>
       <section className="mt-12">
-        <div className="relative p-5 border-[#B5B5B5] border rounded">
-          <p className="text-primary-500 text-xl font-bold absolute top-0 -translate-y-1/2 bg-white-0 px-2">Filtrar por</p>
-          <ul className="flex flex-wrap gap-12">
-            <li>
-              <p className="text-base mb-2 text-primary-500">Ano</p>
-              <div className="w-36 h-10 rounded bg-white-0 shadow" />
-            </li>
-            <li>
-              <p className="text-base mb-2 text-primary-500">Status</p>
-              <div className="w-36 h-10 rounded bg-white-0 shadow" />
-            </li>
-            <li>
-              <p className="text-base mb-2 text-primary-500">Modalidade</p>
-              <div className="w-36 h-10 rounded bg-white-0 shadow" />
-            </li>
-            <li>
-              <p className="text-base mb-2 text-primary-500">Pesquisar</p>
-              <div className="w-36 h-10 rounded bg-white-0 shadow" />
-            </li>
-          </ul>
-        </div>
+        <Filter defaultValues={searchParams} />
         <p className="py-8 border-b-2 border-primary-500"><strong>{data.length}</strong> Resultados encontrados</p>
         <ul className="py-5">
           {

@@ -12,10 +12,15 @@ interface ILatestBids {
     title: string
     opening: string
     closing: string
+    slug: string
     status: {
       name: string,
       date: string
     }[]
+    last_status: {
+      name: string,
+      date: string
+    }
   }[]
 }
 

@@ -21,7 +21,7 @@ async function getPage() {
     valores: page.data.attributes.valores.map(({ id, name, icon }: { id: number, name: string, icon: { data: { attributes: { url: string } } } }) => ({
       id,
       name,
-      icon: icon.data?.attributes.url ? normalizeFileUrl(icon.data?.attributes.url) : null 
+      icon: icon.data?.attributes.url ? normalizeFileUrl(icon.data?.attributes.url) : null
     })) as { id: number, name: string, icon: string }[]
   }
 }
@@ -61,7 +61,7 @@ export default async function Page() {
         mission && (
           <PageTitle
             title="Missão"
-            description="Universalizar o abastecimento de água potável e o esgotamento sanitário de forma sustentável, contribuindo com a melhoria da qualidade de vida no município de Várzea Grande."
+            description={mission}
           />
         )
       }
@@ -69,7 +69,7 @@ export default async function Page() {
         vision && (
           <PageTitle
             title="Visão"
-            description="Ser reconhecida como autarquia referência no abastecimento de água e esgotamento sanitário no estado de Mato Grosso."
+            description={vision}
           />
         )
       }

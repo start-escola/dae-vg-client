@@ -17,11 +17,9 @@ export async function performForgetPassword(prevData: any, formData: FormData) {
   }
 
   try {
-    const request = await api.post(
-      "/auth/forgot-password",
-      validatedFields.data
-    );
-    console.log(request);
+    await api.post("/auth/forgot-password", {
+      email: validatedFields.data.email,
+    });
 
     return "success";
   } catch (err) {

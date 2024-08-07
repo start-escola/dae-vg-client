@@ -3,6 +3,7 @@
 import React from "react";
 import { performForgetPassword } from "./action";
 import { useFormState } from "react-dom";
+import Link from "next/link";
 
 function ForgotForm() {
   const [state, formAction] = useFormState(performForgetPassword, null);
@@ -30,9 +31,20 @@ function ForgotForm() {
               Recuperar
             </button>
           </div>
+          {state === "success" && (
+            <p className="text-primary-500 text-lg mt-2">
+              Verique sua caixa de entrada para as instruções para a sua nova senha.
+            </p>
+          )}
         </form>
       </div>
-      <span className="text-xl text-white-200 flex text-center text-">Fazer Login</span>
+
+      <Link
+        href="/acesso"
+        className="text-xl text-white-200 flex text-center underline"
+      >
+        Fazer Login
+      </Link>
     </div>
   );
 }

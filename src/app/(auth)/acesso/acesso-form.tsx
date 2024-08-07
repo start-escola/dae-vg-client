@@ -1,21 +1,20 @@
-'use client'
-import Image from "next/image"
-import Input from "../input"
-import Link from "next/link"
-import { createSession } from "./action"
-import { useFormState } from "react-dom"
-import { maskCPF } from "../cadastro/cadastro-form"
-import { redirect, useSearchParams } from "next/navigation"
+"use client";
+import Input from "../input";
+import Link from "next/link";
+import { createSession } from "./action";
+import { useFormState } from "react-dom";
+import { maskCPF } from "../cadastro/cadastro-form";
+import { redirect, useSearchParams } from "next/navigation";
 
 const AcessoForm = () => {
-  const [state, formAction] = useFormState(createSession, null)
+  const [state, formAction] = useFormState(createSession, null);
 
   // Redirect Functions
-  const params = useSearchParams()
-  const callbackUrl = params.get('callbackUrl')
-  if (state === "success") return redirect(callbackUrl ? callbackUrl : "/")
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl");
+  if (state === "success") return redirect(callbackUrl ? callbackUrl : "/");
 
-  const passwordError = state?.errors.password?.pop()
+  const passwordError = state?.errors.password?.pop();
 
   return (
     <form
@@ -48,7 +47,9 @@ const AcessoForm = () => {
           type="password"
           error={passwordError}
         />
-        {/* <a href="#" className="self-end font-light">Lembrar minha senha</a> */}
+        <Link href="/forgot-password" className="self-end font-light">
+          Esqueci a minha senha
+        </Link>
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>
         <div className="flex items-center justify-center w-full">
           <hr className="bg-white-0 w-full" />
@@ -57,7 +58,13 @@ const AcessoForm = () => {
         </div>
         <ul className="w-full">
           <li className="relative">
-            <Link href={callbackUrl ? `/cadastro?callbackUrl=${callbackUrl}` : "/cadastro"}>
+            <Link
+              href={
+                callbackUrl
+                  ? `/cadastro?callbackUrl=${callbackUrl}`
+                  : "/cadastro"
+              }
+            >
               <button className="mt-3 w-full py-3 bg-[#868E96] rounded">
                 Cadastrar-se
               </button>

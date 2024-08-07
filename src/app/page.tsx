@@ -2,42 +2,22 @@ import AboutUs from "@/components/AboutUs";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
+import api from "@/utils/api"
+import { normalizeFileUrl } from "@/utils/normalize";
 
 async function getLastNews() {
   "use server";
 
-  const result = [
-    {
-      description: `
-            <p style="font-size: 1.125rem; line-height: 1.75rem;">Iniciativas de</p>
-            <h1 style="font-size: 2rem; line-height: 1; font-weight: 600;"> Sustentabilidade</h1>
-            <p style="font-size: 1.125rem; line-height: 1.75rem;">Tratamento de água sustentável para um futuro melhor.</p>
-            <p style="font-size: 0.875rem; line-height: 1.25rem; display: block;">Projetos ecológicos que preservam recursos naturais e promovem sustentabilidade.</p>
-        `,
-      img: "/DAE2.jpeg",
-    },
-    {
-      description: `
-            <p style="font-size: 1.125rem; line-height: 1.75rem;">Obras da</p>
-            <h1 style="font-size: 2rem; line-height: 1; font-weight: 600;"> Estação de Tratamento de Água</h1>
-            <p style="font-size: 1.125rem; line-height: 1.75rem;"></p>
-            <p style="font-size: 0.875rem; line-height: 1.25rem;">Melhorias contínuas para garantir água de qualidade à população.</p>
-        `,
-      img: "/DAE.jpeg",
-    },
-    {
-      description: `
-            <p style="font-size: 1.125rem; line-height: 1.75rem;">Projetos em</p>
-            <h1 style="font-size: 2rem; line-height: 1; font-weight: 600;"> Infraestrutura Hídrica</h1>
-            <p style="font-size: 1.125rem; line-height: 1.75rem;">Para garantir a qualidade da água.</p>
-            <p style="font-size: 0.875rem; line-height: 1.25rem;">Investimentos em tecnologia e inovação para um abastecimento eficiente.</p>
-        `,
-      img: "/DAE1.jpeg",
-    },
-  ];
+  const { data: page } = await api.get('/home?populate[banners][populate]=image')
+
+  const result = page.data.attributes.banners.map(({ id, link, description, image }: { id: number, link: string, description: string, image: { data: { attributes: { url: string } } } }) => ({
+    id,
+    link,
+    description,
+    img: normalizeFileUrl(image?.data?.attributes?.url)
+  }))
 
   return result;
 }
@@ -94,21 +74,17 @@ async function getMostUsedServices() {
 async function getLatestBids() {
   "use server";
 
-  const values = [
-    {
-      title: "Pregão Eletrônico",
-      opening: "25/04/2023",
-      closing: "09/08/2023",
-    },
-    {
-      title: "Concorrência Pública",
-      opening: "15/05/2023",
-      closing: "30/09/2023",
-    },
-    { title: "Tomada de Preços", opening: "01/06/2023", closing: "15/10/2023" },
-    { title: "Convite", opening: "10/07/2023", closing: "20/11/2023" },
-    { title: "Leilão", opening: "25/08/2023", closing: "15/12/2023" },
-  ];
+  const { data: tenders } = await api.get('/tenders?populate[last_status]=*&populate[tender_type]=*&pagination[limit]=15&sort[0]=publishedAt:desc')
+
+  const values = tenders.data.map(({ id, attributes }: { id: number, attributes: any }) => ({
+    id,
+    title: attributes.tender_type.data.attributes.name,
+    opening: attributes.opening_date?.replaceAll('-', '/'),
+    closing: attributes.closing_date?.replaceAll('-', '/'),
+    status: attributes.status,
+    slug: attributes.tender_type.data.attributes.slug,
+    last_status: attributes.last_status
+  }))
 
   return values;
 }
@@ -138,7 +114,11 @@ async function getImages() {
 async function getSummary() {
   "use server";
 
-  return "O Departamento de Água e Esgoto de Várzea Grande (DAE-VG) foi criado em 5 de junho de 1997, conforme Lei Municipal nº 1.733 e alterado em 08 de abril de 1998, conforme Lei Municipal nº 1.866 para atender à comunidade em saneamento básico de qualidade.";
+  const { data: page } = await api.get('/home')
+
+  const { summary } = page.data.attributes
+
+  return summary
 }
 
 export default async function Home() {

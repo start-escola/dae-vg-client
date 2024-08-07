@@ -24,7 +24,9 @@ export default async function RootLayout({
 }>) {
   const session = await getSession()
 
-  api.defaults.headers.common.Authorization = session && `Bearer ${session.jwt}`
+  if (session?.jwt) {
+    api.defaults.headers.common.Authorization = session && `Bearer ${session.jwt}`
+  }
 
   return (
     <html lang="en">

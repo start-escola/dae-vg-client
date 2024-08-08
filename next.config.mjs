@@ -10,7 +10,7 @@ const nextConfig = {
         protocol: parsedUrl.protocol.replace(":", ""),
         hostname: parsedUrl.hostname,
         port: parsedUrl.port ? parsedUrl.port : "",
-        pathname: "/uploads/*",
+        pathname: "/*",
       },
     ],
   },

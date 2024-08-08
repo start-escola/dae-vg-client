@@ -5,6 +5,7 @@ export const isExternalUrl = (url: string): boolean => {
     return hostname !== "localhost" && hostname !== "127.0.0.1";
   } catch (error) {
     // Retorna true em caso de erro na URL (por exemplo, URL inválida)
+    if (process.env.NODE_ENV === "development") return false;
     return true;
   }
 };

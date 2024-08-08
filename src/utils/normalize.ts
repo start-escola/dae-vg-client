@@ -1,4 +1,4 @@
-export const isExternalUrl = (url: string): boolean => {
+export const isExternalUrl = (url: string) => {
   try {
     if (url.startsWith("http://") || url.startsWith("https://")) {
       return true

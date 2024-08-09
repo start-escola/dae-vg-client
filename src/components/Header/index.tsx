@@ -140,7 +140,7 @@ const Header = () => {
           <img
             src="/logo.png"
             alt="logo"
-            className="absolute object-contain object-left"
+            className="w-full h-full absolute object-contain object-left"
           />
         </Link>
         <button

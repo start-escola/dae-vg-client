@@ -18,7 +18,7 @@ const AboutUs = ({ summary }: IAboutUsProps) => {
             <Link href="/dae/quem-somos" className="cursor-pointer shadow-lg bg-white-50 text-primary-500 w-fit h-fit px-5 py-2 font-semibold rounded">Saber mais</Link>
           </div>
           <div className="relative w-4/12">
-            <img src="/banner-about-us.png" alt="background" className="absolute -z-10 object-cover" />
+            <img src="/banner-about-us.png" alt="background" className="w-full h-full absolute -z-10 object-cover" />
           </div>
         </div>
         <Image src="/pessoa.png" height={400} width={400} className="hidden md:flex absolute left-[66%] -translate-x-1/2 bottom-0 " alt="pessoa" />

@@ -32,7 +32,7 @@ export default async function Page() {
         {
           members.map(({ id, name, position }) => (
             <li className="relative w-80 h-[420px] shadow-md" key={id}>
-              <img src={picture ? "picture" : "/nopicture.png"} className="absolute object-cover" alt={""} />
+              <img src={picture ? "picture" : "/nopicture.png"} className="w-full h-full absolute object-cover" alt={""} />
               <div className="w-full absolute bottom-4 p-4 bg-white-50 backdrop-blur-m  d bg-opacity-80 text-center text-black">
                 <p className="text-lg font-light">{name}</p>
                 <p className="text-sm font-semibold">{position}</p>

@@ -65,16 +65,11 @@ const LatestBidsCard = ({
       </div>
       <Link
         href={`/transparencia/licitacoes/${opening?.split("/")[0]}/${slug}`}
-        className="flex flex-col items-center text-center"
-      >
-        <button
-          className={`justify-self-end py-1 text-white-0 font-semibold text-base rounded bg-primary-500 ${
-            last_status?.name === "Finalizada" && "opacity-40"
+        className={`w-full py-1 text-white-0 text-center font-semibold text-base rounded bg-primary-500 ${last_status?.name === "Finalizada" && "opacity-40"
           }`}
-          aria-label="Bid Status"
-        >
-          {last_status?.name || "Não definido"}
-        </button>
+        aria-label="Bid Status"
+      >
+        {last_status?.name || "Não definido"}
       </Link>
     </li>
   );

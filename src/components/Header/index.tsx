@@ -18,6 +18,7 @@ const Header = () => {
   const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
 
   const handleOpen = (open: boolean) => {
+    console.log(open)
     setOpen(open);
   }
 
@@ -136,14 +137,14 @@ const Header = () => {
           href="/"
           className="relative h-full z-20 min-w-40 md:min-w-48 cursor-pointer"
         >
-          <Image
+          <img
             src="/logo.png"
-            fill
             alt="logo"
-            className="object-contain object-left"
+            className="absolute object-contain object-left"
           />
         </Link>
         <button
+          onClick={() => setOpen((old) => !old)}
           className={clsx(
             "flex flex-col justify-between w-8 h-6 relative z-20",
             "md:hidden"
@@ -279,7 +280,7 @@ const Header = () => {
         ))}
       </section>
       <div className="left-0 top-0 absolute w-full h-full bg-white-50 md:z-0" />
-    </header>
+    </header >
   );
 };
 

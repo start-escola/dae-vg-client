@@ -79,9 +79,8 @@ const Banner = ({ values }: IBannerProps) => {
         onTouchStart={handleDragStart}
       >
         {values.map((val, i) => (
-          <Image
+          <img
             key={i}
-            fill
             src={val.img}
             alt=""
             className={clsx(

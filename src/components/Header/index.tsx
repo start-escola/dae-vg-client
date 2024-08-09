@@ -18,7 +18,6 @@ const Header = () => {
   const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
 
   const handleOpen = (open: boolean) => {
-    console.log(open)
     setOpen(open);
   }
 

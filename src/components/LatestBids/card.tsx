@@ -30,7 +30,7 @@ const LatestBidsCard = ({
 
   // Cria uma cópia do array de status e remove o último elemento
   return (
-    <li className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl w-fit">
+    <div className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl w-fit">
       <div className="flex flex-col gap-4">
         <div>
           <Link
@@ -71,7 +71,7 @@ const LatestBidsCard = ({
       >
         {last_status?.name || "Não definido"}
       </Link>
-    </li>
+    </div>
   );
 };
 

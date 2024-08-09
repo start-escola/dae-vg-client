@@ -42,6 +42,7 @@ export interface TenderAttributes {
   updatedAt: string;
   publishedAt: string;
   opening_date: string;
+  realization: string;
   description: string;
   closing_date: string | null;
   process_number: string;

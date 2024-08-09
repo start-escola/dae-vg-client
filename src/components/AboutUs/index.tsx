@@ -10,7 +10,7 @@ const AboutUs = ({ summary }: IAboutUsProps) => {
     <section className="my-20 mx-auto container p-4">
       <div className="relative">
         <div className="flex relative rounded overflow-hidden">
-          <div className="flex flex-col gap-6 px-4 py-8 h-fit bg-primary-500 w-10/12 md:w-8/12 md:pl-14 md:pr-44 md:py-28">
+          <div className="flex flex-col gap-6 px-4 py-8 h-fit bg-primary-500 w-10/12 md:w-8/12 md:pl-14 md:pr-44 md:py-28 text-white-0">
             <h1 className="text-3xl font-bold">Conheça o <strong className="font-extrabold">DAE</strong></h1>
             <p className="font-light text-base">
               {summary}

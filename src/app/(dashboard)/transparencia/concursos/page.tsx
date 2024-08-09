@@ -1,7 +1,7 @@
 export default function Page() {
 
     return (
-      <h1>Concursos</h1>
+      <h1 className="text-white-0">Concursos</h1>
     );
   }
   

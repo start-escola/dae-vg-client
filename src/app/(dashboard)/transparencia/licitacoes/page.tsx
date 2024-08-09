@@ -15,6 +15,7 @@ async function getPage(searchParams: SearchParams) {
 
   const params: { [key: string]: string | number } = {
     "fields[0]": "opening_date",
+    "fields[1]": "realization",
     "pagination[limit]": "100"
   }
 
@@ -41,6 +42,7 @@ async function getPage(searchParams: SearchParams) {
   let filteredData: {
     id: number,
     attributes: {
+      realization: string;
       opening_date: string
     }
   }[] = [];
@@ -53,6 +55,7 @@ async function getPage(searchParams: SearchParams) {
         id: number,
         attributes: {
           opening_date: string
+          realization: string
         }
       }[],
       meta: {
@@ -75,10 +78,12 @@ async function getPage(searchParams: SearchParams) {
   const uniqueYears: string[] = [];
 
   filteredData.forEach(item => {
-    const year = item.attributes.opening_date?.split('-')[0];
+    const year = item.attributes.opening_date?.split('-')[0] || item.attributes.realization.split("-")[0];
     if (!yearTracker[year]) {
       yearTracker[year] = true;
-      uniqueYears.push(year);
+      if (!!year) {
+        uniqueYears.push(year);
+      }
     }
   });
 
@@ -106,11 +111,11 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
                   <p>Ano</p>
                   <p className="font-bold">{year}</p>
                 </div>
-              </Link >
-            </li >
+              </Link>
+            </li>
           ))}
-        </ul >
-      </section >
+        </ul>
+      </section>
     </>
   )
 }

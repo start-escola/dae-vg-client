@@ -108,10 +108,10 @@ interface NewsAttributes {
   publishedAt: string;
   short_description: string;
   images: {
-    data: File[]
+    data: File[];
   };
   main_image: {
-    data: File
+    data: File;
   };
 }
 
@@ -126,3 +126,55 @@ export interface NewsResponse {
     pagination: PaginationMeta;
   };
 }
+
+export interface AguaESgotoAttributes {
+  attributes: {
+    agua: string;
+    esgoto: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    relacao_etes: {
+      data: File;
+    };
+    mapa: {
+      data: File;
+    };
+  };
+}
+
+export interface AguaESgotoResponse {
+  data: AguaESgotoAttributes;
+  meta: Record<string, unknown>;
+}
+
+export interface Link {
+  id: number;
+  title: string;
+  route: string;
+  sublink: {
+    id: number;
+    href: string | null;
+    name: string | null;
+    icon: {
+      data: File | null;
+    };
+  }[];
+}
+
+export interface SubMenu {
+  id: number;
+  attributes: {
+    resume: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    link: Link[];
+  };
+}
+
+export interface SubMenuResponse {
+  data: SubMenu;
+  meta: Record<string, unknown>;
+}
+

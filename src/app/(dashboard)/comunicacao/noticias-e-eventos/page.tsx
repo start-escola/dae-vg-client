@@ -9,6 +9,8 @@ async function getPage() {
 
   const { data: page } = await api.get<NewsResponse>("/news?populate=*")
 
+  console.log(page.data[2]);
+
   return {
     data: page.data.map(({ id, attributes }) => ({
       id,
@@ -19,9 +21,9 @@ async function getPage() {
         url: normalizeFileUrl(attributes.url)
       })),
       main_image: {
-        id: attributes.main_image?.data.id,
-        ...attributes.main_image?.data.attributes,
-        url: normalizeFileUrl(attributes.main_image?.data.attributes.url)
+        id: attributes.main_image?.data?.id,
+        ...attributes.main_image?.data?.attributes,
+        url: normalizeFileUrl(attributes.main_image?.data?.attributes?.url)
       }
     })),
     total: page.meta.pagination.total
@@ -37,17 +39,15 @@ export default async function Page() {
 
   return (
     <>
-      <PageTitle
-        title="Notícias e Eventos"
-        description="Entenda de onde vem a água que você bebe e o esgoto que sai do seu chuveiro. Nós compartilhamos notícias e eventos sobre o nosso departamento de água e esgoto. Você pode acompanhar nossas publicações em nossas redes sociais ou clicando no botão abaixo."
-      />
-      <section className="mt-20 w-full flex flex-col md:flex-row gap-4 md:gap-24 text-primary-500">
-        <div className="w-full md:w-4/6">
-          <PageTitle title="Notícias" />
+      <section className="w-full flex flex-col md:flex-row gap-4 md:gap-24 text-primary-500">
+        <div className="w-full">
+          <PageTitle
+            title="Notícias e Eventos"
+          />
           <ul className="flex flex-col gap-10">
             {data.map(({ id, title, short_description, main_image, createdAt }) => (
               <li key={id} className="flex gap-4">
-                <div className="w-1/2 relative">
+                <div className="w-full max-w-[25%] relative">
                   <img src={main_image.url} className="absolute w-full h-full object-cover" />
                 </div>
                 <div className="flex flex-col gap-6">
@@ -61,9 +61,6 @@ export default async function Page() {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="w-full md:w-2/6">
-          <PageTitle title="Eventos" />
         </div>
       </section>
     </>

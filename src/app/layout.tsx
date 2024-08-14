@@ -34,6 +34,8 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider provider={session}>
           {children}
+          <div className="bg-white-0 w-10 h-10 fixed right-[10px] top-1/2 -translate-y-[75px] rounded" />
+          <div className="bg-primary-500 w-10 h-10 fixed right-[10px] top-1/2 -translate-y-1/2 rounded" />
           <VLibrasClient />
         </SessionProvider>
       </body>

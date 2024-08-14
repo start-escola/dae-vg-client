@@ -26,10 +26,6 @@ const Header = () => {
       label: "DAE",
       options: [
         {
-          label: "Quem somos",
-          href: "/dae/quem-somos",
-        },
-        {
           label: "Diretoria",
           href: "/dae/diretoria",
         },
@@ -40,21 +36,9 @@ const Header = () => {
       ],
     },
     {
-      label: "ATENDIMENTO",
-      options: [
-        {
-          label: "Abastecimento",
-          href: "/",
-        },
-        {
-          label: "Agência Virtual",
-          href: "/",
-        },
-        {
-          label: "Quadro de Serviços",
-          href: "/",
-        },
-      ],
+      label: "QUEM SOMOS",
+      href: "/dae/quem-somos",
+      options: []
     },
     {
       label: "TRANSPARÊNCIA",
@@ -73,27 +57,19 @@ const Header = () => {
         },
         {
           label: "Portal da Transparência",
-          href: "https://e-gov.betha.com.br/transparencia/01037-167/recursos.faces",
+          href: "/transparencia/portal-da-transparencia",
         },
       ],
     },
     {
-      label: "CARTA DE SERVIÇOS",
+      label: "NOTICIAS E EVENTOS",
+      href: "/comunicacao/noticias-e-eventos",
+      options: []
+    },
+    {
+      label: "GALERIAS",
       href: "/",
-      options: [],
-    },
-    {
-      label: "COMUNICAÇÃO",
-      options: [
-        {
-          label: "Noticias e Eventos",
-          href: "/comunicacao/noticias-e-eventos",
-        },
-        {
-          label: "Galerias",
-          href: "/",
-        },
-      ],
+      options: []
     },
     {
       label: "OUVIDORIA",
@@ -182,7 +158,7 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <button className="w-full justify-center flex gap-2 items-center text-center">
+                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -209,7 +185,7 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <p className="w-full justify-center flex gap-2 items-center text-center">
+                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -225,7 +201,7 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </p>
+                  </button>
                 </div>
               )}
               <ul

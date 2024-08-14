@@ -104,15 +104,15 @@ const Banner = ({ values }: IBannerProps) => {
         onMouseEnter={() => handlePauseToggle(true)}
         onMouseLeave={() => handlePauseToggle(false)}
       >
-        <h2 className="text-4xl font-semibold">{values[selectedBanner].title}</h2>
-        <p className="text-white-0 text-base">{values[selectedBanner].description}</p>
+        <h2 className="text-4xl font-semibold">{values[selectedBanner]?.title}</h2>
+        <p className="text-white-0 text-base">{values[selectedBanner]?.description}</p>
         <div className="absolute left-0 top-0 h-full w-full z-10"
           ref={bannerRef}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
         />
         {
-          values[selectedBanner].link && (
+          values[selectedBanner]?.link && (
             <a className="flex w-fit rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md relative z-20" href={values[selectedBanner].link}>Saber mais</a>
           )
         }

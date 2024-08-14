@@ -2,25 +2,20 @@
 import Image from "next/image";
 import { useState } from "react";
 
-interface IInfoComponentProps {
+interface IContestComponent {
   title: string,
   process_number?: string,
   files: {
     name: string,
-    file: string
+    url: string
   }[],
   description?: string,
-  opening_date: string,
-  tender_type?: string,
   realization?: string,
-  last_status: {
-    id: number,
-    name: string,
-    date: string
-  }
+  status?: string,
+  publishedAt?: string,
 }
 
-const InfoComponent = ({ files, process_number, description, opening_date, title, tender_type, last_status, realization }: IInfoComponentProps) => {
+const ContestComponent = ({ files, description, title, realization, status, publishedAt, process_number }: IContestComponent) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -28,31 +23,24 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
   };
 
   return (
-    <div className="flex flex-col bg-grey w-full rounded border drop-shadow border-border_grey">
+    <div className="flex flex-col bg-grey w-full rounded border drop-shadow border-border_grey text-primary-500">
       <div className="flex justify-between p-4 md:p-5 border-b border-[#B5B5B5]">
-        <div className="text-xl">{tender_type}: <strong>{process_number}</strong></div>
-        <span>Status: <strong>{last_status?.name || "Não definido"}</strong></span>
+        <div className="text-xl">Processo seletivo: <strong>{title}</strong></div>
+        <span>Status: <strong>{status || "Não definido"}</strong></span>
       </div>
       <div className="p-4 md:p-5">
         <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap">
           {
-            title && (
-              <li className="p-4 bg-white-50 text-primary-500 rounded text-xl border border-[#B5B5B5]">
-                Título do documento: <strong>{title}</strong>
-              </li>
-            )
-          }
-          {
-            opening_date && (
+            process_number && (
               <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded text-base md:text-xl border-border_grey">
                 <Image
-                  src="/Vector.svg"
+                  src="/file.svg"
                   width={18}
                   height={20}
                   alt="date"
                   className="mr-5"
                 />
-                Publicação: <strong className="ml-1">{opening_date.replaceAll('-', '/')}</strong>
+                Realização: <strong className="ml-1">{process_number}</strong>
               </li>
             )
           }
@@ -67,6 +55,20 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
                   className="mr-5"
                 />
                 Realização: <strong className="ml-1">{realization.replaceAll('-', '/')}</strong>
+              </li>
+            )
+          }
+          {
+            publishedAt && (
+              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded text-base md:text-xl border-border_grey">
+                <Image
+                  src="/Vector.svg"
+                  width={18}
+                  height={20}
+                  alt="date"
+                  className="mr-5"
+                />
+                Publicação: <strong className="ml-1">{publishedAt?.split('T')[0].replaceAll('-', '/')}</strong>
               </li>
             )
           }
@@ -99,11 +101,11 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
         {
           files && (
             <ul className="flex gap-2 overflow-x-scroll">
-              {files.map(({ file, name }) => (
+              {files.map(({ url, name }) => (
                 <li
                   key={name}
                 >
-                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0  border-white-200 p-2" href={file} download={name} target="_blank">
+                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0  border-white-200 p-2" href={url} download={name} target="_blank">
                     <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
                     <span className="text-border_grey text-base mt-1">{name.length > 13 ? `${name.substring(0, 10)}...` : name}</span>                  </a>
                 </li>
@@ -116,4 +118,4 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
   );
 };
 
-export default InfoComponent;
+export default ContestComponent;

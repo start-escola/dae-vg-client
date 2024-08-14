@@ -21,6 +21,7 @@ interface ILatestBids {
       name: string,
       date: string
     }
+    realization?: string;
   }[]
 }
 

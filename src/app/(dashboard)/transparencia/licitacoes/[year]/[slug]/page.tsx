@@ -12,7 +12,7 @@ export default async function Page({ params, searchParams }: { params: { year: s
   const { data, pageTitle, resultsFound } = await getPage(params.year, params.slug, 0, searchParams)
 
   return (
-    <section className="py-10 text-primary-500">
+    <section className="text-primary-500">
       <section className="text-primary-500 border-b-2 border-primary-500 pb-5">
         <h1 className="font-semibold text-3xl mb-1">Licitações</h1>
         <div className="flex gap-[0.5ch]">

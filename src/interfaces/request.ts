@@ -1,4 +1,4 @@
-export interface TenderFile {
+export interface File {
   id: number;
   attributes: {
     name: string;
@@ -53,7 +53,7 @@ export interface TenderAttributes {
     };
   };
   files: {
-    data: TenderFile[];
+    data: File[];
   };
   status: TenderStatus[];
   last_status: TenderStatus;
@@ -77,3 +77,52 @@ export interface TenderResponse {
   };
 }
 
+interface InternalControlAttributes {
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  files: {
+    data: File[];
+  };
+}
+
+export interface InternalControl {
+  id: number;
+  attributes: InternalControlAttributes;
+}
+
+export interface InternalControlsResponse {
+  data: InternalControl[];
+  meta: {
+    pagination: PaginationMeta;
+  };
+}
+
+interface NewsAttributes {
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  short_description: string;
+  images: {
+    data: File[]
+  };
+  main_image: {
+    data: File
+  };
+}
+
+export interface News {
+  id: number;
+  attributes: NewsAttributes;
+}
+
+export interface NewsResponse {
+  data: News[];
+  meta: {
+    pagination: PaginationMeta;
+  };
+}

@@ -49,7 +49,7 @@ export default async function Page() {
               </div>
             </div>
             <div className="relative w-4/12">
-              <Image src="/banner-about-us.png" fill alt="background" className="-z-10 object-cover" />
+              <img src="/banner-about-us.png" alt="background" className="w-full h-full absolute -z-10 object-cover" />
             </div>
           </div>
         </div>

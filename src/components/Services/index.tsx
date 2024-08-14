@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "@/app/session-provider";
 import Image from "next/image";
+import Text from "../Text";
 
 interface IServiceProps {
   values: {
@@ -21,7 +22,8 @@ const Services = ({ values }: IServiceProps) => {
             key={i}
             className="rounded overflow-hidden bg-white-50 w-36 md:w-80 md:h-fit flex-grow shadow"
           >
-            <a
+            <Text
+              as="a"
               href={
                 session.status === "authenticated"
                   ? val.href
@@ -40,7 +42,7 @@ const Services = ({ values }: IServiceProps) => {
                 </p>
                 <p className="text-[#B5B5B5] text-center">Solicitar agora</p>
               </div>
-            </a>
+            </Text>
           </li>
         ))}
       </ul>

@@ -87,7 +87,7 @@ const Header = () => {
       options: [
         {
           label: "Noticias e Eventos",
-          href: "/",
+          href: "/comunicacao/noticias-e-eventos",
         },
         {
           label: "Galerias",
@@ -107,30 +107,23 @@ const Header = () => {
       setSelectedOption(null);
       return;
     }
+    setIsMouseLeaveTimeoutActive(false);
     setSelectedOption(label);
   };
 
+  const [isMouseLeaveTimeoutActive, setIsMouseLeaveTimeoutActive] = useState(false);
+
   const handleMouseLeave = () => {
-    setSelectedOption(null);
+    setIsMouseLeaveTimeoutActive(true);
+    setTimeout(() => {
+      if (isMouseLeaveTimeoutActive) {
+        setSelectedOption(null);
+      }
+    }, 800);
   };
 
   return (
     <header className="bg-white-50 fixed w-screen top-0 z-20 text-white-0" onMouseLeave={handleMouseLeave}>
-      <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
-        <svg
-          width="26"
-          height="26"
-          viewBox="0 0 26 26"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M26.0015 8.99902C26.003 10.4958 25.6312 11.9693 24.9197 13.2862C24.2082 14.603 23.1795 15.7216 21.9268 16.5407C20.674 17.3599 19.2368 17.8536 17.7451 17.9773C16.2535 18.1009 14.7545 17.8506 13.384 17.249L6.87649 24.7765C6.86149 24.794 6.84399 24.8128 6.82774 24.829C6.07751 25.5793 5.05998 26.0007 3.99899 26.0007C2.938 26.0007 1.92047 25.5793 1.17024 24.829C0.42001 24.0788 -0.00146484 23.0613 -0.00146484 22.0003C-0.00146484 20.9393 0.42001 19.9218 1.17024 19.1715C1.18774 19.1553 1.20524 19.1378 1.22399 19.1228L8.75149 12.6165C8.07707 11.0738 7.84849 9.37291 8.09167 7.70686C8.33486 6.0408 9.04007 4.47623 10.1273 3.19063C11.2146 1.90504 12.6404 0.949858 14.2429 0.433453C15.8455 -0.0829528 17.5607 -0.139918 19.194 0.269019C19.3624 0.311218 19.5168 0.396517 19.6423 0.516525C19.7677 0.636533 19.8597 0.787118 19.9092 0.953468C19.9588 1.11982 19.9642 1.29621 19.9249 1.46528C19.8857 1.63436 19.8031 1.7903 19.6852 1.91777L15.0015 6.99902L15.709 10.2928L19.0015 10.999L24.0827 6.30902C24.2102 6.1912 24.3662 6.10859 24.5352 6.06932C24.7043 6.03005 24.8807 6.03546 25.047 6.08502C25.2134 6.13459 25.364 6.2266 25.484 6.35201C25.604 6.47741 25.6893 6.6319 25.7315 6.80027C25.9109 7.51941 26.0016 8.25783 26.0015 8.99902Z"
-            fill="#FAFAFA"
-          />
-        </svg>
-        Nosso site está passando por mudanças!
-      </div>
       <section className="container flex items-center justify-between m-auto p-4 h-20 relative">
         <Link
           href="/"
@@ -189,7 +182,7 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <p className="w-full justify-center flex gap-2 items-center text-center">
+                  <button className="w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -205,7 +198,7 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </p>
+                  </button>
                 </Link>
               ) : (
                 <div

@@ -3,6 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Filter from "./filter";
 
+export const metadata = {
+  title: "Licitações - DAE",
+  description: "Acompanhe histórico de solicitações"
+}
 export type SearchParams = {
   year?: string,
   status?: string,

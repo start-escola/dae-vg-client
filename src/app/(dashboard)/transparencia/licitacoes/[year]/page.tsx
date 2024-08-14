@@ -13,7 +13,7 @@ export default async function Page({ params, searchParams }: { params: { year: s
   const data = await getPage(params.year, searchParams)
 
   return (
-    <section className="py-10 text-primary-500">
+    <section className="text-primary-500">
       <section className="text-primary-500 border-b-2 border-primary-500 pb-5">
         <h1 className="font-semibold text-3xl mb-1">Licitações</h1>
         <p className="text-lg">{params.year}</p>

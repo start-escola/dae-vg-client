@@ -14,6 +14,7 @@ import { Navigation } from "swiper/modules";
 import SessionProvider from "./session-provider";
 import { getSession } from "@/utils/session";
 import api from "@/utils/api"
+import VLibrasClient from "@/components/VLibras";
 
 SwiperCore.use([Navigation])
 
@@ -33,6 +34,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider provider={session}>
           {children}
+          <VLibrasClient />
         </SessionProvider>
       </body>
     </html>

@@ -16,12 +16,14 @@ interface ILatestBidsCard {
     name: string;
     date: string;
   };
+  realization?: string;
 }
 
 const LatestBidsCard = ({
   title,
   opening,
   closing,
+  realization,
   status,
   slug,
   last_status,
@@ -30,7 +32,7 @@ const LatestBidsCard = ({
 
   // Cria uma cópia do array de status e remove o último elemento
   return (
-    <div className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl w-fit">
+    <div className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl">
       <div className="flex flex-col gap-4">
         <div>
           <Link
@@ -64,9 +66,8 @@ const LatestBidsCard = ({
         </ul>
       </div>
       <Link
-        href={`/transparencia/licitacoes/${opening?.split("/")[0]}/${slug}`}
-        className={`w-full py-1 text-white-0 text-center font-semibold text-base rounded bg-primary-500 ${last_status?.name === "Finalizada" && "opacity-40"
-          }`}
+        href={`/transparencia/licitacoes/${opening?.split("/")[0] || realization?.split("/")[0]}/${slug}`}
+        className={`w-full py-1 text-white-0 text-center font-semibold text-base rounded bg-primary-500 ${last_status?.name === "Finalizada" && "opacity-40"}`}
         aria-label="Bid Status"
       >
         {last_status?.name || "Não definido"}

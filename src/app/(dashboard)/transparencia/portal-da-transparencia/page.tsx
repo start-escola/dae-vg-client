@@ -17,7 +17,7 @@ async function getPage() {
   return { link: attributes.link, resume: attributes.resume }
 }
 
-export async function Page() {
+export default async function Page() {
   const { link, resume } = await getPage()
 
   return (
@@ -44,5 +44,3 @@ export async function Page() {
     </section>
   )
 }
-
-export default Page

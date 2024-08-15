@@ -5,6 +5,7 @@ import { createSession } from "./action";
 import { useFormState } from "react-dom";
 import { maskCPF } from "../cadastro/cadastro-form";
 import { redirect, useSearchParams } from "next/navigation";
+import Text from "@/components/Text";
 
 const AcessoForm = () => {
   const [state, formAction] = useFormState(createSession, null);
@@ -22,10 +23,10 @@ const AcessoForm = () => {
       action={formAction}
     >
       <div className="flex flex-col gap-3 max-w-[318px] text-center">
-        <p className="text-2xl font-medium">É um prazer rever você!</p>
-        <p className="text-xl font-light">
+        <Text className="text-2xl font-medium">É um prazer rever você!</Text>
+        <Text className="text-xl font-light">
           Aqui nossa missão é proporcionar o melhor para a população
-        </p>
+        </Text>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <Input
@@ -48,12 +49,12 @@ const AcessoForm = () => {
           error={passwordError}
         />
         <Link href="/forgot-password" className="self-end font-light">
-          Esqueci a minha senha
+          <Text className="text-base font-light">Esqueci a minha senha</Text>
         </Link>
         <button className="mt-8 w-full py-3 bg-[#911414] rounded">Login</button>
         <div className="flex items-center justify-center w-full">
           <hr className="bg-white-0 w-full" />
-          <p className="px-4">ou</p>
+          <Text className="px-4 text-xl">ou</Text>
           <hr className="bg-white-0 w-full" />
         </div>
         <ul className="w-full">
@@ -65,9 +66,9 @@ const AcessoForm = () => {
                   : "/cadastro"
               }
             >
-              <button className="mt-3 w-full py-3 bg-[#868E96] rounded">
+              <Text className="mt-3 w-full py-3 bg-[#868E96] rounded text-xl" as="button">
                 Cadastrar-se
-              </button>
+              </Text>
             </Link>
           </li>
         </ul>

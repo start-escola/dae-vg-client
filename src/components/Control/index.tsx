@@ -1,11 +1,13 @@
 "use client";
+import { useAcessibility } from "@/app/acessibility-provider";
 import Image from "next/image";
 import { useState } from "react";
+import { changeModifier } from "./action";
 
 const Control = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  
+  const { modifier } = useAcessibility();
 
   const toggleOpen = () => setIsOpen((prevState) => !prevState);
 
@@ -16,30 +18,37 @@ const Control = () => {
         onClick={toggleOpen}
       >
         <Image src="/Gears.svg" alt="Control" width={30} height={30} />
-      </div>
+        {isOpen && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="fixed z-10 absolute right-full -translate-x-[14px] w-32"
+          >
+            <div className="bg-primary-500 shadow-lg rounded p-4">
+              <p className="text-center mb-4">Ajuste o texto</p>
 
-      {isOpen && (
-        <div className="fixed top-1/2 right-0 -translate-y-1/2 mr-4 z-10 ">
-          <div className="bg-primary-500 shadow-lg rounded p-4">
-            <p className="text-center mb-4">Ajuste o texto</p>
+              <div className="flex gap-4 items-center justify-center">
+                <button
+                  className="bg-white-50 rounded p-2 w-7 h-7 text-black flex items-center justify-center"
+                  onClick={() => {
+                    changeModifier(modifier + 1);
+                  }}
+                >
+                  A+
+                </button>
 
-            <div className="flex gap-4 items-center justify-center">
-              <button
-                className="bg-white-50 rounded p-2 w-7 h-7 text-black flex items-center justify-center"
-                onClick={() => {
-                  document.body.style.fontSize = "clamp(1rem, 1vw, 1.2rem)";
-                }}
-              >
-                A+
-              </button>
-
-              <button className="bg-white-50 rounded p-2 w-7 h-7 text-black flex items-center justify-center">
-                A-
-              </button>
+                <button
+                  className="bg-white-50 rounded p-2 w-7 h-7 text-black flex items-center justify-center"
+                  onClick={() => {
+                    changeModifier(modifier - 1);
+                  }}
+                >
+                  A-
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };

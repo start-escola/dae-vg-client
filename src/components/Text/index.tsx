@@ -3,19 +3,19 @@ import { useAcessibility } from "@/app/acessibility-provider";
 import React from "react";
 
 interface ITextProps {
-  className: string;
+  className?: string;
   children: React.ReactNode;
-  as: string;
+  as?: string;
   href?: string;
   target?: string;
   rel?: string;
+  type?: string;
 }
 
 const Text = ({ className, children, as, ...rest }: ITextProps) => {
-  const classes = className.split(" ");
+  const classes = className?.split(" ");
 
   const { modifier } = useAcessibility();
-  console.log(modifier);
   const fontSizes = [
     "text-xs",
     "text-sm",
@@ -34,7 +34,7 @@ const Text = ({ className, children, as, ...rest }: ITextProps) => {
 
   const breakpoints = ["sm:", "md:", "lg:", "xl:", "2xl:"];
 
-  const classNameResult = classes.map((elem) => {
+  const classNameResult = classes?.map((elem) => {
     let result = elem;
 
     if (fontSizes.includes(elem)) {
@@ -67,7 +67,7 @@ const Text = ({ className, children, as, ...rest }: ITextProps) => {
   const Component = as || "p";
   return React.createElement(
     Component,
-    { className: classNameResult.join(" "), ...rest },
+    { className: classNameResult?.join(" "), ...rest },
     children
   );
 };

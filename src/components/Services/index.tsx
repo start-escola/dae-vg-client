@@ -31,15 +31,15 @@ const Services = ({ values }: IServiceProps) => {
               }
               target={session.status === "authenticated" ? "_blank" : "_self"}
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 justify-around sm:flex-row px-2 py-4 md:p-4"
+              className="text-base flex flex-col items-center gap-2 justify-around sm:flex-row px-2 py-4 md:p-4"
             >
               <div className="relative">
                 <Image src={val.icon} width={30} height={30} alt="" />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="text-black font-semibold text-center">
+                <Text className="text-black text-base font-semibold text-center">
                   {val.title}
-                </p>
+                </Text>
                 <p className="text-[#B5B5B5] text-center">Solicitar agora</p>
               </div>
             </Text>

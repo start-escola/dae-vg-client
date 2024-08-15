@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useFormState, useFormStatus } from "react-dom";
 import { performSignup } from "./action";
 import { redirect, useSearchParams } from "next/navigation";
+import Text from "@/components/Text";
 
 export const maskCPF = (cpf: string) => {
   return cpf
@@ -40,8 +41,8 @@ const CadastroForm = () => {
         <Image src="arrow-back.svg" width={24} height={24} alt="voltar" />
       </Link>
       <div className="flex flex-col gap-3 max-w-[318px] text-center">
-        <p className="text-2xl font-medium">É um prazer rever você!</p>
-        <p className="text-xl font-light">Aqui nossa missão é proporcionar o melhor para a população</p>
+        <Text className="text-2xl font-medium">É um prazer rever você!</Text>
+        <Text className="text-xl font-light">Aqui nossa missão é proporcionar o melhor para a população</Text>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <Input
@@ -87,7 +88,7 @@ const CadastroForm = () => {
           type="password"
           error={state?.errors?.confirmPassword?.pop()}
         />
-        <button className="mt-8 w-full py-3 bg-[#911414] rounded">Cadastra-se</button>
+        <Text className="mt-8 w-full py-3 bg-[#911414] rounded" as="button">Cadastra-se</Text>
       </div>
     </form>
   )

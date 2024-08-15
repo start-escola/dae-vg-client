@@ -1,3 +1,4 @@
+import Text from "@/components/Text";
 import Image from "next/image";
 
 export default function Layout({
@@ -11,8 +12,8 @@ export default function Layout({
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <Image width={150} height={150} src="/logopng.png" alt="" />
           <div>
-            <p className="text-2xl font-light">Prefeitura Municipal de</p>
-            <h1 className="text-4xl font-bold">VÁRZEA GRANDE</h1>
+            <Text className="text-2xl font-light">Prefeitura Municipal de</Text>
+            <Text className="text-4xl font-bold" as="h1">VÁRZEA GRANDE</Text>
           </div>
         </div>
         <section>

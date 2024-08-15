@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 import { performReset } from "./action";
 import { redirect, useSearchParams } from "next/navigation";
+import Text from "@/components/Text";
 
 const ResetForm = () => {
   const [state, formAction] = useFormState(performReset, null);
@@ -26,10 +27,10 @@ const ResetForm = () => {
         <Image src="arrow-back.svg" width={24} height={24} alt="voltar" />
       </Link>
       <div className="flex flex-col gap-3 max-w-[318px] text-center">
-        <p className="text-2xl font-medium">É um prazer rever você!</p>
-        <p className="text-xl font-light">
+        <Text className="text-2xl font-medium">É um prazer rever você!</Text>
+        <Text className="text-xl font-light">
           Aqui nossa missão é proporcionar o melhor para a população
-        </p>
+        </Text>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <Input
@@ -50,9 +51,9 @@ const ResetForm = () => {
         />
         <input type="hidden" name="code" value={code ? code : ""} />
 
-        <button className="mt-8 w-full py-3 bg-[#911414] rounded">
+        <Text className="mt-8 w-full py-3 bg-[#911414] rounde text-xl" as="button">
           Resetar senha
-        </button>
+        </Text>
       </div>
     </form>
   );

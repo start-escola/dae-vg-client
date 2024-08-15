@@ -2,6 +2,7 @@ import AboutUs from "@/components/AboutUs";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
 import { NewsResponse } from "@/interfaces/request";
@@ -150,7 +151,7 @@ export default async function Home() {
         <Services values={mostUsedServices} />
         <AboutUs summary={summary} />
         <LatestBids values={latestBids} />
-        {/* <ImageGallery values={images} /> */}
+        <ImageGallery values={images} />
       </main>
       <Footer />
     </>

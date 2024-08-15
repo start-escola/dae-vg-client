@@ -29,10 +29,14 @@ export default async function Page() {
   return (
     <>
       <section className="">
-        <PageTitle
-          title="Água"
-          description={agua}
-        />
+        {
+          agua || mapa && (
+            <PageTitle
+              title="Água"
+              description={agua}
+            />
+          )
+        }
         {
           mapa && (
             // eslint-disable-next-line @next/next/no-img-element
@@ -41,10 +45,14 @@ export default async function Page() {
         }
       </section>
       <section>
-        <PageTitle
-          title="Esgoto"
-          description={esgoto}
-        />
+        {
+          esgoto && (
+            <PageTitle
+              title="Esgoto"
+              description={esgoto}
+            />
+          )
+        }
         {
           relacao_etes && (
             <div className="mt-8">

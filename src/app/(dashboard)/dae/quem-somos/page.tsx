@@ -34,7 +34,7 @@ export default async function Page() {
       <section className="my-4 mx-auto container">
         <div className="relative">
           <Image src="/pessoa.png" height={400} width={400} className="hidden md:flex absolute left-[66%] -translate-x-1/2 bottom-0 z-10" alt="pessoa" />
-          <div className="flex relative rounded overflow-hidden">
+          <div className="flex relative rounded overflow-hidden text-primary-500">
             <div className="flex flex-col gap-6 h-fit bg-primary-500 w-10/12 md:w-8/12 px-4 md:px-24 py-10">
               <h1 className="text-3xl font-bold">Somos o <strong className="font-extrabold">DAE</strong></h1>
               <p className="font-light text-base max-w-96">
@@ -59,18 +59,22 @@ export default async function Page() {
       <div className="text-primary-500" dangerouslySetInnerHTML={{ __html: description }} />
       {
         mission && (
-          <PageTitle
-            title="Missão"
-            description={mission}
-          />
+          <div className="my-10 lg:my-20">
+            <PageTitle
+              title="Missão"
+              description={mission}
+            />
+          </div>
         )
       }
       {
         vision && (
-          <PageTitle
-            title="Visão"
-            description={vision}
-          />
+          <div className="my-10 lg:my-20">
+            <PageTitle
+              title="Visão"
+              description={vision}
+            />
+          </div>
         )
       }
       {

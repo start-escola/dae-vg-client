@@ -39,10 +39,10 @@ export default async function Page({ params }: { params: { route: string } }) {
     <section className="text-primary-500">
       <GoBack />
       <PageTitle title={title || ""} description="" />
-      <ul className="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <ul className="my-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
         {sublink?.map((link) => (
           <li key={link.id}>
-            <a className="flex-col gap-4 flex items-center justify-center shadow-lg p-6" href={link.href || ""} target="_blank">
+            <a className="flex-col gap-4 flex items-center justify-center shadow-lg p-6 h-full" href={link.href || ""} target="_blank">
               {
                 link.icon?.url && (
                   <Image src={link.icon.url} width={62} height={62} alt="icone" />

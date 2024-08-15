@@ -26,12 +26,12 @@ export default async function Page() {
         title="Portal da Transparência"
         description={resume}
       />
-      <ul className="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <ul className="my-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {
           link.map(({ title, route, id }) => (
             <li key={id}>
               <Link
-                className="flex-col gap-4 flex items-center justify-center shadow-lg p-6"
+                className="flex-col gap-4 flex items-center justify-center shadow-lg px-6 py-4 aspect-square"
                 href={`/transparencia/portal-da-transparencia/${route}`}
               >
                 <p className="font-semibold">{title}</p>

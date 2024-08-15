@@ -69,11 +69,6 @@ const Header = () => {
       options: []
     },
     {
-      label: "GALERIAS",
-      href: "/",
-      options: []
-    },
-    {
       label: "OUVIDORIA",
       href: "https://falabr.cgu.gov.br/web/home",
       target: "_blank",

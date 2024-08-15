@@ -3,15 +3,11 @@ import api from "@/utils/api";
 import { SearchParams } from "./page";
 
 export async function getPage(year: string, searchParams: SearchParams) {
-  const params: {
-    "filters[$or][0][tenders][title][$containsi]"?: string;
-    "filters[$or][1][tenders][process_number][$containsi]"?: string;
-    "filters[$and][0][tenders][opening_date][$gte]": string;
-    "filters[$and][1][tenders][opening_date][$lte]": string;
-    "filters[$and][2][tenders][last_status][name][$eq]"?: string;
-  } = {
-    "filters[$and][0][tenders][opening_date][$gte]": `${year}-01-01`,
-    "filters[$and][1][tenders][opening_date][$lte]": `${year}-12-31`,
+  const params: { [key: string]: string } = {
+    "filters[$or][0][tenders][opening_date][$gte]": `${year}-01-01`,
+    "filters[$or][1][tenders][opening_date][$lte]": `${year}-12-31`,
+    "filters[$or][2][tenders][realization][$gte]": `${year}-01-01`,
+    "filters[$or][3][tenders][realization][$lte]": `${year}-12-31`,
   };
 
   if (searchParams.text) {
@@ -20,8 +16,9 @@ export async function getPage(year: string, searchParams: SearchParams) {
       searchParams.text;
   }
 
-  if(searchParams.status) {
-    params["filters[$and][2][tenders][last_status][name][$eq]"] = searchParams.status
+  if (searchParams.status) {
+    params["filters[$and][0][tenders][last_status][name][$eq]"] =
+      searchParams.status;
   }
 
   const { data: page } = await api.get<{

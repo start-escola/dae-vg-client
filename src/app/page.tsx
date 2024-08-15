@@ -5,22 +5,26 @@ import Header from "@/components/Header";
 import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
+import { NewsResponse } from "@/interfaces/request";
 import api from "@/utils/api"
 import { normalizeFileUrl } from "@/utils/normalize";
 
 async function getLastNews() {
   "use server";
 
-  const { data: page } = await api.get('/home?populate[banners][populate]=image')
+  const { data: page } = await api.get<NewsResponse>(
+    "/news?populate=*&sort[0]=publishedAt:desc&pagination[page]=1&pagination[pageSize]=5",
+  )
 
-  const result = page.data.attributes.banners.map(({ id, link, description, image }: { id: number, link: string, description: string, image: { data: { attributes: { url: string } } } }) => ({
+  const result = page.data.map(({ id, attributes }) => ({
     id,
-    link,
-    description,
-    img: normalizeFileUrl(image?.data?.attributes?.url)
+    title: attributes.title,
+    link: `/comunicacao/noticias-e-eventos/noticias/${id}`,
+    description: attributes.short_description,
+    img: normalizeFileUrl(attributes.main_image.data?.attributes.url)
   }))
 
-  return result;
+  return result
 }
 
 async function getMostUsedServices() {
@@ -82,6 +86,7 @@ async function getLatestBids() {
     title: attributes.tender_type.data.attributes.name,
     opening: attributes.opening_date?.replaceAll('-', '/'),
     closing: attributes.closing_date?.replaceAll('-', '/'),
+    realization: attributes.realization?.replaceAll('-', '/'),
     status: attributes.status,
     slug: attributes.tender_type.data.attributes.slug,
     last_status: attributes.last_status
@@ -127,7 +132,7 @@ export default async function Home() {
   const mostUsedServicesData = getMostUsedServices();
   const latestBidsData = getLatestBids();
   const imagesData = getImages();
-  const summaryData = getSummary();
+    const summaryData = getSummary();
 
   const [latestNews, mostUsedServices, latestBids, images, summary] =
     await Promise.all([

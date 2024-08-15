@@ -14,10 +14,12 @@ import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import SessionProvider from "./session-provider";
 import { getSession } from "@/utils/session";
-import api from "@/utils/api";
 import AcessibilityProvider from "./acessibility-provider";
 import { getModifier } from "@/utils/modifier";
 import Control from "@/components/Control";
+import api from "@/utils/api"
+import VLibrasClient from "@/components/VLibras";
+
 
 SwiperCore.use([Navigation]);
 
@@ -41,7 +43,7 @@ export default async function RootLayout({
           <AcessibilityProvider provider={{ modifier }}>
             {children}
             <Control />
-            <div className="bg-primary-500 w-10 h-10 fixed right-[10px] top-1/2 -translate-y-1/2 rounded" />
+            <VLibrasClient />
           </AcessibilityProvider>
         </SessionProvider>
       </body>

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import Text from "../Text";
 
 export interface IInternalComponent {
   id: number,
@@ -27,14 +28,14 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
         <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap">
           {
             title && (
-              <li className="p-4 bg-white-50 text-primary-500 rounded text-xl border border-[#B5B5B5]">
-                Título do documento: <strong>{title}</strong>
+              <li className="p-4 bg-white-50 text-primary-500 rounded border border-[#B5B5B5]">
+                <Text className="text-xl">Título do documento: <strong>{title}</strong></Text>
               </li>
             )
           }
           {
             publishedAt && (
-              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded text-base md:text-xl border-border_grey">
+              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded border-border_grey">
                 <Image
                   src="/Vector.svg"
                   width={18}
@@ -42,14 +43,14 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
                   alt="date"
                   className="mr-5"
                 />
-                Publicação: <strong className="ml-1">{publishedAt.split('T')[0].replaceAll('-', '/')}</strong>
+                <Text className="text-base md:text-xl">Publicação: <strong className="ml-1">{publishedAt.split('T')[0].replaceAll('-', '/')}</strong></Text>
               </li>
             )
           }
           {
             id && (
-              <li className="p-4 bg-white-50 text-primary-500 rounded text-xl border border-[#B5B5B5]">
-                Título do documento: <strong>{id}</strong>
+              <li className="p-4 bg-white-50 text-primary-500 rounded border border-[#B5B5B5]">
+                <Text className="text-xl">Título do documento: <strong>{id}</strong></Text>
               </li>
             )
           }
@@ -69,14 +70,16 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
             onClick={() => toggleExpand()}
             className="text-primary-500 ml-2 flex justify-end mt-2"
           >
-            {isExpanded ? <strong>Ler menos</strong> : <strong>...ler mais</strong>}
+            <Text>
+              {isExpanded ? <strong>Ler menos</strong> : <strong>...ler mais</strong>}
+            </Text>
           </button>
         </div>
         <div className="flex justify-start items-center mb-2">
           <Image src="/download.svg" width={18} height={18} alt="download" />
-          <span className="text-base text-primary-500 ml-2">
+          <Text className="text-base text-primary-500 ml-2">
             Arquivos para download
-          </span>
+          </Text>
         </div>
         <hr className="border-border_grey border mb-6" />
         {
@@ -88,7 +91,12 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
                 >
                   <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0  border-white-200 p-2" href={url} download={name} target="_blank">
                     <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
-                    <span className="text-border_grey text-base mt-1" title={name}>{name.length > 13 ? `${name.substring(0, 10)}...` : name}</span>                  </a>
+                    <Text
+                      className="text-border_grey text-base mt-1"
+                    >
+                      {name.length > 13 ? `${name.substring(0, 10)}...` : name}
+                    </Text>
+                  </a>
                 </li>
               ))}
             </ul>

@@ -178,3 +178,27 @@ export interface SubMenuResponse {
   meta: Record<string, unknown>;
 }
 
+export interface GalleryContent {
+  id: number;
+  midia: {
+    data: File;
+  };
+  title: string;
+}
+
+export interface GalleryAttributes {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  conteudo: GalleryContent[];
+}
+
+export interface GalleryData {
+  id: number;
+  attributes: GalleryAttributes;
+}
+
+export interface GalleryResponse {
+  data: GalleryData;
+  meta: Record<string, unknown>;
+}

@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Text from "../Text"
 
 const Footer = () => {
   return (
@@ -7,36 +8,36 @@ const Footer = () => {
         <div className="w-full flex flex-col justify-center items-center gap-4 md:w-fit">
           <Image src="/brasao.png" width={100} height={100} alt="logo" />
           <div className="flex flex-col gap-2">
-            <p className="font-light text-lg text-center">Prefeitura Municipal de</p>
-            <p className="text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</p>
+            <Text className="font-light text-lg text-center">Prefeitura Municipal de</Text>
+            <Text className="text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</Text>
           </div>
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <li>
-            <h3 className="text-2xl font-semibold mb-3">Sede</h3>
+            <Text as="h3" className="text-2xl font-semibold mb-3">Sede</Text>
             <div className="flex flex-col gap-4">
-              <p className="font-light">Av. Julio Campos, 2599 - Jardim dos Estados</p>
+              <Text className="font-light text-base">Av. Julio Campos, 2599 - Jardim dos Estados</Text>
             </div>
           </li>
           <li>
-            <h3 className="text-2xl font-semibold mb-3">Rede Social</h3>
+            <Text as="h3" className="text-2xl font-semibold mb-3">Rede Social</Text>
             <div className="flex flex-col gap-4">
-              <p className="font-light">@daevarzeagrande</p>
+              <Text className="font-light text-base">@daevarzeagrande</Text>
             </div>
           </li>
           <li>
-            <h3 className="text-2xl font-semibold mb-3">Agência Comercial Cristo Rei</h3>
+            <Text as="h3" className="text-2xl font-semibold mb-3">Agência Comercial Cristo Rei</Text>
             <div className="flex flex-col gap-4">
-              <p className="font-light">Av. Gonçalo Botelho de Campos -
-                Cristo Rei</p>
-              <p><strong>Atendimento:</strong> (65) 99267-9271</p>
+              <Text className="font-light text-base">Av. Gonçalo Botelho de Campos -
+                Cristo Rei</Text>
+              <Text><strong>Atendimento:</strong> (65) 99267-9271</Text>
             </div>
           </li>
           <li>
-            <h3 className="text-2xl font-semibold mb-3">Agência Comercial Centro</h3>
+            <Text className="text-2xl font-semibold mb-3">Agência Comercial Centro</Text>
             <div className="flex flex-col gap-4">
-              <a href="https://maps.app.goo.gl/YVn1wZqQzqBDhHvw8" className="font-light" target="_blank">Av. Castelo Branco, 245</a>
-              <p><strong>Atendimento:</strong> (65) 99327-2409</p>
+              <Text as="a" href="https://maps.app.goo.gl/YVn1wZqQzqBDhHvw8" className="font-light text-base" target="_blank">Av. Castelo Branco, 245</Text>
+              <Text><strong>Atendimento:</strong> (65) 99327-2409</Text>
             </div>
           </li>
         </ul>

@@ -40,7 +40,7 @@ const Services = ({ values }: IServiceProps) => {
                 <Text className="text-black text-base font-semibold text-center">
                   {val.title}
                 </Text>
-                <p className="text-[#B5B5B5] text-center">Solicitar agora</p>
+                <Text className="text-[#B5B5B5] text-base text-center">Solicitar agora</Text>
               </div>
             </Text>
           </li>

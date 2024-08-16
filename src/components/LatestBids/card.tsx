@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import Text from "../Text";
 
 interface ILatestBidsCard {
   title: string;
@@ -40,7 +41,7 @@ const LatestBidsCard = ({
             className="flex flex-col items-center text-center"
           >
             <Image src="/hammer.svg" width={30} height={30} alt="martelo" />
-            <p className="font-bold text-lg my-2">{title}</p>
+            <Text className="font-bold text-lg my-2">{title}</Text>
           </Link>
         </div>
         <button
@@ -48,7 +49,9 @@ const LatestBidsCard = ({
           onClick={() => setShowAllStatus((old) => !old)}
           aria-label="Toggle Status"
         >
-          STATUS
+          <Text className="font-bold text-center text-base">
+            STATUS
+          </Text>
         </button>
         <ul className="min-h-32">
           {showAllStatus &&
@@ -59,7 +62,7 @@ const LatestBidsCard = ({
             ))}
           {last_status && (
             <li>
-              <strong>{last_status.name}:</strong>{" "}
+              <strong className="text-base">{last_status.name}:</strong>{" "}
               {last_status.date?.replaceAll("-", "/")}
             </li>
           )}

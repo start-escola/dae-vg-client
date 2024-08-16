@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import Text from "../Text";
 
 type IOption = {
   label: string;
@@ -64,9 +65,17 @@ const Header = () => {
       ],
     },
     {
-      label: "NOTICIAS E EVENTOS",
-      href: "/comunicacao/noticias-e-eventos",
-      options: []
+      label: "COMUNICAÇÃO",
+      options: [
+        {
+          label: "Notícias",
+          href: "/comunicacao/noticias-e-eventos"
+        },
+        {
+          label: "Galerias",
+          href: "/comunicacao/galerias"
+        }
+      ]
     },
     {
       label: "OUVIDORIA",
@@ -172,7 +181,7 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -188,7 +197,7 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </button>
+                  </Text>
                 </Link>
               ) : (
                 <div
@@ -199,7 +208,7 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -215,7 +224,7 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </button>
+                  </Text>
                 </div>
               )}
               <ul
@@ -231,22 +240,33 @@ const Header = () => {
                 {link.options.map((subopt) => (
                   <li
                     key={subopt.label}
-                    className="text-center text-xl text-[#919191]"
+                    className="text-center"
                   >
-                    <Link href={subopt.href} target={link.target || "_self"} onClick={() => handleOpen(false)}>{subopt.label}</Link>
+                    <Link href={subopt.href} target={link.target || "_self"} onClick={() => handleOpen(false)}>
+                      <Text className="text-center text-xl text-[#919191]">
+                        {subopt.label}
+                      </Text>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </li>
           ))}
-          <Link href="/cms/admin/auth/login" className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14">
+          <Link
+            href="/cms/admin/auth/login"
+            className="md:hidden whitespace-nowrap flex relative z-10 py-2 px-4 bg-primary-500 gap-2 rounded mt-14"
+          >
             <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-            ACESSO SERVIDOR
+            <Text className="text-white-0 font-medium">
+              ACESSO SERVIDOR
+            </Text>
           </Link>
         </ul>
-        <Link href="/cms/admin/auth/login" className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm">
+        <Link href="/cms/admin/auth/login" className="hidden whitespace-nowrap md:flex relative z-10 py-2 px-4 bg-primary-500 gap-2 rounded">
           <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-          ACESSO SERVIDOR
+          <Text className="text-white-0 font-medium md:text-sm">
+            ACESSO SERVIDOR
+          </Text>
         </Link>
       </section>
       <section
@@ -256,8 +276,10 @@ const Header = () => {
         )}
       >
         {selectedOption?.options.map((subOption, index) => (
-          <Link href={subOption.href} target={subOption.target || "_self"} key={index} className="text-white hover:font-normal">
-            {subOption.label}
+          <Link href={subOption.href} target={subOption.target || "_self"} key={index} className="hover:font-normal">
+            <Text className="text-white-0 text-lg">
+              {subOption.label}
+            </Text>
           </Link>
         ))}
       </section>

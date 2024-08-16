@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
-import { NewsResponse } from "@/interfaces/request";
+import { GalleryResponse, NewsResponse } from "@/interfaces/request";
 import api from "@/utils/api"
 import { normalizeFileUrl } from "@/utils/normalize";
 
@@ -98,23 +98,25 @@ async function getLatestBids() {
 async function getImages() {
   "use server";
 
-  return [
-    {
-      img: "/grid-example.jpeg",
-    },
-    {
-      img: "/grid-example.jpeg",
-    },
-    {
-      img: "/grid-example.jpeg",
-    },
-    {
-      img: "/grid-example.jpeg",
-    },
-    {
-      img: "/grid-example.jpeg",
-    },
-  ];
+  const videoExtensions = ['mp4', 'mov', 'avi', 'mkv', 'flv', 'wmv', 'webm'];
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+
+  const { data: page } = await api.get<GalleryResponse>("/gallery?populate[conteudo][populate][midia]=*");
+
+  const result = page.data.attributes.conteudo.map(({ id, midia, title }) => {
+    const ext = midia.data.attributes.ext.toLowerCase().replace(".", "");
+
+    let type = 'unknown';
+    if (videoExtensions.includes(ext)) {
+      type = 'video';
+    } else if (imageExtensions.includes(ext)) {
+      type = 'image';
+    }
+
+    return { img: normalizeFileUrl(midia.data.attributes.url) };
+  });
+
+  return result
 }
 
 async function getSummary() {

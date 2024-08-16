@@ -1,6 +1,7 @@
 import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
 import api from "@/utils/api"
+import Text from "@/components/Text";
 
 async function getPage() {
   const { data: page } = await api.get("/diretoria?populate=*")
@@ -28,14 +29,14 @@ export default async function Page() {
         title="Diretoria"
         description={resume}
       />
-      <ul className="flex flex-wrap gap-4 my-32 justify-center sm:justify-start">
+      <ul className="flex flex-col gap-4 text-black">
         {
           members.map(({ id, name, position }) => (
-            <li className="relative w-80 h-[420px] shadow-md" key={id}>
-              <img src={picture ? "picture" : "/nopicture.png"} className="w-full h-full absolute object-cover" alt={""} />
-              <div className="w-full absolute bottom-4 p-4 bg-white-50 backdrop-blur-m  d bg-opacity-80 text-center text-black">
-                <p className="text-lg font-light">{name}</p>
-                <p className="text-sm font-semibold">{position}</p>
+            <li className="relative" key={id}>
+              <div className="flex gap-2 items-center">
+                <Text className="text-lg font-light">{name}</Text>
+                <p>-</p>
+                <Text className="text-sm font-semibold">{position}</Text>
               </div>
             </li>
           ))

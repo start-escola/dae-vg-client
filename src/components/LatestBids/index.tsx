@@ -29,7 +29,7 @@ interface ILatestBids {
 const LatestBids = ({ values }: ILatestBids) => {
   return (
     <section className="my-14 mx-auto container p-4">
-      <Text as="h1" className="text-primary-500 text-2xl font-semibold text-center">Últimas licitações</Text>
+      <Text as="h1" className="text-primary-500 text-2xl font-semibold text-center dark:text-white-0">Últimas licitações</Text>
       <div className="relative my-10 max-w-5xl mx-auto px-10">
         <Swiper
           spaceBetween={32}

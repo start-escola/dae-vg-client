@@ -148,7 +148,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="relative mt-32 text-white-0">
+      <main className="relative mt-32 text-white-0 ">
         <Banner values={latestNews} />
         <Services values={mostUsedServices} />
         <AboutUs summary={summary} />

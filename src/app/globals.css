@@ -2,22 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: #fafafa;
-  --background-start-rgb: #fafafa;
-  --background-end-rgb: #fafafa;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: #fafafa;
-    --background-end-rgb: #fafafa;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #fafafa;
   background: #fafafa;
 }
 

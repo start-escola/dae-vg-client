@@ -12,7 +12,7 @@ const ImageGallery = ({ values }: IImageProps) => {
 
   return (
     <section className="my-14 mx-auto container p-4">
-      <Text className="text-primary-500 text-2xl font-semibold text-center">
+      <Text className="text-primary-500 text-2xl font-semibold text-center dark:text-white-0">
         Galeria de imagens
       </Text>
       <div className="flex flex-col md:flex-row gap-4 mt-10">

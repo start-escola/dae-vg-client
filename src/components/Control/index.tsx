@@ -42,6 +42,16 @@ const Control = () => {
                 >
                   A-
                 </button>
+                <button
+                  className="bg-white-50 rounded p-2 w-7 h-7 text-black flex items-center justify-center"
+                  onClick={() => {
+                    const html = document.querySelector('html')
+
+                    html?.classList.toggle('dark')
+                  }}  
+                >
+                  C
+                </button>
               </div>
             </div>
           </div>

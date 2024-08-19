@@ -29,23 +29,23 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
   };
 
   return (
-    <div className="flex flex-col bg-grey w-full rounded border drop-shadow border-border_grey">
+    <div className="flex flex-col bg-grey w-full rounded border drop-shadow border-border_grey dark:bg-black dark:text-white-0">
       <div className="flex justify-between p-4 md:p-5 border-b border-[#B5B5B5]">
         <Text as="div" className="text-xl">{tender_type}: <strong>{process_number}</strong></Text>
-        <Text as="span text-base">Status: <strong>{last_status?.name || "Não definido"}</strong></Text>
+        <Text as="span" className="text-base">Status: <strong>{last_status?.name || "Não definido"}</strong></Text>
       </div>
       <div className="p-4 md:p-5">
-        <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap">
+        <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap text-primary-500 dark:text-black">
           {
             title && (
-              <li className="p-4 bg-white-50 text-primary-500 rounded border border-[#B5B5B5]">
+              <li className="p-4 bg-white-50 rounded border border-[#B5B5B5]">
                 <Text className="text-xl md:text-xl">Título do documento: <strong>{title}</strong></Text>
               </li>
             )
           }
           {
             opening_date && (
-              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded border-border_grey">
+              <li className="flex justify-between items-center p-4 bg-white-50 border rounded border-border_grey">
                 <Image
                   src="/Vector.svg"
                   width={18}
@@ -61,7 +61,7 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
           }
           {
             realization && (
-              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded border-border_grey">
+              <li className="flex justify-between items-center p-4 bg-white-50 border rounded border-border_grey">
                 <Image
                   src="/Vector.svg"
                   width={18}
@@ -69,7 +69,7 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
                   alt="date"
                   className="mr-5"
                 />
-                <Text as="text-base md:text-xl">Realização: <strong className="ml-1">{realization.replaceAll('-', '/')}</strong></Text>
+                <Text className="text-base md:text-xl">Realização: <strong className="ml-1">{realization.replaceAll('-', '/')}</strong></Text>
               </li>
             )
           }
@@ -77,7 +77,7 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
         <div className="flex flex-col">
           <div className="relative">
             <div
-              className={`text-primary-500 text-base overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-12'
+              className={`text-primary-500 dark:text-white-0 text-base overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-12'
                 }`}
               dangerouslySetInnerHTML={{ __html: description || "" }}
             >
@@ -89,12 +89,12 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
             onClick={() => toggleExpand()}
             className="text-primary-500 ml-2 flex justify-end mt-2"
           >
-            <Text className="text-base">{isExpanded ? <strong>Ler menos</strong> : <strong>...ler mais</strong>}</Text>
+            <Text as="strong" className="text-primary-500 dark:text-white-0">{isExpanded ? 'Ler menos' : 'Ler mais'}</Text>
           </button>
         </div>
         <div className="flex justify-start items-center mb-2">
           <Image src="/download.svg" width={18} height={18} alt="download" />
-          <Text as="span" className="text-base text-primary-500 ml-2">
+          <Text as="span" className="text-base text-primary-500 dark:text-white-0 ml-2">
             Arquivos para download
           </Text>
         </div>
@@ -106,9 +106,9 @@ const InfoComponent = ({ files, process_number, description, opening_date, title
                 <li
                   key={name}
                 >
-                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0  border-white-200 p-2" href={file} download={name} target="_blank">
+                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0 border-white-200 p-2" href={file} download={name} target="_blank">
                     <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
-                    <Text as="span" className="text-border_grey text-base mt-1">{name.length > 13 ? `${name.substring(0, 10)}...` : name}</Text>
+                    <Text as="span" className="dark:text-black text-border_grey text-base mt-1">{name.length > 13 ? `${name.substring(0, 10)}...` : name}</Text>
                   </a>
                 </li>
               ))}

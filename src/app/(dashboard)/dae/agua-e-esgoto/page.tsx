@@ -56,7 +56,7 @@ export default async function Page() {
         {
           relacao_etes && (
             <div className="mt-8">
-              <Link href={relacao_etes} className="px-4 py-2 bg-primary-500 text-white-0 rounded">Relação das Etes MP</Link>
+              <Link href={relacao_etes} className="px-4 py-2 bg-primary-500 text-white-0 dark:bg-[#0D0D0D] dark:text-white-0 rounded">Relação das Etes MP</Link>
             </div>
           )
         }

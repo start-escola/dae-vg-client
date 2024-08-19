@@ -29,7 +29,7 @@ export default async function Page() {
         title="Diretoria"
         description={resume}
       />
-      <ul className="flex flex-col gap-4 text-black">
+      <ul className="flex flex-col gap-4 text-black dark:text-white-0">
         {
           members.map(({ id, name, position }) => (
             <li className="relative" key={id}>

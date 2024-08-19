@@ -35,16 +35,16 @@ export default async function Page() {
       <PageTitle
         title="Galerias"
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 gap-8 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 gap-8 w-full dark:bg-[#0D0D0D]">
         {midia.map((item, index) => (
           <a
             href={item.url}
             key={index}
-            className="relative w-full h-full pb-[56.25%] flex justify-center items-center overflow-hidden rounded"
+            className="relative w-full h-full pb-[56.25%] flex justify-center items-center overflow-hidden rounded dark:bg-black"
             target="_blank"
           >
             {item.title && (
-              <Text as="h2" className="absolute z-10 bg-primary-500 p-4 text-base font-semibold left-0 top-0">{item.title}</Text>
+              <Text as="h2" className="absolute z-10 bg-primary-500 dark:text-white-0 p-4 text-base font-semibold left-0 top-0">{item.title}</Text>
             )}
             {item.type === "image" && (
               <img

@@ -12,7 +12,7 @@ async function getPage() {
   const { data: page } = await api.get<GalleryResponse>("/gallery?populate[conteudo][populate][midia]=*");
 
   const result = page.data.attributes.conteudo.map(({ id, midia, title }) => {
-    const ext = midia.data.attributes.ext.toLowerCase().replace(".", "");
+    const ext = midia?.data?.attributes?.ext?.toLowerCase()?.replace(".", "");
 
     let type = 'unknown';
     if (videoExtensions.includes(ext)) {
@@ -21,7 +21,7 @@ async function getPage() {
       type = 'image';
     }
 
-    return { id, title, url: normalizeFileUrl(midia.data.attributes.url), type };
+    return { id, title, url: normalizeFileUrl(midia.data?.attributes.url), type };
   });
 
   return result;

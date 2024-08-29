@@ -65,6 +65,9 @@ export interface Tender {
 }
 
 export interface PaginationMeta {
+  pageCount: number;
+  pageSize: number;
+  page: number;
   start: number;
   limit: number;
   total: number;
@@ -200,5 +203,8 @@ export interface GalleryData {
 
 export interface GalleryResponse {
   data: GalleryData;
-  meta: Record<string, unknown>;
+  meta: {
+    pagination: PaginationMeta;
+  };
 }
+

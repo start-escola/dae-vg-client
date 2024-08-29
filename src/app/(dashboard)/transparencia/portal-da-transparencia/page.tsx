@@ -31,10 +31,10 @@ export default async function Page() {
           link.map(({ title, route, id }) => (
             <li key={id}>
               <Link
-                className="flex-col gap-4 flex items-center justify-center shadow-lg px-6 py-4 aspect-square bg-black"
+                className="flex-col gap-4 flex items-center justify-between shadow-lg px-6 py-4 aspect-square dark:bg-black"
                 href={`/transparencia/portal-da-transparencia/${route}`}
               >
-                <p className="font-semibold dark:text-white-0">{title}</p>
+                <p className="font-semibold dark:text-white-0 text-center">{title}</p>
                 <button className="text-white-0 bg-primary-500 dark:text-black dark:bg-white-0 px-4 py-2">Acessar</button>
               </Link>
             </li>

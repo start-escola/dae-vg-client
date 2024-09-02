@@ -26,6 +26,7 @@ function ForgotForm() {
               className="w-full px-4 py-2 text-lg border rounded-lg mr-4 h-14"
             />
             <Text
+              as="button"
               type="submit"
               className="px-8 py-4 text-lg text-white rounded-sm hover:bg-green-600 bg-primary-500 w-40 h-14"
             >

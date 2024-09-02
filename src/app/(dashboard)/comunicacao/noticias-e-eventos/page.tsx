@@ -66,7 +66,7 @@ export default async function Page() {
                   </div>
                   <a
                     href={`/comunicacao/noticias-e-eventos/noticias/${id}`}
-                    className="mt-2 px-4 py-2 text-white-0 bg-primary-500 dark:bg-[#0D0D0D] rounded w-fit"
+                    className="mt-2 px-4 py-2 text-white-0 bg-primary-500 dark:bg-black rounded w-fit"
                   >
                     Saber mais
                   </a>

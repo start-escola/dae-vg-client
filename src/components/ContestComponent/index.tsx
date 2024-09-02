@@ -42,7 +42,7 @@ const ContestComponent = ({ files, description, title, realization, status, publ
                   className="mr-5"
                 />
                 <Text className="text-base md:text-xl dark:text-black" as="span">
-                  Realização: <strong className="ml-1">{process_number}</strong>
+                  Processo: <strong className="ml-1">{process_number}</strong>
                 </Text>
               </li>
             )

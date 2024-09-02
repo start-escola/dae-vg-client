@@ -9,6 +9,7 @@ import Text from "@/components/Text";
 function ForgotForm() {
   const [state, formAction] = useFormState(performForgetPassword, null);
 
+  console.log(state)
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="flex flex-col bg-blur bg-black backdrop-blur-lg bg-opacity-30 bg-cover bg-center p-16 mb-10">

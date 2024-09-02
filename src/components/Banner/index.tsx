@@ -2,6 +2,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
+import Text from "../Text";
 
 interface IBannerProps {
   values: {
@@ -104,8 +105,8 @@ const Banner = ({ values }: IBannerProps) => {
         onMouseEnter={() => handlePauseToggle(true)}
         onMouseLeave={() => handlePauseToggle(false)}
       >
-        <h2 className="text-4xl font-semibold">{values[selectedBanner]?.title}</h2>
-        <p className="text-white-0 text-base">{values[selectedBanner]?.description}</p>
+        <Text as="h2" className="text-4xl font-semibold">{values[selectedBanner]?.title}</Text>
+        <Text className="text-base text-white-0">{values[selectedBanner]?.description}</Text>
         <div className="absolute left-0 top-0 h-full w-full z-10"
           ref={bannerRef}
           onMouseDown={handleDragStart}
@@ -113,7 +114,7 @@ const Banner = ({ values }: IBannerProps) => {
         />
         {
           values[selectedBanner]?.link && (
-            <a className="flex w-fit rounded mt-8 px-5 py-2 bg-primary-500 text-white shadow-md relative z-20" href={values[selectedBanner].link}>Saber mais</a>
+            <Text as="a" className="flex w-fit rounded mt-8 px-5 py-2 dark:bg-black bg-primary-500 text-white shadow-md relative z-20" href={values[selectedBanner].link}>Saber mais</Text>
           )
         }
       </div>

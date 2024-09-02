@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import Text from "../Text";
 
 type IOption = {
   label: string;
@@ -64,9 +65,17 @@ const Header = () => {
       ],
     },
     {
-      label: "NOTICIAS E EVENTOS",
-      href: "/comunicacao/noticias-e-eventos",
-      options: []
+      label: "COMUNICAÇÃO",
+      options: [
+        {
+          label: "Notícias",
+          href: "/comunicacao/noticias-e-eventos"
+        },
+        {
+          label: "Galerias",
+          href: "/comunicacao/galerias"
+        }
+      ]
     },
     {
       label: "OUVIDORIA",
@@ -97,7 +106,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white-50 fixed w-screen top-0 z-20 text-white-0" onMouseLeave={handleMouseLeave}>
+    <header className="fixed w-screen top-0 z-20 text-white-0 bg-white-50 dark:bg-black" onMouseLeave={handleMouseLeave}>
       <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
         <svg
           width="26"
@@ -133,19 +142,19 @@ const Header = () => {
         >
           <div
             className={clsx(
-              "bg-black w-8 h-[2px] transition-all",
+              "bg-black dark:bg-white-0 w-8 h-[2px] transition-all",
               open && "rotate-45 absolute left-0 bottom-1/2"
             )}
           />
           <div
             className={clsx(
-              "bg-black w-8 h-[2px] transition-all",
+              "bg-black dark:bg-white-0 w-8 h-[2px] transition-all",
               open && "rotate-45 absolute left-0 bottom-1/2"
             )}
           />
           <div
             className={clsx(
-              "bg-black w-8 h-[2px] transition-all",
+              "bg-black dark:bg-white-0 w-8 h-[2px] transition-all",
               open && "-rotate-45 absolute left-0 bottom-1/2"
             )}
           />
@@ -153,7 +162,7 @@ const Header = () => {
 
         <ul
           className={clsx(
-            "flex flex-col gap-4 justify-center items-center h-[calc(100dvh-80px)] md:justify-center h-[calc(100vh - 80px)] absolute transition-all duration-500 translate-y-0 bottom-0 left-0 bg-white-50 w-full text-black text-2xl md:z-10",
+            "flex flex-col gap-4 justify-center items-center h-[calc(100dvh-80px)] md:justify-center h-[calc(100vh - 80px)] absolute transition-all duration-500 translate-y-0 bottom-0 left-0 bg-white-50 w-full text-black text-2xl md:z-10 dark:text-white-0 dark:bg-black",
             "md:flex-row md:h-fit md:sticky md:transparent md:gap-2 lg:gap-4 lg:w-fit lg:text-sm",
             "*:text-nowrap *:md:text-sm *:w-fit *:md:font-medium *:font-semibold",
             open && "translate-y-full"
@@ -166,13 +175,13 @@ const Header = () => {
                   href={link?.href || "#"}
                   target={link?.target || "_self"}
                   className={clsx(
-                    "flex gap-2 md:text-xs md:font-light xl:text-base hover:font-light items-center text-primary-500 cursor-pointer",
+                    "flex gap-2 md:text-xs md:font-light xl:text-base hover:font-light items-center text-primary-500 cursor-pointer dark:text-white-0",
                     selectedOption?.label === link.label
                       ? "font-normal"
                       : "font-normal"
                   )}
                 >
-                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -188,18 +197,18 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </button>
+                  </Text>
                 </Link>
               ) : (
                 <div
                   className={clsx(
-                    "flex gap-2 md:text-xs md:font-light xl:text-base hover:font-light items-center text-primary-500 cursor-pointer",
+                    "flex gap-2 md:text-xs md:font-light xl:text-base hover:font-light items-center text-primary-500 dark:text-white-0 cursor-pointer",
                     selectedOption?.label === link.label
                       ? "font-normal"
                       : "font-normal"
                   )}
                 >
-                  <button className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -215,7 +224,7 @@ const Header = () => {
                         />
                       </svg>
                     )}
-                  </button>
+                  </Text>
                 </div>
               )}
               <ul
@@ -231,37 +240,50 @@ const Header = () => {
                 {link.options.map((subopt) => (
                   <li
                     key={subopt.label}
-                    className="text-center text-xl text-[#919191]"
+                    className="text-center"
                   >
-                    <Link href={subopt.href} target={link.target || "_self"} onClick={() => handleOpen(false)}>{subopt.label}</Link>
+                    <Link href={subopt.href} target={link.target || "_self"} onClick={() => handleOpen(false)}>
+                      <Text className="text-center text-xl text-[#919191]">
+                        {subopt.label}
+                      </Text>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </li>
           ))}
-          <Link href="/cms/admin/auth/login" className="md:hidden whitespace-nowrap flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded text-white-0 mt-14">
+          <Link
+            href="/cms/admin/auth/login"
+            className="md:hidden whitespace-nowrap flex relative z-10 py-2 px-4 bg-primary-500 gap-2 rounded mt-14"
+          >
             <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-            ACESSO SERVIDOR
+            <Text className="text-white-0 font-medium">
+              ACESSO SERVIDOR
+            </Text>
           </Link>
         </ul>
-        <Link href="/cms/admin/auth/login" className="hidden whitespace-nowrap md:flex relative z-10 text-white py-2 px-4 bg-primary-500 font-medium gap-2 rounded md:text-sm">
+        <Link href="/cms/admin/auth/login" className="hidden whitespace-nowrap md:flex relative z-10 py-2 px-4 bg-primary-500 dark:bg-white-0 dark:text-black gap-2 rounded">
           <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-          ACESSO SERVIDOR
+          <Text className="font-medium md:text-sm">
+            ACESSO SERVIDOR
+          </Text>
         </Link>
       </section>
       <section
         className={clsx(
-          "flex justify-center items-center gap-8 w-full absolute bottom-0 h-12 bg-primary-500 text-white-0 -z-10 duration-500",
+          "flex justify-center items-center gap-8 w-full absolute bottom-0 h-12 bg-primary-500 text-white-0 dark:text-black -z-10 duration-500",
           selectedOption?.options.length && "translate-y-full"
         )}
       >
         {selectedOption?.options.map((subOption, index) => (
-          <Link href={subOption.href} target={subOption.target || "_self"} key={index} className="text-white hover:font-normal">
-            {subOption.label}
+          <Link href={subOption.href} target={subOption.target || "_self"} key={index} className="hover:font-normal">
+            <Text className="text-white-0 text-lg">
+              {subOption.label}
+            </Text>
           </Link>
         ))}
       </section>
-      <div className="left-0 top-0 absolute w-full h-full bg-white-50 md:z-0" />
+      <div className="left-0 top-0 absolute w-full h-full bg-white-50 dark:bg-black md:z-0" />
     </header >
   );
 };

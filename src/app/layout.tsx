@@ -38,7 +38,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} dark:bg-[#0D0D0D] dark:text-white-0`}>
         <SessionProvider provider={session}>
           <AcessibilityProvider provider={{ modifier }}>
             {children}

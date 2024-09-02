@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: { route: string } }) {
       <ul className="my-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
         {sublink?.map((link) => (
           <li key={link.id}>
-            <a className="flex-col gap-4 flex items-center justify-center shadow-lg p-6 h-full" href={link.href || ""} target="_blank">
+            <a className="flex-col gap-4 flex items-center justify-center shadow-lg p-6 h-full dark:text-white-0 dark:bg-black" href={link.href || ""} target="_blank">
               {
                 link.icon?.url && (
                   <Image src={link.icon.url} width={62} height={62} alt="icone" />

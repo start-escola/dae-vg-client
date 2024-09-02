@@ -2,6 +2,7 @@ import PageTitle from "@/components/PageTitle";
 import Image from "next/image";
 import api from "@/utils/api"
 import { normalizeFileUrl } from "@/utils/normalize";
+import Text from "@/components/Text";
 
 export const metadata = {
   title: "Quem Somos - DAE",
@@ -34,17 +35,17 @@ export default async function Page() {
       <section className="my-4 mx-auto container">
         <div className="relative">
           <Image src="/pessoa.png" height={400} width={400} className="hidden md:flex absolute left-[66%] -translate-x-1/2 bottom-0 z-10" alt="pessoa" />
-          <div className="flex relative rounded overflow-hidden text-primary-500">
-            <div className="flex flex-col gap-6 h-fit bg-primary-500 w-10/12 md:w-8/12 px-4 md:px-24 py-10">
-              <h1 className="text-3xl font-bold">Somos o <strong className="font-extrabold">DAE</strong></h1>
-              <p className="font-light text-base max-w-96">
+          <div className="flex relative rounded overflow-hidden text-white-0">
+            <div className="flex flex-col gap-6 h-fit bg-primary-500 dark:bg-[#0D0D0D] w-10/12 md:w-8/12 px-4 md:px-24 py-10">
+              <Text as="h1" className="text-3xl font-bold">Somos o <strong className="font-extrabold">DAE</strong></Text>
+              <Text className="font-light text-base max-w-96">
                 {short_description}
-              </p>
+              </Text>
               <div className="w-full flex flex-col justify-center items-center gap-4 md:w-fit">
                 <Image src="/brasao.png" width={100} height={100} alt="logo" />
                 <div className="flex flex-col gap-2">
-                  <p className="font-light text-lg text-center">Prefeitura Municipal de</p>
-                  <p className="text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</p>
+                  <Text className="font-light text-lg text-center">Prefeitura Municipal de</Text>
+                  <Text className="text-white-0 dark:text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</Text>
                 </div>
               </div>
             </div>
@@ -56,7 +57,7 @@ export default async function Page() {
       </section>
       <section>
       </section>
-      <div className="text-primary-500" dangerouslySetInnerHTML={{ __html: description }} />
+      <div className="text-primary-500 dark:text-white-0" dangerouslySetInnerHTML={{ __html: description }} />
       {
         mission && (
           <div className="my-10 lg:my-20">
@@ -79,18 +80,18 @@ export default async function Page() {
       }
       {
         valores.length > 0 && (
-          <div className="text-primary-500 mb-20">
-            <h2 className="text-3xl py-5 border-b-2 border-primary-500 font-semibold mb-4">Valores</h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-black font-semibold">
+          <div className="text-primary-500 mb-20 dark:text-white-0">
+            <Text as="h2" className="text-3xl py-5 border-b-2 border-primary-500 dark:border-white-0 font-semibold mb-4">Valores</Text>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-black dark:text-white-0 font-semibold">
               {
                 valores.map(({ id, icon, name }) => (
-                  <li key={id} className="shadow bg-white-0 flex gap-4 py-6 px-4">
+                  <li key={id} className="shadow bg-white-0 dark:bg-black flex gap-4 py-6 px-4">
                     {
                       icon && (
                         <Image src={icon} width={35} height={35} alt="" />
                       )
                     }
-                    <p className="w-full text-center font-semibold text-lg">{name}</p>
+                    <Text className="w-full text-center font-semibold text-lg">{name}</Text>
                   </li>
                 ))
               }

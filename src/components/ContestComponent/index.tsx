@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import Text from "../Text";
 
 interface IContestComponent {
   title: string,
@@ -23,16 +24,16 @@ const ContestComponent = ({ files, description, title, realization, status, publ
   };
 
   return (
-    <div className="flex flex-col bg-grey w-full rounded border drop-shadow border-border_grey text-primary-500">
+    <div className="flex flex-col w-full rounded border drop-shadow bg-grey border-border_grey text-primary-500 dark:bg-black dark:text-white-0">
       <div className="flex justify-between p-4 md:p-5 border-b border-[#B5B5B5]">
-        <div className="text-xl">Processo seletivo: <strong>{title}</strong></div>
-        <span>Status: <strong>{status || "Não definido"}</strong></span>
+        <Text as="div" className="text-xl">Processo seletivo: <strong>{title}</strong></Text>
+        <Text as="span">Status: <strong>{status || "Não definido"}</strong></Text>
       </div>
       <div className="p-4 md:p-5">
-        <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap">
+        <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap dark:text-white-0">
           {
             process_number && (
-              <li className="flex justify-between items-center p-4 bg-white-50 text-primary-500 border rounded text-base md:text-xl border-border_grey">
+              <li className="flex justify-between items-center p-4 border rounded border-border_grey bg-white-50">
                 <Image
                   src="/file.svg"
                   width={18}
@@ -40,7 +41,9 @@ const ContestComponent = ({ files, description, title, realization, status, publ
                   alt="date"
                   className="mr-5"
                 />
-                Realização: <strong className="ml-1">{process_number}</strong>
+                <Text className="text-base md:text-xl dark:text-black" as="span">
+                  Processo: <strong className="ml-1">{process_number}</strong>
+                </Text>
               </li>
             )
           }
@@ -54,7 +57,9 @@ const ContestComponent = ({ files, description, title, realization, status, publ
                   alt="date"
                   className="mr-5"
                 />
-                Realização: <strong className="ml-1">{realization.replaceAll('-', '/')}</strong>
+                <Text className="text-primary-500 text-base md:text-xl dark:text-black">
+                  Realização: <strong className="ml-1">{realization.replaceAll('-', '/')}</strong>
+                </Text>
               </li>
             )
           }
@@ -68,7 +73,9 @@ const ContestComponent = ({ files, description, title, realization, status, publ
                   alt="date"
                   className="mr-5"
                 />
-                Publicação: <strong className="ml-1">{publishedAt?.split('T')[0].replaceAll('-', '/')}</strong>
+                <Text className="text-primary-500 text-base md:text-xl dark:text-black">
+                  Publicação: <strong className="ml-1">{publishedAt?.split('T')[0].replaceAll('-', '/')}</strong>
+                </Text>
               </li>
             )
           }
@@ -76,7 +83,7 @@ const ContestComponent = ({ files, description, title, realization, status, publ
         <div className="flex flex-col">
           <div className="relative">
             <div
-              className={`text-primary-500 text-base overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-12'
+              className={`dark:text-white-0 text-primary-500 text-base overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-12'
                 }`}
               dangerouslySetInnerHTML={{ __html: description || "" }}
             >
@@ -86,31 +93,34 @@ const ContestComponent = ({ files, description, title, realization, status, publ
           </div>
           <button
             onClick={() => toggleExpand()}
-            className="text-primary-500 ml-2 flex justify-end mt-2"
+            className="ml-2 flex justify-end mt-2"
           >
-            {isExpanded ? <strong>Ler menos</strong> : <strong>...ler mais</strong>}
+            {
+              <Text as="strong" className="text-primary-500 dark:text-white-0">{isExpanded ? 'Ler menos' : 'Ler mais'}</Text>
+            }
           </button>
         </div>
         <div className="flex justify-start items-center mb-2">
           <Image src="/download.svg" width={18} height={18} alt="download" />
-          <span className="text-base text-primary-500 ml-2">
+          <Text className="text-base text-primary-500 dark:text-white-0 ml-2">
             Arquivos para download
-          </span>
+          </Text>
         </div>
         <hr className="border-border_grey border mb-6" />
         {
           files && (
-            <ul className="flex gap-2 overflow-x-scroll">
+            <div className="flex overflow-x-auto">
               {files.map(({ url, name }) => (
-                <li
+                <div
                   key={name}
+                  className="flex flex-col justify-center items-center gap-2 border bg-white-0 border-white-200 p-2 mr-2"
                 >
-                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0  border-white-200 p-2" href={url} download={name} target="_blank">
-                    <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
-                    <span className="text-border_grey text-base mt-1">{name.length > 13 ? `${name.substring(0, 10)}...` : name}</span>                  </a>
-                </li>
+                  <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
+                  <Text className="text-border_grey text-base mt-1 dark:text-black">{name.length > 13 ? `${name.substring(0, 10)}...` : name}</Text>
+                  <a download={name} href={url} target="_blank"></a>
+                </div>
               ))}
-            </ul>
+            </div>
           )
         }
       </div>

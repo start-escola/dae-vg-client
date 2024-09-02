@@ -43,10 +43,10 @@ export default async function Page({ params }: { params: { id: string } }) {
   metadata.description = short_description
 
   return (
-    <section className="text-primary-500">
+    <section className="text-primary-500 dark:text-white-0">
       <div className="flex justify-between mb-8">
         <GoBack />
-        <p className="text-primary-100 text-base">
+        <p className="text-primary-100 dark:text-white-0 text-base">
           Publicada em {new Date(createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}
         </p>
       </div>

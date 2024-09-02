@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: ["selector"],
   theme: {
     extend: {
       backgroundImage: {
@@ -35,6 +36,9 @@ const config: Config = {
         warning: "yellow",
         failed: "red",
       },
+      dark: {
+        bg: "#0D0D0D"
+      }
     },
   },
   plugins: [],

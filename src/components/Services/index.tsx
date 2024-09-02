@@ -20,7 +20,7 @@ const Services = ({ values }: IServiceProps) => {
         {values.map((val, i) => (
           <li
             key={i}
-            className="rounded overflow-hidden bg-white-50 w-36 md:w-80 md:h-fit flex-grow shadow"
+            className="rounded overflow-hidden w-36 md:w-80 md:h-fit flex-grow shadow bg-white-50 dark:bg-black"
           >
             <Text
               as="a"
@@ -37,10 +37,10 @@ const Services = ({ values }: IServiceProps) => {
                 <Image src={val.icon} width={30} height={30} alt="" />
               </div>
               <div className="flex flex-col gap-2">
-                <Text className="text-black text-base font-semibold text-center">
+                <Text className="text-base font-semibold text-center text-black dark:text-white-0">
                   {val.title}
                 </Text>
-                <p className="text-[#B5B5B5] text-center">Solicitar agora</p>
+                <Text className="text-[#B5B5B5] text-base text-center">Solicitar agora</Text>
               </div>
             </Text>
           </li>

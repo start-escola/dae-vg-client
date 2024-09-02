@@ -49,8 +49,8 @@ const List = ({ defaultValues, total, defaultPage }: IList) => {
   return (
     <ul className="flex flex-col gap-4">
       {values.map(
-        ({ id, ...props }) => (
-          <Card {...props} key={id} />
+        ({ ...props }) => (
+          <Card { ...props} key={props.id} />
         )
       )}
       {total > values.length && <div ref={ref} />}

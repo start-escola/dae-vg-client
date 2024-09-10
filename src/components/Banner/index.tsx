@@ -73,7 +73,7 @@ const Banner = ({ values }: IBannerProps) => {
   };
 
   return (
-    <section className="flex justify-center items-center w-full h-[calc(100svh-128px)] relative">
+    <section className="flex justify-center items-center w-full h-[calc(100svh-80px)] relative">
       <div
         className="w-full h-full relative overflow-hidden"
         ref={bannerRef}

@@ -107,7 +107,7 @@ const Header = () => {
 
   return (
     <header className="fixed w-screen top-0 z-20 text-white-0 bg-white-50 dark:bg-black" onMouseLeave={handleMouseLeave}>
-      <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
+      {/* <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
         <svg
           width="26"
           height="26"
@@ -121,7 +121,7 @@ const Header = () => {
           />
         </svg>
         Nosso site está passando por mudanças!
-      </div>
+      </div> */}
       <section className="container flex items-center justify-between m-auto p-4 h-20 relative">
         <Link
           href="/"

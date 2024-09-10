@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import ImageGallery from "@/components/ImageGallery";
 import LatestBids from "@/components/LatestBids";
 import Services from "@/components/Services";
+import WebChat from "@/components/WebChat";
 import { GalleryResponse, NewsResponse } from "@/interfaces/request";
 import api from "@/utils/api"
 import { normalizeFileUrl } from "@/utils/normalize";
@@ -148,12 +149,13 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="relative mt-32 text-white-0 ">
+      <main className="relative mt-20 text-white-0 ">
         <Banner values={latestNews} />
         <Services values={mostUsedServices} />
         <AboutUs summary={summary} />
         <LatestBids values={latestBids} />
         <ImageGallery values={images} />
+        <WebChat />
       </main>
       <Footer />
     </>

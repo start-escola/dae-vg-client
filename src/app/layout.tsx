@@ -16,10 +16,10 @@ import SessionProvider from "./session-provider";
 import { getSession } from "@/utils/session";
 import AcessibilityProvider from "./acessibility-provider";
 import { getModifier } from "@/utils/modifier";
+import api from "@/utils/api";
+import WebChat from "@/components/WebChat";
 import Control from "@/components/Control";
-import api from "@/utils/api"
 import VLibrasClient from "@/components/VLibras";
-
 
 SwiperCore.use([Navigation]);
 
@@ -38,10 +38,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} dark:bg-[#0D0D0D] dark:text-white-0`}>
+      <body
+        className={`${inter.className} dark:bg-[#0D0D0D] dark:text-white-0`}
+      >
         <SessionProvider provider={session}>
           <AcessibilityProvider provider={{ modifier }}>
             {children}
+            <WebChat />
             <Control />
             <VLibrasClient />
           </AcessibilityProvider>

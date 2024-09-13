@@ -9,7 +9,7 @@ export default async function RootLayout({
   return (
     <>
       <Header />
-      <main className="mx-auto px-4 py-12 mt-28 min-h-[50svh] container">{children}</main>
+      <main className="mx-auto px-4 py-12 mt-40 min-h-[50svh] container">{children}</main>
       <Footer />
     </>
   );

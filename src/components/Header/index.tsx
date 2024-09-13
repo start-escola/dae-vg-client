@@ -12,7 +12,7 @@ type IOption = {
   options: {
     label: string;
     href: string;
-    target?: string
+    target?: string;
   }[];
 };
 
@@ -22,7 +22,7 @@ const Header = () => {
 
   const handleOpen = (open: boolean) => {
     setOpen(open);
-  }
+  };
 
   const links: IOption[] = [
     {
@@ -41,7 +41,7 @@ const Header = () => {
     {
       label: "QUEM SOMOS",
       href: "/dae/quem-somos",
-      options: []
+      options: [],
     },
     {
       label: "TRANSPARÊNCIA",
@@ -69,21 +69,21 @@ const Header = () => {
       options: [
         {
           label: "Notícias",
-          href: "/comunicacao/noticias-e-eventos"
+          href: "/comunicacao/noticias-e-eventos",
         },
         {
           label: "Galerias",
-          href: "/comunicacao/galerias"
-        }
-      ]
+          href: "/comunicacao/galerias",
+        },
+      ],
     },
     {
       label: "OUVIDORIA",
       href: "https://falabr.cgu.gov.br/web/home",
       target: "_blank",
-      options: []
+      options: [],
     },
-  ]
+  ];
 
   const handleMouseEnter = (label: IOption) => {
     if (selectedOption?.label === label.label) {
@@ -94,7 +94,8 @@ const Header = () => {
     setSelectedOption(label);
   };
 
-  const [isMouseLeaveTimeoutActive, setIsMouseLeaveTimeoutActive] = useState(false);
+  const [isMouseLeaveTimeoutActive, setIsMouseLeaveTimeoutActive] =
+    useState(false);
 
   const handleMouseLeave = () => {
     setIsMouseLeaveTimeoutActive(true);
@@ -106,8 +107,11 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed w-screen top-0 z-20 text-white-0 bg-white-50 dark:bg-black" onMouseLeave={handleMouseLeave}>
-      {/* <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
+    <header
+      className="fixed w-screen top-0 z-20 text-white-0 bg-white-50 dark:bg-black"
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="flex gap-4 items-center justify-center h-12 relative z-20 bg-[#911414] text-md  md:text-2xl font-semibold">
         <svg
           width="26"
           height="26"
@@ -121,7 +125,7 @@ const Header = () => {
           />
         </svg>
         Nosso site está passando por mudanças!
-      </div> */}
+      </div>
       <section className="container flex items-center justify-between m-auto p-4 h-20 relative">
         <Link
           href="/"
@@ -181,7 +185,10 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text
+                    as="button"
+                    className="font-light w-full justify-center flex gap-2 items-center text-center"
+                  >
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -208,7 +215,10 @@ const Header = () => {
                       : "font-normal"
                   )}
                 >
-                  <Text as="button" className="font-light w-full justify-center flex gap-2 items-center text-center">
+                  <Text
+                    as="button"
+                    className="font-light w-full justify-center flex gap-2 items-center text-center"
+                  >
                     {link.label}
                     {link?.options.length > 0 && (
                       <svg
@@ -238,11 +248,12 @@ const Header = () => {
                 )}
               >
                 {link.options.map((subopt) => (
-                  <li
-                    key={subopt.label}
-                    className="text-center"
-                  >
-                    <Link href={subopt.href} target={link.target || "_self"} onClick={() => handleOpen(false)}>
+                  <li key={subopt.label} className="text-center">
+                    <Link
+                      href={subopt.href}
+                      target={link.target || "_self"}
+                      onClick={() => handleOpen(false)}
+                    >
                       <Text className="text-center text-xl text-[#919191]">
                         {subopt.label}
                       </Text>
@@ -256,17 +267,28 @@ const Header = () => {
             href="/cms/admin/auth/login"
             className="md:hidden whitespace-nowrap flex relative z-10 py-2 px-4 bg-primary-500 gap-2 rounded mt-14"
           >
-            <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-            <Text className="text-white-0 font-medium">
-              ACESSO SERVIDOR
-            </Text>
+            <Image
+              src="/user.svg"
+              width={20}
+              height={20}
+              alt="Acesso ao servidor"
+              className="object-cover"
+            />
+            <Text className="text-white-0 font-medium">ACESSO SERVIDOR</Text>
           </Link>
         </ul>
-        <Link href="/cms/admin/auth/login" className="hidden whitespace-nowrap md:flex relative z-10 py-2 px-4 bg-primary-500 dark:bg-white-0 dark:text-black gap-2 rounded">
-          <Image src="/user.svg" width={20} height={20} alt="Acesso ao servidor" className="object-cover" />
-          <Text className="font-medium md:text-sm">
-            ACESSO SERVIDOR
-          </Text>
+        <Link
+          href="/cms/admin/auth/login"
+          className="hidden whitespace-nowrap md:flex relative z-10 py-2 px-4 bg-primary-500 dark:bg-white-0 dark:text-black gap-2 rounded"
+        >
+          <Image
+            src="/user.svg"
+            width={20}
+            height={20}
+            alt="Acesso ao servidor"
+            className="object-cover"
+          />
+          <Text className="font-medium md:text-sm">ACESSO SERVIDOR</Text>
         </Link>
       </section>
       <section
@@ -276,15 +298,18 @@ const Header = () => {
         )}
       >
         {selectedOption?.options.map((subOption, index) => (
-          <Link href={subOption.href} target={subOption.target || "_self"} key={index} className="hover:font-normal">
-            <Text className="text-white-0 text-lg">
-              {subOption.label}
-            </Text>
+          <Link
+            href={subOption.href}
+            target={subOption.target || "_self"}
+            key={index}
+            className="hover:font-normal"
+          >
+            <Text className="text-white-0 text-lg">{subOption.label}</Text>
           </Link>
         ))}
       </section>
       <div className="left-0 top-0 absolute w-full h-full bg-white-50 dark:bg-black md:z-0" />
-    </header >
+    </header>
   );
 };
 

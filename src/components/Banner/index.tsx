@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
@@ -44,15 +44,20 @@ const Banner = ({ values }: IBannerProps) => {
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setPause(true);
-    const startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const startX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const handleDragMove = (moveEvent: MouseEvent | TouchEvent) => {
-      const currentX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
+      const currentX =
+        "touches" in moveEvent
+          ? moveEvent.touches[0].clientX
+          : moveEvent.clientX;
       const difference = startX - currentX;
       if (difference > 50) {
         handleChangeBanner((selectedBanner + 1) % values.length);
         cleanup();
       } else if (difference < -50) {
-        handleChangeBanner((selectedBanner - 1 + values.length) % values.length);
+        handleChangeBanner(
+          (selectedBanner - 1 + values.length) % values.length
+        );
         cleanup();
       }
     };
@@ -61,19 +66,19 @@ const Banner = ({ values }: IBannerProps) => {
       cleanup();
     };
     const cleanup = () => {
-      document.removeEventListener('mousemove', handleDragMove);
-      document.removeEventListener('mouseup', handleDragEnd);
-      document.removeEventListener('touchmove', handleDragMove);
-      document.removeEventListener('touchend', handleDragEnd);
+      document.removeEventListener("mousemove", handleDragMove);
+      document.removeEventListener("mouseup", handleDragEnd);
+      document.removeEventListener("touchmove", handleDragMove);
+      document.removeEventListener("touchend", handleDragEnd);
     };
-    document.addEventListener('mousemove', handleDragMove);
-    document.addEventListener('mouseup', handleDragEnd);
-    document.addEventListener('touchmove', handleDragMove);
-    document.addEventListener('touchend', handleDragEnd);
+    document.addEventListener("mousemove", handleDragMove);
+    document.addEventListener("mouseup", handleDragEnd);
+    document.addEventListener("touchmove", handleDragMove);
+    document.addEventListener("touchend", handleDragEnd);
   };
 
   return (
-    <section className="flex justify-center items-center w-full h-[calc(100svh-80px)] relative">
+    <section className="flex justify-center items-center w-full h-[calc(100svh-128px)] relative">
       <div
         className="w-full h-full relative overflow-hidden"
         ref={bannerRef}
@@ -90,8 +95,8 @@ const Banner = ({ values }: IBannerProps) => {
               i === selectedBanner
                 ? "translate-x-0"
                 : i === selectedBanner - 1
-                  ? "-translate-x-full"
-                  : "translate-x-full",
+                ? "-translate-x-full"
+                : "translate-x-full"
             )}
           />
         ))}
@@ -101,29 +106,44 @@ const Banner = ({ values }: IBannerProps) => {
           onMouseLeave={() => handlePauseToggle(false)}
         />
       </div>
-      <div className="container absolute translate-y-1/4 bottom-1/4 p-4"
+      <div
+        className="container absolute translate-y-1/4 bottom-1/4 p-4"
         onMouseEnter={() => handlePauseToggle(true)}
         onMouseLeave={() => handlePauseToggle(false)}
       >
-        <Text as="h2" className="text-4xl font-semibold">{values[selectedBanner]?.title}</Text>
-        <Text className="text-base text-white-0">{values[selectedBanner]?.description}</Text>
-        <div className="absolute left-0 top-0 h-full w-full z-10"
+        <Text as="h2" className="text-4xl font-semibold">
+          {values[selectedBanner]?.title}
+        </Text>
+        <Text className="text-base text-white-0">
+          {values[selectedBanner]?.description}
+        </Text>
+        <div
+          className="absolute left-0 top-0 h-full w-full z-10"
           ref={bannerRef}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
         />
-        {
-          values[selectedBanner]?.link && (
-            <Text as="a" className="flex w-fit rounded mt-8 px-5 py-2 dark:bg-black bg-primary-500 text-white shadow-md relative z-20" href={values[selectedBanner].link}>Saber mais</Text>
-          )
-        }
+        {values[selectedBanner]?.link && (
+          <Text
+            as="a"
+            className="flex w-fit rounded mt-8 px-5 py-2 dark:bg-black bg-primary-500 text-white shadow-md relative z-20"
+            href={values[selectedBanner].link}
+          >
+            Saber mais
+          </Text>
+        )}
       </div>
       <div className="flex gap-2 absolute bottom-[56px]">
         {values.map((val, i) => (
           <button
             key={i}
             onClick={() => handleChangeBanner(i)}
-            className={clsx("h-2 transition-all", selectedBanner === i ? "w-12 bg-primary-500 rounded-3xl" : "w-2 rounded-full bg-white-200")}
+            className={clsx(
+              "h-2 transition-all",
+              selectedBanner === i
+                ? "w-12 bg-primary-500 rounded-3xl"
+                : "w-2 rounded-full bg-white-200"
+            )}
           />
         ))}
       </div>

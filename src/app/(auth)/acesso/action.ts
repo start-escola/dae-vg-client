@@ -1,6 +1,5 @@
 "use server";
 import api from "@/utils/api";
-import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
@@ -29,17 +28,30 @@ const validateCPF = (cpf: string) => {
   return true;
 };
 
-const createSessionSchema = z.object({
-  identifier: z
-    .string()
-    .refine((cpf) => validateCPF(cpf.replace(/\D/g, "")), "CPF inválido")
-    .transform((cpf) => cpf.replace(/\D/g, "")),
-  password: z.string(),
-});
+const createSessionSchema = {
+  person: z.object({
+    identifier: z
+      .string()
+      .refine((cpf) => validateCPF(cpf.replace(/\D/g, "")), "CPF inválido")
+      .transform((cpf) => cpf.replace(/\D/g, "")),
+    password: z.string(),
+  }),
+  company: z.object({
+    identifier: z
+      .string()
+      .refine((cnpj) => cnpj.replace(/\D/g, ""), "CNPJ inválido")
+      .transform((cnpj) => cnpj.replace(/\D/g, "")),
+    password: z.string(),
+  }),
+};
 
 export async function createSession(prevState: any, formData: FormData) {
+  const isJuridic = Boolean(formData.get("isJuridic"));
+
   try {
-    const validatedFields = createSessionSchema.safeParse({
+    const validatedFields = createSessionSchema[
+      isJuridic ? "company" : "person"
+    ].safeParse({
       identifier: formData.get("identifier"),
       password: formData.get("password"),
     });
@@ -63,7 +75,11 @@ export async function createSession(prevState: any, formData: FormData) {
   } catch (err) {
     return {
       errors: {
-        password: ["CPF e/ou senha incorretos"],
+        password: [
+          isJuridic
+            ? "CNPJ e/ou senha incorretos"
+            : "CPF e/ou senha incorretos",
+        ],
       },
     };
   }

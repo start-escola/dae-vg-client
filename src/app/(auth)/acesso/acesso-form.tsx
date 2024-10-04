@@ -3,12 +3,17 @@ import Input from "../input";
 import Link from "next/link";
 import { createSession } from "./action";
 import { useFormState } from "react-dom";
-import { maskCPF } from "../cadastro/cadastro-form";
+import { maskCNPJ, maskCPF } from "../cadastro/cadastro-form";
 import { redirect, useSearchParams } from "next/navigation";
 import Text from "@/components/Text";
+import { useState } from "react";
+import Image from "next/image";
+import clsx from "clsx";
+
 
 const AcessoForm = () => {
   const [state, formAction] = useFormState(createSession, null);
+  const [isJuridic, setIsJuridic] = useState(true);
 
   // Redirect Functions
   const params = useSearchParams();
@@ -22,6 +27,7 @@ const AcessoForm = () => {
       className="flex flex-col items-center w-screen max-w-[580px] my-4 mx-2 px-2 py-16 bg-[#06092B4D] backdrop-blur-lg"
       action={formAction}
     >
+      <input type="checkbox" name="isJuridic" checked={isJuridic} hidden readOnly />
       <div className="flex flex-col gap-3 max-w-[318px] text-center">
         <Text className="text-2xl font-medium">É um prazer rever você!</Text>
         <Text className="text-xl font-light">
@@ -29,16 +35,31 @@ const AcessoForm = () => {
         </Text>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
+        <div className="grid grid-cols-2 w-full rounded overflow-hidden border border-white-50">
+          <button className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
+            <Image width={24} height={24} src="/user.svg" alt={""} />
+            Pessoa Física
+          </button>
+          <button className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500": "opacity-60")} onClick={() => setIsJuridic(true)}>
+              <Image width={24} height={24} src="/company.svg" alt={""} />
+              Pessoa Jurídica
+          </button>
+        </div>
         <Input
           name="identifier"
-          placeholder="CPF"
+          placeholder={isJuridic ? "CNPJ" : "CPF"}
+          aria-label={isJuridic ? "CNPJ" : "CPF"}
+          autoComplete="new-password"
           icon="/user.svg"
-          label="CPF"
+          label={isJuridic ? "CNPJ" : "CPF"}
           onChange={(e) => {
-            e.target.value = maskCPF(e.currentTarget.value);
+            isJuridic
+              ?
+              e.target.value = maskCNPJ(e.currentTarget.value)
+              :
+              e.target.value = maskCPF(e.currentTarget.value);
           }}
           error={state?.errors.identifier?.pop() || passwordError}
-          autoComplete="off"
         />
         <Input
           name="password"

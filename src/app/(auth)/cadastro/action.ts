@@ -62,34 +62,62 @@ function formatErrors(errors: ValidationError[]): FormattedErrors {
   return formattedErrors;
 }
 
-const signupSchema = z
-  .object({
-    username: z.string(),
-    cpf: z
-      .string()
-      .refine((cpf) => validateCPF(cpf.replace(/\D/g, "")), "CPF inválido")
-      .transform((cpf) => cpf.replace(/\D/g, "")),
-    email: z.string().email("Email inválido"),
-    password: z.string(),
-    confirmPassword: z.string(),
-    fullname: z.string(),
-  })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: "custom",
-        message: "As senhas não combinam",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+const signupSchema = {
+  person: z
+    .object({
+      username: z.string(),
+      cpf: z
+        .string()
+        .refine((cpf) => validateCPF(cpf.replace(/\D/g, "")), "CPF inválido")
+        .transform((cpf) => cpf.replace(/\D/g, "")),
+      email: z.string().email("Email inválido"),
+      password: z.string(),
+      confirmPassword: z.string(),
+      fullname: z.string(),
+    })
+    .superRefine(({ password, confirmPassword }, ctx) => {
+      if (password !== confirmPassword) {
+        ctx.addIssue({
+          code: "custom",
+          message: "As senhas não combinam",
+          path: ["confirmPassword"],
+        });
+      }
+    }),
+  company: z
+    .object({
+      username: z.string(),
+      email: z.string().email("Email inválido"),
+      cnpj: z
+        .string()
+        .refine((cnpj) => cnpj.replace(/\D/g, ""), "CNPJ inválido")
+        .transform((cnpj) => cnpj.replace(/\D/g, "")),
+      password: z.string(),
+      confirmPassword: z.string(),
+      fullname: z.string(),
+    })
+    .superRefine(({ password, confirmPassword }, ctx) => {
+      if (password !== confirmPassword) {
+        ctx.addIssue({
+          code: "custom",
+          message: "As senhas não combinam",
+          path: ["confirmPassword"],
+        });
+      }
+    }),
+};
 
 export async function performSignup(prevData: any, formData: FormData) {
-  const validatedFields = signupSchema.safeParse({
+  const isJuridic = Boolean(formData.get("isJuridic"));
+
+  const validatedFields = signupSchema[
+    isJuridic ? "company" : "person"
+  ].safeParse({
     fullname: formData.get("fullname"),
     username: randomUUID(),
     email: formData.get("email"),
     cpf: formData.get("cpf"),
+    cnpj: formData.get("cnpj"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
   });
@@ -120,10 +148,10 @@ export async function performSignup(prevData: any, formData: FormData) {
         error.response?.data.error.message ===
         "Email or Username are already taken"
       ) {
-        console.log(error.response.data.error.message);
         return {
           errors: {
-            email: ["Este e-mail ja está sendo utilizado"],
+            email: ["Este e-mail ou cnpj ja está sendo utilizado"],
+            cnpj: ["Este e-mail ou cnpj ja está sendo utilizado"],
           },
         };
       }
@@ -131,6 +159,7 @@ export async function performSignup(prevData: any, formData: FormData) {
       const formattedError = formatErrors(
         error.response?.data.error.details.errors as ValidationError[]
       );
+      console.log(formattedError)
 
       return formattedError;
     } else {

@@ -105,7 +105,7 @@ async function getImages() {
   const { data: page } = await api.get<GalleryResponse>("/gallery?populate[conteudo][populate][midia]=*");
 
   const result = page.data.attributes.conteudo.map(({ id, midia, title }) => {
-    const ext = midia.data.attributes.ext.toLowerCase().replace(".", "");
+    const ext = midia.data?.attributes.ext.toLowerCase().replace(".", "");
 
     let type = 'unknown';
     if (videoExtensions.includes(ext)) {
@@ -114,7 +114,7 @@ async function getImages() {
       type = 'image';
     }
 
-    return { img: normalizeFileUrl(midia.data.attributes.url) };
+    return { img: normalizeFileUrl(midia.data?.attributes.url) };
   });
 
   return result

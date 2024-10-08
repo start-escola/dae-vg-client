@@ -6,6 +6,8 @@ import { useFormState, useFormStatus } from "react-dom";
 import { performSignup } from "./action";
 import { redirect, useSearchParams } from "next/navigation";
 import Text from "@/components/Text";
+import clsx from "clsx";
+import { useState } from "react";
 
 export const maskCPF = (cpf: string) => {
   return cpf
@@ -15,6 +17,17 @@ export const maskCPF = (cpf: string) => {
     .replace(/(\d{3})(\d{1,2})/, "$1-$2")
     .replace(/(-\d{2})\d+?$/, "$1");
 };
+
+export const maskCNPJ = (cnpj: string) => {
+  return cnpj
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1/$2")
+    .replace(/(\d{4})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1");
+};
+
 
 const maskName = (value: string) => {
   const preposicoes = ['de', 'da', 'do', 'das', 'dos', 'e'];
@@ -29,6 +42,7 @@ const maskName = (value: string) => {
 
 const CadastroForm = () => {
   const [state, formAction] = useFormState(performSignup, null)
+  const [isJuridic, setIsJuridic] = useState(false);
 
   // Redirect Functions
   const params = useSearchParams()
@@ -37,6 +51,7 @@ const CadastroForm = () => {
 
   return (
     <form className="relative flex flex-col items-center w-screen max-w-[580px] my-4 mx-2 px-2 py-16 bg-[#06092B4D] backdrop-blur-lg" action={formAction}>
+      <input type="checkbox" name="isJuridic" checked={isJuridic} hidden readOnly />
       <Link className="absolute left-4 top-4 bg-white-0 rounded-full p-3" href="/acesso">
         <Image src="arrow-back.svg" width={24} height={24} alt="voltar" />
       </Link>
@@ -45,13 +60,23 @@ const CadastroForm = () => {
         <Text className="text-xl font-light">Aqui nossa missão é proporcionar o melhor para a população</Text>
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
+        <div className="grid grid-cols-2 w-full rounded overflow-hidden border border-white-50">
+          <button className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
+            <Image width={24} height={24} src="/user.svg" alt={""} />
+            Pessoa Física
+          </button>
+          <button className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(true)}>
+            <Image width={24} height={24} src="/company.svg" alt={""} />
+            Pessoa Jurídica
+          </button>
+        </div>
         <Input
           name="fullname"
-          placeholder="Nome completo"
+          placeholder={isJuridic ? "Razão Social" : "Nome completo"}
           icon="/user.svg"
-          label="Nome completo"
+          label={isJuridic ? "Razão Social" : "Nome completo"}
           onChange={(e) => {
-            e.target.value = maskName(e.target.value)
+            if (!isJuridic) e.target.value = maskName(e.target.value)
           }}
           error={state?.errors?.fullname?.pop()}
         />
@@ -63,14 +88,21 @@ const CadastroForm = () => {
           error={state?.errors?.email?.pop()}
         />
         <Input
-          name="cpf"
-          placeholder="CPF"
+          name={isJuridic ? "cnpj" : "cpf"}
+          placeholder={isJuridic ? "CNPJ" : "CPF"}
+          aria-label={isJuridic ? "CNPJ" : "CPF"}
+          autoComplete="new-password"
           icon="/user.svg"
-          label="CPF"
+          label={isJuridic ? "CNPJ" : "CPF"}
           onChange={(e) => {
-            e.target.value = maskCPF(e.currentTarget.value);
+            isJuridic
+              ?
+              e.target.value = maskCNPJ(e.currentTarget.value)
+              :
+              e.target.value = maskCPF(e.currentTarget.value);
           }}
-          error={state?.errors?.cpf?.pop()}
+          // @ts-ignore
+          error={isJuridic ? state?.errors?.cnpj?.pop() : state?.errors?.cpf?.pop()}
         />
         <Input
           name="password"
@@ -88,7 +120,7 @@ const CadastroForm = () => {
           type="password"
           error={state?.errors?.confirmPassword?.pop()}
         />
-        <Text className="mt-8 w-full py-3 bg-[#911414] rounded" as="button">Cadastra-se</Text>
+        <Text className="mt-8 w-full py-3 bg-[#911414] rounded" as="button">Cadastrar-se</Text>
       </div>
     </form>
   )

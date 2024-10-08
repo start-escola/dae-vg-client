@@ -13,7 +13,7 @@ import clsx from "clsx";
 
 const AcessoForm = () => {
   const [state, formAction] = useFormState(createSession, null);
-  const [isJuridic, setIsJuridic] = useState(true);
+  const [isJuridic, setIsJuridic] = useState(false);
 
   // Redirect Functions
   const params = useSearchParams();

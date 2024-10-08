@@ -44,10 +44,13 @@ interface ValidationError {
 }
 
 const translate = {
-  "This attribute must be unique": "CPF já cadastrado",
+  "This attribute must be unique": "{unique} já cadastrado",
 };
 
-function formatErrors(errors: ValidationError[]): FormattedErrors {
+function formatErrors(
+  errors: ValidationError[],
+  isJuridic: boolean
+): FormattedErrors {
   const formattedErrors: FormattedErrors = { errors: {} };
   errors?.forEach((error) => {
     const key = error.path[0];
@@ -56,7 +59,10 @@ function formatErrors(errors: ValidationError[]): FormattedErrors {
       formattedErrors.errors[key] = [];
     }
     formattedErrors.errors[key].push(
-      translate[message as keyof typeof translate] || message
+      translate[message as keyof typeof translate].replace(
+        "{unique}",
+        isJuridic ? "CNPJ" : "CPF"
+      ) || message
     );
   });
   return formattedErrors;
@@ -150,16 +156,16 @@ export async function performSignup(prevData: any, formData: FormData) {
       ) {
         return {
           errors: {
-            email: ["Este e-mail ou cnpj ja está sendo utilizado"],
-            cnpj: ["Este e-mail ou cnpj ja está sendo utilizado"],
+            email: ["Este e-mail ja está sendo utilizado"],
+            cnpj: isJuridic && ["Este cnpj ja está sendo utilizado"],
           },
         };
       }
 
       const formattedError = formatErrors(
-        error.response?.data.error.details.errors as ValidationError[]
+        error.response?.data.error.details.errors as ValidationError[],
+        isJuridic
       );
-      console.log(formattedError)
 
       return formattedError;
     } else {

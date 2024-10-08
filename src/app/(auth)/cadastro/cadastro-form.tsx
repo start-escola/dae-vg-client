@@ -120,7 +120,7 @@ const CadastroForm = () => {
           type="password"
           error={state?.errors?.confirmPassword?.pop()}
         />
-        <Text className="mt-8 w-full py-3 bg-[#911414] rounded" as="button">Cadastra-se</Text>
+        <Text className="mt-8 w-full py-3 bg-[#911414] rounded" as="button">Cadastrar-se</Text>
       </div>
     </form>
   )

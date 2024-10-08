@@ -61,11 +61,11 @@ const CadastroForm = () => {
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <div className="grid grid-cols-2 w-full rounded overflow-hidden border border-white-50">
-          <button className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
+          <button type="button" className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
             <Image width={24} height={24} src="/user.svg" alt={""} />
             Pessoa Física
           </button>
-          <button className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(true)}>
+          <button type="button" className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(true)}>
             <Image width={24} height={24} src="/company.svg" alt={""} />
             Pessoa Jurídica
           </button>

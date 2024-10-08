@@ -13,7 +13,7 @@ import clsx from "clsx";
 
 const AcessoForm = () => {
   const [state, formAction] = useFormState(createSession, null);
-  const [isJuridic, setIsJuridic] = useState(true);
+  const [isJuridic, setIsJuridic] = useState(false);
 
   // Redirect Functions
   const params = useSearchParams();
@@ -36,13 +36,13 @@ const AcessoForm = () => {
       </div>
       <div className="flex flex-col items-center gap-2 w-full max-w-[350px] mt-4">
         <div className="grid grid-cols-2 w-full rounded overflow-hidden border border-white-50">
-          <button className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
+          <button type="button" className={clsx("flex items-center justify-between p-3", !isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(false)}>
             <Image width={24} height={24} src="/user.svg" alt={""} />
             Pessoa Física
           </button>
-          <button className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500": "opacity-60")} onClick={() => setIsJuridic(true)}>
-              <Image width={24} height={24} src="/company.svg" alt={""} />
-              Pessoa Jurídica
+          <button type="button" className={clsx("flex items-center justify-between p-3", isJuridic ? "bg-primary-500" : "opacity-60")} onClick={() => setIsJuridic(true)}>
+            <Image width={24} height={24} src="/company.svg" alt={""} />
+            Pessoa Jurídica
           </button>
         </div>
         <Input

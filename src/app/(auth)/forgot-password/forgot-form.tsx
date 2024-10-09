@@ -23,7 +23,8 @@ function ForgotForm() {
             <input
               name="email"
               placeholder="Digite seu email de acesso aqui"
-              className="w-full px-4 py-2 text-lg border rounded-lg mr-4 h-14"
+              type="text"
+              className="w-full px-4 py-2 text-lg border rounded-lg mr-4 h-14 text-placeholder"
             />
             <Text
               as="button"

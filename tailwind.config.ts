@@ -29,6 +29,7 @@ const config: Config = {
       },
       black: "#000000",
       grey: "#F4F4F4",
+      placeholder: "#8e8273",
       border_grey: "#B5B5B5",
       transparent: "transparent",
       feedback: {

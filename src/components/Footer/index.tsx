@@ -19,25 +19,23 @@ const Footer = () => {
               <Text className="font-light text-base">Av. Julio Campos, 2599 - Jardim dos Estados</Text>
             </div>
           </li>
-          <li>
+          {/* <li>
             <Text as="h3" className="text-2xl font-semibold mb-3">Rede Social</Text>
             <div className="flex flex-col gap-4">
               <Text className="font-light text-base">@daevarzeagrande</Text>
             </div>
-          </li>
+          </li> */}
           <li>
             <Text as="h3" className="text-2xl font-semibold mb-3">Agência Comercial Cristo Rei</Text>
             <div className="flex flex-col gap-4">
               <Text className="font-light text-base">Av. Gonçalo Botelho de Campos -
                 Cristo Rei</Text>
-              <Text><strong>Atendimento:</strong> (65) 99267-9271</Text>
             </div>
           </li>
           <li>
             <Text className="text-2xl font-semibold mb-3">Agência Comercial Centro</Text>
             <div className="flex flex-col gap-4">
               <Text as="a" href="https://maps.app.goo.gl/YVn1wZqQzqBDhHvw8" className="font-light text-base" target="_blank">Av. Castelo Branco, 245</Text>
-              <Text><strong>Atendimento:</strong> (65) 99327-2409</Text>
             </div>
           </li>
         </ul>

@@ -8,7 +8,7 @@ const WebChat = () => {
         target="_blank"
       >
         <Image
-          src="/support-1.svg"
+          src="/wpp.png"
           className="w-4 h-4"
           alt="Support"
           fill

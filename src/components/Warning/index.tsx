@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const Warning = ({ values: { img } }: { values: { img: string } }) => {
+const Warning = ({ values: { img } }: { values: { img: string | null } }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClose = () => {

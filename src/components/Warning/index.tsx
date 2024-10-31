@@ -8,6 +8,10 @@ const Warning = ({ values: { img } }: { values: { img: string } }) => {
     setIsVisible(false);
   };
 
+  if (!img) {
+    return null;
+  }
+
   return (
     <>
       {isVisible && (

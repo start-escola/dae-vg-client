@@ -151,9 +151,7 @@ async function getWarnings() {
     })
   );
 
-  console.log(result);
-
-  return { img: normalizeFileUrl(result[0].url) };
+  return { img: result[0]?.url ? normalizeFileUrl(result[0]?.url) : null };
 }
 
 export default async function Home() {

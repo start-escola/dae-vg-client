@@ -15,7 +15,7 @@ const Warning = ({ values: { img } }: { values: { img: string | null } }) => {
   return (
     <>
       {isVisible && (
-        <div className="flex items-center justify-center fixed z-50 w-full h-full bg-black bg-opacity-50">
+        <div className="flex items-center justify-center top-0 fixed z-50 w-screen h-screen bg-black bg-opacity-50">
           <div className="relative aspect-square w-[90%] h-2/5 md:w-[90%] md:h-3/5 lg:w-4/5">
             <button
               onClick={handleClose}

@@ -20,7 +20,7 @@ const Services = ({ values }: IServiceProps) => {
         {values.map((val, i) => (
           <li
             key={i}
-            className="rounded overflow-hidden w-36 md:w-80 md:h-fit flex-grow shadow bg-white-50 dark:bg-black"
+            className="rounded overflow-hidden w-36 md:w-80 md:h-fit flex-grow border-2 border-[#0000009d] bg-white-50 dark:bg-black"
           >
             <Text
               as="a"

@@ -33,7 +33,7 @@ const LatestBidsCard = ({
 
   // Cria uma cópia do array de status e remove o último elemento
   return (
-    <div className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl dark:bg-black rounded dark:text-white-0">
+    <div className="m-auto flex flex-col justify-between text-primary-500 px-6 pt-5 pb-4 border-b-4 shadow-xl dark:bg-black rounded dark:text-white-0 border-2 border-[#0000009d]">
       <div className="flex flex-col gap-4">
         <div>
           <Link

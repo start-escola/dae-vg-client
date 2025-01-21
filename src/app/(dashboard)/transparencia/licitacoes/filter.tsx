@@ -110,7 +110,7 @@ const Filter = ({ defaultValues }: IFilter) => {
         </li>
         <li className="flex flex-col gap-2 justify-end">
           <button type="submit" className="text-white-0 cursor-pointer w-36 h-10 rounded bg-primary-500 text-white shadow hover:bg-primary-600">
-            Filtrar
+            Pesquisar
           </button>
         </li>
       </ul>

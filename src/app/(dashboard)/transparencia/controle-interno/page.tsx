@@ -16,8 +16,6 @@ export type SearchParams = {
 export default async function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const { data, total } = await getPage(0, searchParams)
 
-  console.log(data)
-
   return (
     <>
       <section className="text-primary-500 border-b-2 border-primary-500 pb-5">

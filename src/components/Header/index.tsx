@@ -33,16 +33,17 @@ const Header = () => {
           label: "Diretoria",
           href: "/dae/diretoria",
         },
-        {
-          label: "Água e Esgoto",
-          href: "/dae/agua-e-esgoto",
-        },
       ],
     },
     {
       label: "QUEM SOMOS",
       href: "/dae/quem-somos",
       options: [],
+    },
+    {
+      label: "DISTRIBUIÇÃO",
+      href: "/dae/agua-e-esgoto",
+      options: []
     },
     {
       label: "TRANSPARÊNCIA",
@@ -310,7 +311,7 @@ const Header = () => {
             </Link>
           ))}
         </section>
-        <div className="left-0 top-0 absolute w-full h-full bg-white-50 dark:bg-black md:z-0" />
+        <div className="shadow-md left-0 top-0 absolute w-full h-full bg-white-50 dark:bg-black md:z-0" />
         <Tutorial />
       </header>
     </>

@@ -20,6 +20,7 @@ import api from "@/utils/api";
 import WebChat from "@/components/WebChat";
 import Control from "@/components/Control";
 import VLibrasClient from "@/components/VLibras";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 SwiperCore.use([Navigation]);
 
@@ -42,12 +43,14 @@ export default async function RootLayout({
         className={`${inter.className} dark:bg-[#0D0D0D] dark:text-white-0`}
       >
         <SessionProvider provider={session}>
-          <AcessibilityProvider provider={{ modifier }}>
-            {children}
-            <WebChat />
-            <Control />
-            <VLibrasClient />
-          </AcessibilityProvider>
+          <AppRouterCacheProvider>
+            <AcessibilityProvider provider={{ modifier }}>
+              {children}
+              <WebChat />
+              <Control />
+              <VLibrasClient />
+            </AcessibilityProvider>
+          </AppRouterCacheProvider>
         </SessionProvider>
       </body>
     </html>

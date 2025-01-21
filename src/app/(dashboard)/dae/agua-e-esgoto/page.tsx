@@ -3,34 +3,67 @@ import Link from "next/link";
 import api from "@/utils/api"
 import { AguaESgotoResponse } from "@/interfaces/request";
 import { normalizeFileUrl } from "@/utils/normalize";
+import { getDistricts, getFirstAndLastWSRDate, getTodaySectors } from "@/utils/requests";
+import TableWSR from "@/components/TableWSR";
 
 export const metadata = {
-  title: "Água e Esgoto - DAE",
+  title: "DISTRIBUIÇÃO",
   description: ""
 }
 
-async function getPage() {
+async function getPage(date: string, district: string) {
   "use server"
-
   const { data: page } = await api.get<AguaESgotoResponse>("/agua-e-esgoto?populate=*")
-
   const { attributes } = page.data
+
+  const firstAndLastDate = await getFirstAndLastWSRDate()
+
+  const today = new Date();
+  let searchedDate = today.toISOString().split("T")[0];
+  const lastWSRDate = new Date(firstAndLastDate.lastWSRDate || firstAndLastDate.firstWSRDate);
+  if (lastWSRDate.getTime()) {
+    searchedDate = (today < lastWSRDate ? today : lastWSRDate).toISOString().split("T")[0];
+  }
+
+  if (date) {
+    searchedDate = new Date(date).toISOString().split("T")[0]
+  }
+
+  let sectors = await getTodaySectors(searchedDate, district ? Number(district) : null)
+
+  const districts = await getDistricts()
 
   return {
     ...attributes,
     mapa: attributes.mapa.data?.attributes?.url ? normalizeFileUrl(page.data.attributes.mapa.data?.attributes.url) : null,
-    relacao_etes: attributes.relacao_etes.data?.attributes?.url ? normalizeFileUrl(attributes.relacao_etes.data.attributes.url) : null
+    relacao_etes: attributes.relacao_etes.data?.attributes?.url ? normalizeFileUrl(attributes.relacao_etes.data.attributes.url) : null,
+    sectors,
+    districts,
+    firstAndLastDate,
+    searchedDate
   }
 }
 
-export default async function Page() {
-  const { agua, esgoto, mapa, relacao_etes } = await getPage()
+export default async function Page({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
+  const { date, districtId } = await searchParams;
+  const { agua, esgoto, mapa, relacao_etes, sectors, districts, firstAndLastDate, searchedDate } = await getPage(date, districtId)
+
+  const formmatedTableData = sectors?.map(({ id, last_status, name, turno }) => ({
+    id,
+    location: name,
+    turn: turno,
+    status: {
+      date: last_status.createdAt,
+      situation: last_status.situation
+    },
+    description: last_status.description ?? ""
+  }))
 
   return (
     <>
-      <section className="">
+      <section className="w-full">
         {
-          agua || mapa && (
+          agua && (
             <PageTitle
               title="Água"
               description={agua}
@@ -38,9 +71,18 @@ export default async function Page() {
           )
         }
         {
-          mapa && (
+          formmatedTableData ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={mapa} alt="" className="object-contain mx-auto my-20" />
+            <>
+              <TableWSR
+                data={formmatedTableData}
+                districts={districts}
+                date={searchedDate}
+                firstAndLastDate={firstAndLastDate}
+              />
+            </>
+          ) : (
+            <div className="mt-4 text-center text-primary-500">Ainda não há dados disponíveis para esta data.</div>
           )
         }
       </section>

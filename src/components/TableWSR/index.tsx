@@ -104,6 +104,7 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
               minDate={dayjs(new Date())}
               maxDate={dayjs(firstAndLastDate.lastWSRDate)}
               onChange={(value) => value && setSelectedDate(value.format("YYYY-MM-DD"))}
+              format="DD/MM/YYYY"
             />
           </LocalizationProvider>
           <div className="flex max-w-80">

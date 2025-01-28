@@ -134,7 +134,7 @@ export const getFirstAndLastWSRDate = async () => {
 
 export const getDistricts = async () => {
   const { data: districts } = await api.get<{ data: District[] }>(
-    "/districts?populate=*&sort[0]=name:asc"
+    "/districts?populate=*&sort[0]=name:asc&pagination[pageSize]=100"
   );
 
   const districtMapped = districts.data.map(({ id, attributes }) => ({

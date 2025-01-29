@@ -52,6 +52,7 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
   const handleFilter = () => {
     setDistrictsData([])
     router.push(`?date=${selectedDate}`);
+    router.refresh();
   }
 
   const isToday = (dateString: string) => {

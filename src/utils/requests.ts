@@ -12,6 +12,15 @@ interface DefaultProps {
   attributes: BaseAttributes;
 }
 
+interface Meta {
+  pagination: {
+    page: number;
+    pageSize: number;
+    number: 2;
+    total: 110;
+  };
+}
+
 export interface District extends DefaultProps {
   attributes: BaseAttributes & {
     name: string;
@@ -133,15 +142,34 @@ export const getFirstAndLastWSRDate = async () => {
 };
 
 export const getDistricts = async () => {
-  const { data: districts } = await api.get<{ data: District[] }>(
-    "/districts?populate=*&sort[0]=name:asc&pagination[pageSize]=100"
-  );
+  let allDistricts: { id: number; label: string }[] = [];
+  let page = 1;
+  const pageSize = 100;
 
-  const districtMapped = districts.data.map(({ id, attributes }) => ({
-    id,
-    label: attributes.name,
-  }));
+  while (true) {
+    const { data: districts } = await api.get<{ data: District[]; meta: Meta }>(
+      `/districts?populate=*&sort[0]=name:asc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+    );
 
-  return districtMapped;
+    // Map current page results
+    const districtMapped = districts.data.map(({ id, attributes }) => ({
+      id,
+      label: attributes.name,
+    }));
+
+    allDistricts = allDistricts.concat(districtMapped);
+
+    // Check if we've fetched all pages
+    if (
+      districts.meta.pagination.page * districts.meta.pagination.pageSize >=
+      districts.meta.pagination.total
+    ) {
+      break;
+    }
+
+    page++;
+  }
+
+  return allDistricts;
 };
 

@@ -50,11 +50,9 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
   const dataFiltered = districtsData.filter((item) => item.id === district?.id);
 
   const handleFilter = () => {
-    setDistrictsData([])
-    router.push(`?date=${selectedDate}`);
-    router.refresh();
-    window.location.reload();
-  }
+    setDistrictsData([]); // Limpa os dados filtrados
+    window.location.replace(`?date=${selectedDate}`);
+  };
 
   const isToday = (dateString: string) => {
     // Fuso horário de Várzea Grande (GMT-4)

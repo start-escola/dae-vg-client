@@ -53,6 +53,7 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
     setDistrictsData([])
     router.push(`?date=${selectedDate}`);
     router.refresh();
+    window.location.reload();
   }
 
   const isToday = (dateString: string) => {

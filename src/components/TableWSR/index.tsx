@@ -44,9 +44,15 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
     label: string;
   } | null>(null);
   const [selectedDate, setSelectedDate] = useState(date);
+  const [districtsData, setDistrictsData] = useState(data)
   const router = useRouter();
 
-  const dataFiltered = data.filter((item) => item.id === district?.id);
+  const dataFiltered = districtsData.filter((item) => item.id === district?.id);
+
+  const handleFilter = () => {
+    setDistrictsData([])
+    router.push(`?date=${selectedDate}`);
+  }
 
   const isToday = (dateString: string) => {
     // Fuso horário de Várzea Grande (GMT-4)
@@ -110,7 +116,7 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
           <div className="flex max-w-80">
             <button
               className="px-4 py-2 text-white-0 bg-primary-500 hover:bg-primary-700 rounded"
-              onClick={() => router.push(`?date=${selectedDate}`)}
+              onClick={() => handleFilter()}
             >
               Filtrar
             </button>

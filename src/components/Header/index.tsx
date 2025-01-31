@@ -135,7 +135,7 @@ const Header = () => {
             className="relative h-full z-20 min-w-40 md:min-w-48 cursor-pointer"
           >
             <img
-              src="/LOGO_DAE.svg"
+              src="/cms/uploads/Logo_DAE_7599e69883.svg"
               alt="logo"
               className="w-full h-full absolute object-contain object-left"
             />

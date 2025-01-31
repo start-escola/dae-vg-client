@@ -1,5 +1,6 @@
 import api from "@/utils/api";
 import { districtMapper } from "./mappers";
+import dayjs from "dayjs";
 
 interface BaseAttributes {
   createdAt: string;
@@ -25,6 +26,9 @@ export interface District extends DefaultProps {
   attributes: BaseAttributes & {
     name: string;
     logs: SectorLogs[];
+    sectors: {
+      data: Sector[];
+    };
   };
 }
 
@@ -63,12 +67,14 @@ interface SectorsGroup {
 
 export const getTodaySectors = async (
   day: string,
-  districtId: number | null
 ) => {
+  if(typeof day !== "string"){
+    return null
+  }
+
   const params = {
     "populate[sectors][populate][sectors][populate][districts]": "*",
     "filters[date][$eq]": day,
-    "filters[sectors][sectors][districts][districts][id][$eq]": districtId,
   };
 
   const { data: WSR } = await api.get<{ data: WSR[] }>(
@@ -171,5 +177,28 @@ export const getDistricts = async () => {
   }
 
   return allDistricts;
+};
+
+export const findNextSupply = async (id: number | string) => {
+  const { data: district } = await api.get<{ data: District }>(
+    `districts/${id}?populate=*`
+  );
+
+  const sectorsId = district.data.attributes.sectors.data.map(
+    (sector) => sector.id
+  );
+
+  const { data: WSR } = await api.get<{ data: WSR[] }>(
+    "/water-supply-relationships",
+    {
+      params: {
+        "filters[sectors][sectors][id][$in]": sectorsId,
+        "filters[date][$gte]": dayjs().format("YYYY-MM-DD"),
+        "sort[0]": "date:asc",
+      },
+    }
+  );
+
+  return WSR.data[0]?.attributes.date;
 };
 

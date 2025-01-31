@@ -11,7 +11,7 @@ export const metadata = {
   description: ""
 }
 
-async function getPage(date: string, district: string) {
+async function getPage(date: string) {
   "use server"
   const { data: page } = await api.get<AguaESgotoResponse>("/agua-e-esgoto?populate=*")
   const { attributes } = page.data
@@ -29,7 +29,7 @@ async function getPage(date: string, district: string) {
     searchedDate = new Date(date).toISOString().split("T")[0]
   }
 
-  let sectors = await getTodaySectors(searchedDate, district ? Number(district) : null)
+  let sectors = await getTodaySectors(searchedDate)
 
   const districts = await getDistricts()
 
@@ -46,7 +46,7 @@ async function getPage(date: string, district: string) {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ [key: string]: string }> }) {
   const { date, districtId } = await searchParams;
-  const { agua, esgoto, mapa, relacao_etes, sectors, districts, firstAndLastDate, searchedDate } = await getPage(date, districtId)
+  const { agua, esgoto, mapa, relacao_etes, sectors, districts, firstAndLastDate, searchedDate } = await getPage(date)
 
   const formmatedTableData = sectors?.map(({ id, last_status, name, turno }) => ({
     id,
@@ -75,8 +75,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ [
             // eslint-disable-next-line @next/next/no-img-element
             <>
               <TableWSR
-                data={formmatedTableData}
-                districts={districts}
+                defaultValues={formmatedTableData}
+                select={{ options: districts, defaultValue: districts?.find(({ id }) => id === Number(districtId)) }}
                 date={searchedDate}
                 firstAndLastDate={firstAndLastDate}
               />

@@ -5,19 +5,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-function formatDate(date: Date) {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa do 0
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-}
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { isToday } from '@/utils/conditionals';
+import { findNextSupply, getTodaySectors } from '@/utils/requests';
 
 interface ITableWSRProps {
-  data: {
+  defaultValues: {
     id: number;
     location: string;
     turn: string;
@@ -27,10 +21,16 @@ interface ITableWSRProps {
     };
     description: string;
   }[];
-  districts: {
-    id: number;
-    label: string;
-  }[];
+  select: {
+    defaultValue: {
+      id: number;
+      label: string;
+    } | undefined;
+    options: {
+      id: number;
+      label: string;
+    }[];
+  }
   date: string; // data em formato string
   firstAndLastDate: {
     firstWSRDate: string;
@@ -38,38 +38,85 @@ interface ITableWSRProps {
   };
 }
 
-const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) => {
-  const [district, setDistrict] = useState<{
-    id: number;
-    label: string;
-  } | null>(null);
-  const [selectedDate, setSelectedDate] = useState(date);
-  const [districtsData, setDistrictsData] = useState(data)
-  const router = useRouter();
+const TableWSR = ({ defaultValues, select, date, firstAndLastDate }: ITableWSRProps) => {
+  const [defaultValuesState, setDefaultValuesState] = useState(defaultValues)
+  const [dateState, setDateState] = useState(date)
+  const [renderedCells, setRenderedCells] = useState(defaultValues)
 
-  const dataFiltered = districtsData.filter((item) => item.id === district?.id);
-
-  const handleFilter = () => {
-    setDistrictsData([]); // Limpa os dados filtrados
-    window.location.replace(`?date=${selectedDate}`);
+  const handleFilterDate = async (date: string) => {
+    if (date) {
+      const parsedDate = new Date(date);
+  
+      if (isNaN(parsedDate.getTime())) {
+        return;
+      }
+  
+      const sectors = await getTodaySectors(date);
+  
+      if (sectors) {
+        const formmatedTableData = sectors?.map(({ id, last_status, name, turno }) => ({
+          id,
+          location: name,
+          turn: turno,
+          status: {
+            date: last_status.createdAt,
+            situation: last_status.situation,
+          },
+          description: last_status.description ?? "",
+        }));
+  
+        setDefaultValuesState(formmatedTableData);
+        setRenderedCells(formmatedTableData);
+        setDateState(date);
+      }
+    } else {
+      setDefaultValuesState(defaultValues);
+      setRenderedCells(defaultValues);
+      setDateState(date);
+    }
   };
+  
+  const handleFilterDistrict = async (districtId?: number) => {
+    if (districtId === undefined) {
+      setRenderedCells(defaultValuesState)
+      setDateState(date)
+      return
+    }
 
-  const isToday = (dateString: string) => {
-    // Fuso horário de Várzea Grande (GMT-4)
-    const varzeaGrandeOffset = -4 * 60;  // Deslocamento GMT-4 em minutos
-    const currentDate = new Date();
-    const [year, month, day] = dateString.split('-').map(Number);
-    const selectedDate = new Date(year, month - 1, day); // Mês é 0-indexado
+    const filteredCells = renderedCells.filter(({ id }) => id === districtId)
 
-    // Ajusta as datas para o fuso horário fixo GMT-4
-    const currentOffset = currentDate.getTimezoneOffset(); // offset atual do navegador
-    currentDate.setMinutes(currentDate.getMinutes() + (currentOffset - varzeaGrandeOffset));
+    if (filteredCells.length > 0) {
+      setRenderedCells(filteredCells)
+      return
+    }
 
-    selectedDate.setHours(0, 0, 0, 0);
-    currentDate.setHours(0, 0, 0, 0);
+    if (filteredCells.length === 0) {
+      const nextSupplyDate = await findNextSupply(districtId)
 
-    return selectedDate.getTime() === currentDate.getTime();
-  };
+      const sectors = await getTodaySectors(nextSupplyDate)
+
+      if (sectors) {
+        const formmatedTableData = sectors?.map(({ id, last_status, name, turno }) => ({
+          id,
+          location: name,
+          turn: turno,
+          status: {
+            date: last_status.createdAt,
+            situation: last_status.situation
+          },
+          description: last_status.description ?? ""
+        }))
+
+        setDefaultValuesState(formmatedTableData)
+        setRenderedCells(formmatedTableData.filter(({ id }) => id === districtId))
+        setDateState(nextSupplyDate)
+        return
+      }
+
+      setRenderedCells([])
+      setDateState("")
+    }
+  }
 
   const situationColor = {
     "Previsão": "#93C5FD",  // Azul claro
@@ -82,45 +129,35 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
     <div className="bg-white-0 text-primary-500 my-10 max-w-full overflow-auto p-2 md:p-4 w-full">
       <div>
         <p className="text-2xl">
-          {isToday(date) ? "Hoje" : `${formatDate(new Date(date + "T04:00:00"))}`}
+          {isToday(dateState) ? "Hoje" : `${dateState ? dayjs(dateState).format("DD/MM/YYYY") : "Indisponível" }`}
         </p>
         <p className="text-sm">
-          Relação de abastecimento {formatDate(new Date(date + "T04:00:00"))}.
+          Relação de abastecimento: {dateState ? dayjs(dateState).format("DD/MM/YYYY") : "Sem dados disponíveis para este bairro" }.
         </p>
       </div>
       <div className="flex flex-wrap justify-between py-2 my-10 gap-4">
         <div className="flex w-full max-w-80">
           <Autocomplete
             disablePortal
-            options={districts}
+            options={select.options}
+            defaultValue={select.defaultValue}
             sx={{ width: "100%" }}
             renderInput={(params) => <TextField {...params} label="Bairro" />}
-            onChange={(e, value) => {
-              setDistrict(value);
-            }}
-            value={district}
+            onChange={(e, value) => handleFilterDistrict(value?.id)}
           />
         </div>
         <div className="flex w-full max-w-80 gap-2">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              defaultValue={dayjs(selectedDate)}
               label="Selecionar data"
               sx={{ width: "100%" }}
-              minDate={dayjs(new Date())}
+              defaultValue={isToday(dateState) ? undefined : dayjs(new Date(dateState + "T04:00:00"))}
+              minDate={dayjs()}
               maxDate={dayjs(firstAndLastDate.lastWSRDate)}
-              onChange={(value) => value && setSelectedDate(value.format("YYYY-MM-DD"))}
               format="DD/MM/YYYY"
+              onChange={(e) => e && handleFilterDate(e.format("YYYY-MM-DD"))}
             />
           </LocalizationProvider>
-          <div className="flex max-w-80">
-            <button
-              className="px-4 py-2 text-white-0 bg-primary-500 hover:bg-primary-700 rounded"
-              onClick={() => handleFilter()}
-            >
-              Filtrar
-            </button>
-          </div>
         </div>
       </div>
       <table className="rounded w-full text-left">
@@ -133,12 +170,12 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
           </tr>
         </thead>
         <tbody>
-          {(district ? dataFiltered : data).map(({ id, location, turn, status, description }) => (
+          {renderedCells ? renderedCells?.map(({ id, location, turn, status, description }) => (
             <tr key={id} className="text-xs md:text-base *:p-2 md:*:p-4 border-opacity-15 border-b border-primary-500">
               <td><p className="text-xs md:text-base">{location}</p></td>
               <td><p className="text-xs md:text-base">{turn}</p></td>
-              <td style={{ backgroundColor: situationColor[status.situation as keyof typeof situationColor] }}>
-                <p className="text-xs md:text-base font-bold">{status.situation}</p>
+              <td style={{ backgroundColor: situationColor[status?.situation as keyof typeof situationColor] }}>
+                <p className="text-xs md:text-base font-bold">{status?.situation}</p>
                 {status?.date && <p className="text-xs">Última atualização {status.date}</p>}
               </td>
               {description && (
@@ -147,12 +184,15 @@ const TableWSR = ({ data, districts, date, firstAndLastDate }: ITableWSRProps) =
                 </td>
               )}
             </tr>
-          ))}
+          )) : (
+            <tr className="text-xs md:text-base *:p-2 md:*:p-4 border-opacity-15 border-b border-primary-500">
+              <td colSpan={4}>
+                <p className="text-xs md:text-base">Não há dados disponíveis para essa data</p>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
-      <div className="controls w-full py-5">
-        <div></div>
-      </div>
     </div>
   );
 };

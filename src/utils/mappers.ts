@@ -74,12 +74,12 @@ export const districtMapper = async (
       }
 
       const createdAt = new Date(last_status.attributes.createdAt);
-      const hours = createdAt.getHours();
+      const hours = createdAt.getHours() - 4; // -4 para GMT-4
       const minutes = createdAt.getMinutes();
       const period = hours >= 12 ? "PM" : "AM";
       const formattedCreatedAt = `${hours % 12 || 12}:${minutes
         .toString()
-        .padStart(2, "0")} ${period}`;
+        .padStart(2, "0")} ${period} GMT-4`;
 
       return {
         id,

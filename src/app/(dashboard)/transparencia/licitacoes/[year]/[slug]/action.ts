@@ -34,11 +34,9 @@ export async function getPage(
   const limit = 10;
 
   const params: { [key: string]: string | number } = {
-    "filters[$or][0][opening_date][$gte]": `${year}-01-01`,
-    "filters[$or][1][opening_date][$lte]": `${year}-12-31`,
-    "filters[$or][2][realization][$gte]": `${year}-01-01`,
-    "filters[$or][3][realization][$lte]": `${year}-12-31`,
-    "filters[$and][4][tender_type][slug][$eq]": `${tender_type}`,
+    "filters[$and][0][realization][$gte]": `${year}-01-01`,
+    "filters[$and][1][realization][$lte]": `${year}-12-31`,
+    "filters[$and][2][tender_type][slug][$eq]": `${tender_type}`,
     "pagination[start]": page_num * limit,
     "pagination[limit]": limit,
     populate: "*",

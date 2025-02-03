@@ -3,13 +3,8 @@ import { getPage } from "./action";
 import List from "./list";
 import Filter from "./filter";
 
-export type SearchParams = {
-  status?: string
-  text?: string
-}
-
-export default async function Page({ params, searchParams }: { params: { year: string, slug: string }, searchParams: { [key: string]: string | undefined } }) {
-  const { data, pageTitle, resultsFound } = await getPage(params.year, params.slug, 0, searchParams)
+export default async function Page({ params }: { params: { year: string, slug: string }}) {
+  const { data, pageTitle, resultsFound } = await getPage(params.year, params.slug, 0)
 
   return (
     <section className="text-primary-500">
@@ -22,9 +17,9 @@ export default async function Page({ params, searchParams }: { params: { year: s
         </div>
       </section>
       <section className="mt-12">
-        <Filter defaultValues={searchParams} />
+        <Filter defaultValues={params} />
         <p className="py-8 border-b-2 border-primary-500"><strong>{resultsFound}</strong> Resultados encontrados</p>
-        <List defaultValues={data} searchParams={{ year: params.year, tender_type: params.slug, ...searchParams }} />
+        <List defaultValues={data} searchParams={{ year: params.year, tender_type: params.slug }} />
       </section>
     </section>
   )

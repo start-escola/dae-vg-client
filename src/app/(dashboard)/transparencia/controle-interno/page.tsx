@@ -14,7 +14,7 @@ export type SearchParams = {
   name?: string
 }
 
-export async function getPage(name: string) {
+async function getPage(name: string) {
   "use server"
 
   const params: { [key: string]: string } = {}

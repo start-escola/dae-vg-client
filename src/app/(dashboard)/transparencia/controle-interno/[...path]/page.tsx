@@ -10,7 +10,7 @@ export const metadata = {
   description: "Acesso rápido a todos os nossos documentos"
 }
 
-export async function getPage(path: string[], name?: string) {
+async function getPage(path: string[], name?: string) {
   "use server"
 
   const params: { [key: string]: string } = {

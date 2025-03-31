@@ -2,20 +2,18 @@
 import Image from "next/image";
 import { useState } from "react";
 import Text from "../Text";
+import { File } from "@/interfaces/request";
 
 export interface IInternalComponent {
   id: number,
-  title: string,
-  files: {
-    name: string,
-    url: string
-  }[],
-  description?: string,
+  name: string,
+  file: File,
   publishedAt: string,
+  description?: string,
   tender_type?: string,
 }
 
-const InternalComponent = ({ files, description, publishedAt, title, id }: IInternalComponent) => {
+const InternalComponent = ({ id, name, file, publishedAt, description }: IInternalComponent) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -27,9 +25,9 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
       <div className="p-4 md:p-5">
         <ul className="flex justify-start gap-4 sm:gap-6 md:gap-8 lg:14 mb-3 flex-wrap text-primary-500 dark:text-black">
           {
-            title && (
+            name || file.attributes.name && (
               <li className="p-4 bg-white-50 rounded border border-[#B5B5B5]">
-                <Text className="text-xl">Título do documento: <strong>{title}</strong></Text>
+                <Text className="text-xl">Título do documento: <strong>{name || file.attributes.name}</strong></Text>
               </li>
             )
           }
@@ -81,22 +79,25 @@ const InternalComponent = ({ files, description, publishedAt, title, id }: IInte
         </div>
         <hr className="border-border_grey border mb-6" />
         {
-          files && (
+          file && (
             <ul className="flex gap-2 overflow-x-auto">
-              {files.map(({ url, name }) => (
-                <li
-                  key={name}
+              <li
+                key={name}
+              >
+                <a title={file.attributes.name}
+                  className="flex flex-col justify-center items-center gap-2 border bg-white-0 border-white-200 p-2"
+                  href={file.attributes.url}
+                  download={file.attributes.name}
+                  target="_blank"
                 >
-                  <a title={name} className="flex flex-col justify-center items-center gap-2 border bg-white-0 border-white-200 p-2" href={url} download={name} target="_blank">
-                    <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
-                    <Text
-                      className="dark:text-black text-border_grey text-base mt-1"
-                    >
-                      {name.length > 13 ? `${name.substring(0, 10)}...` : name}
-                    </Text>
-                  </a>
-                </li>
-              ))}
+                  <Image src="/pdf.svg" width={23} height={24} alt="pdf" />
+                  <Text
+                    className="dark:text-black text-border_grey text-base mt-1"
+                  >
+                    {file.attributes.name.length > 13 ? `${file.attributes.name.substring(0, 10)}...` : name}
+                  </Text>
+                </a>
+              </li>
             </ul>
           )
         }

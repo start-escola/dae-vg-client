@@ -81,8 +81,8 @@ export interface TenderResponse {
 }
 
 interface InternalControlAttributes {
-  title: string;
-  description: string;
+  name: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -203,6 +203,93 @@ export interface GalleryData {
 
 export interface GalleryResponse {
   data: GalleryData;
+  meta: {
+    pagination: PaginationMeta;
+  };
+}
+
+export interface FileFormat {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+}
+
+export interface File {
+  id: number;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: FileFormat;
+    small?: FileFormat;
+    medium?: FileFormat;
+    thumbnail?: FileFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: Record<string, unknown> | null;
+  folderPath: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface FileWrapper {
+  id: number;
+  name: string;
+  file: File;
+}
+
+export interface Folder {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  slug: string;
+  name: string;
+  files: File[];
+  subfolders: Folder[];
+}
+
+export interface FolderResponse {
+  data: Folder;
+  meta: {
+    pagination: PaginationMeta;
+  };
+}
+
+export interface Payment {
+  id: number;
+  attributes: {
+    empresa: string;
+    numero_nota_fiscal: string;
+    valor: string;
+    data_liquidacao: string;
+    data_emissao_nf_proc: string;
+    data_vencimento: string;
+    data_pagamento: string;
+    justificativa: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  }
+}
+
+export interface PaymentResponse {
+  data: Payment[];
   meta: {
     pagination: PaginationMeta;
   };

@@ -1,42 +1,33 @@
-import { InternalControlsResponse } from "@/interfaces/request"
+import { FolderResponse, InternalControlsResponse } from "@/interfaces/request";
 import api from "@/utils/api";
-import { normalizeFileUrl } from "@/utils/normalize";
-import Image from "next/image";
 import Link from "next/link";
-import Filter from "./filter";
+import Image from "next/image";
+import { normalizeFileUrl } from "@/utils/normalize";
+import Filter from "../filter";
 
 export const metadata = {
   title: "Controle Interno - DAE",
   description: "Acesso rápido a todos os nossos documentos"
 }
 
-export type SearchParams = {
-  name?: string
-}
-
-export async function getPage(name: string) {
+export async function getPage(path: string[], name?: string) {
   "use server"
 
-  const params: { [key: string]: string } = {}
-
-  if (name) {
-    params["filters[files][name][$containsi]"] = name
-    params["populate"] = "*"
-  } else {
-    params["filters[parent][id][$null]"] = "*"
+  const params: { [key: string]: string } = {
+    path: path.join('/')
   }
 
-  const { data: page } = await api.get<InternalControlsResponse>(
-    "/internal-controls",
+  const { data: folder } = await api.get<FolderResponse>(
+    "/internal-controls/custom",
     {
       params
     }
   );
 
   if (name) {
-    const files = page.data.flatMap(({ attributes }) => attributes.files.data)
+    const files = folder.data.files
 
-    const filesFiltered = files.filter(file => file.attributes?.name?.toLowerCase().includes(name))
+    const filesFiltered = files.filter(file => file.name?.toLowerCase().includes(name.toLowerCase()))
 
     return {
       type: "file",
@@ -45,27 +36,55 @@ export async function getPage(name: string) {
   }
 
   return {
-    type: "page",
-    page: page
+    type: "folder",
+    folder: folder.data
   }
 }
 
-export default async function Page({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
-  const { type, files, page } = await getPage(searchParams.name || "")
+export type SearchParams = {
+  name?: string
+}
+
+export default async function Page({ params, searchParams }: { searchParams: SearchParams, params: Promise<{ path: string[] }> }) {
+  const { path } = await params
+  const { type, files, folder } = await getPage(path, searchParams.name)
 
   return (
     <>
       <Filter defaultValues={{ name: searchParams.name }} />
       <ul>
         {
-          type === "page" && (
-            page?.data.map(({ id, attributes: { name, slug } }, index) => (
+          type === "file" && (
+            files?.map(({ id, name, url, ext }, index) => (
               <li
                 key={id}
-                className={(index % 2 === 0 ? 'bg-white-0' : 'bg-[#F2F2F2]') + " hover:bg-primary-100"}
+                className={(index % 2 === 0 ? 'bg-white-0' : 'bg-[#F2F2F2]') + " hover:bg-primary-100 h-16"}
               >
-                <Link href={`/transparencia/controle-interno/${slug}`} className="flex justify-between items-center py-4 px-6">
-                  <div className="flex gap-4">
+                <Link href={normalizeFileUrl(url)} className="flex justify-between items-center py-4 px-6 h-full" target="_blank">
+                  <div className="flex gap-4 h-full">
+                    <Image
+                      src={`/extensions/${ext.replace(".", "")}.svg`}
+                      alt="Extensão do arquivo"
+                      width={26}
+                      height={22}
+                    />
+                    <p>{name}</p>
+                  </div>
+                  <Image src="/download.svg" width={26} height={26} className="object-contain" alt="download" />
+                </Link>
+              </li>
+            ))
+          )
+        }
+        {
+          type === "folder" && (
+            folder?.subfolders.map(({ name, slug }, index) => (
+              <li
+                key={index}
+                className={(index % 2 === 0 ? 'bg-white-0' : 'bg-[#F2F2F2]') + " hover:bg-primary-100 h-16"}
+              >
+                <Link href={`/transparencia/controle-interno/${path.join('/')}/${slug}`} className="flex justify-between items-center py-4 px-6 h-full">
+                  <div className="flex gap-4 h-full">
                     <Image src="/folder.svg" alt="Icone de pasta" width={26} height={22} />
                     <p>{name}</p>
                   </div>
@@ -78,8 +97,8 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
           )
         }
         {
-          type === "file" && (
-            files?.map(({ id, attributes: { url, ext, name } }, index) => (
+          type === "folder" && (
+            folder?.files?.map(({ id, name, url, ext }, index) => (
               <li
                 key={id}
                 className={(index % 2 === 0 ? 'bg-white-0' : 'bg-[#F2F2F2]') + " hover:bg-primary-100 h-16"}
@@ -102,7 +121,12 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
         }
       </ul>
       {
-        files?.length === 0 && page?.data.length === 0 && (
+        type === "file" && !files?.length && (
+          <p className="text-lg">Nenhum resultado encontrado</p>
+        )
+      }
+      {
+        folder?.subfolders.length === 0 && folder?.files === null && type === "folder" && (
           <p className="text-lg">Nenhum documento encontrado</p>
         )
       }

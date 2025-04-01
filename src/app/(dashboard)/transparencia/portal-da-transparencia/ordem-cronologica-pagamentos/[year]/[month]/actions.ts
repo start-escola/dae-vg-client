@@ -4,7 +4,10 @@ import { Payment, PaymentResponse } from "@/interfaces/request";
 
 export async function getPage(year: string, month: string) {
   const startDate = `${year}-${month.padStart(2, '0')}-01`;
-  const endDate = `${year}-${month.padStart(2, '0')}-31`;
+
+  // Calcular o último dia do mês
+  const lastDayOfMonth = new Date(Number(year), Number(month), 0);  // O dia 0 do mês seguinte retorna o último dia do mês atual
+  const endDate = lastDayOfMonth.toISOString().split('T')[0];  // Formata para 'YYYY-MM-DD'
 
   let currentPage = 1;
   let totalPages = 1;

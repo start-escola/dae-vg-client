@@ -12,13 +12,7 @@ const Footer = () => {
             <Text className="text-white-0 font-bold text-2xl text-center whitespace-nowrap">VÁRZEA GRANDE</Text>
           </div>
         </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <li>
-            <Text as="h3" className="text-2xl font-semibold mb-3">Sede</Text>
-            <div className="flex flex-col gap-4">
-              <Text className="font-light text-base">Av. Julio Campos, 2599 - Jardim dos Estados</Text>
-            </div>
-          </li>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* <li>
             <Text as="h3" className="text-2xl font-semibold mb-3">Rede Social</Text>
             <div className="flex flex-col gap-4">
@@ -26,16 +20,24 @@ const Footer = () => {
             </div>
           </li> */}
           <li>
-            <Text as="h3" className="text-2xl font-semibold mb-3">Agência Comercial Cristo Rei</Text>
+            <Text className="text-2xl font-semibold mb-3">Agência Comercial</Text>
             <div className="flex flex-col gap-4">
-              <Text className="font-light text-base">Av. Gonçalo Botelho de Campos -
-                Cristo Rei</Text>
+              <Text as="a" href="https://maps.app.goo.gl/YVn1wZqQzqBDhHvw8" className="font-light text-base" target="_blank">Av. Castelo Branco, 245</Text>
             </div>
           </li>
           <li>
-            <Text className="text-2xl font-semibold mb-3">Agência Comercial Centro</Text>
+            <Text className="text-2xl font-semibold mb-3">Fale Conosco</Text>
             <div className="flex flex-col gap-4">
-              <Text as="a" href="https://maps.app.goo.gl/YVn1wZqQzqBDhHvw8" className="font-light text-base" target="_blank">Av. Castelo Branco, 245</Text>
+              <Text as="a" href="tel:0800 707 4442" className="font-light text-base" target="_blank">0800 707 4442</Text>
+              <Text as="a" href="mailto:" className="font-light text-base" target="_blank">atendimento.comercial@daevg.com.br</Text>
+            </div>
+          </li>
+          <li>
+            <Text className="text-2xl font-semibold mb-3">Links</Text>
+            <div className="flex flex-col gap-4">
+              <Text as="a" href="/transparencia/portal-da-transparencia" className="font-light text-base" target="_blank">Portal da Transparência</Text>
+              <Text as="a" href="/dae/diretoria" className="font-light text-base" target="_blank">Diretoria</Text>
+              <Text as="a" href="https://falabr.cgu.gov.br/web/home" className="font-light text-base" target="_blank">Fala.BR</Text>
             </div>
           </li>
         </ul>

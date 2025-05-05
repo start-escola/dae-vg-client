@@ -40,11 +40,13 @@ const Header = () => {
       href: "/dae/quem-somos",
       options: [],
     },
-    {
-      label: "DISTRIBUIÇÃO",
-      href: "/dae/agua-e-esgoto",
-      options: []
-    },
+    /*
+      {
+        label: "DISTRIBUIÇÃO",
+        href: "/dae/agua-e-esgoto",
+        options: []
+      },
+    */
     {
       label: "TRANSPARÊNCIA",
       options: [

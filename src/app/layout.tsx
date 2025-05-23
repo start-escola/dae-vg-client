@@ -46,7 +46,6 @@ export default async function RootLayout({
           <AppRouterCacheProvider>
             <AcessibilityProvider provider={{ modifier }}>
               {children}
-              <WebChat />
               <Control />
               <VLibrasClient />
             </AcessibilityProvider>

@@ -314,7 +314,6 @@ const Header = () => {
           ))}
         </section>
         <div className="shadow-md left-0 top-0 absolute w-full h-full bg-white-50 dark:bg-black md:z-0" />
-        <Tutorial />
       </header>
     </>
   );
